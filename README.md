@@ -1,4 +1,4 @@
-# eliana_app
+# Eliana App
 
 &#x27;A new Flutter project. Created by Slidy&#x27;
 

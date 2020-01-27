@@ -1,6 +1,7 @@
 import 'package:eliana_app/app/modules/home/home_controller.dart';
 import 'package:eliana_app/app/modules/home/home_module.dart';
 import 'package:eliana_app/app/pages/home_view/home_view_page.dart';
+import 'package:eliana_app/app/pages/product_view/product_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               HomeViewPage(),
               Container(color: Colors.red),
-              Container(color: Colors.blue),
+              ProductViewPage(),
               Container(color: Colors.green),
               Container(color: Colors.purple),
             ],

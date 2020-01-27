@@ -1,6 +1,6 @@
 import 'package:eliana_app/app/modules/home/home_controller.dart';
 import 'package:eliana_app/app/modules/home/home_module.dart';
-import 'package:eliana_app/app/pages/home_page_app/home_page_app_page.dart';
+import 'package:eliana_app/app/pages/home_view/home_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
             physics: NeverScrollableScrollPhysics(),
             controller: _controller.controllerPage,
             children: <Widget>[
-              HomePageAppPage(),
+              HomeViewPage(),
               Container(color: Colors.red),
               Container(color: Colors.blue),
               Container(color: Colors.green),
@@ -45,12 +45,21 @@ class _HomePageState extends State<HomePage> {
             unselectedItemColor: Colors.white,
             type: BottomNavigationBarType.fixed,
             items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.home)),
               BottomNavigationBarItem(
-                  icon: Icon(FontAwesomeIcons.birthdayCake)),
-              BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.archive)),
-              BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.boxes)),
-              BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.users)),
+                  icon: Icon(FontAwesomeIcons.home), title: Text('Inicio')),
+              BottomNavigationBarItem(
+                  icon: Icon(FontAwesomeIcons.birthdayCake),
+                  title: Text('Montagem')),
+              BottomNavigationBarItem(
+                  icon: Icon(FontAwesomeIcons.archive),
+                  title: Text('Produtos')),
+              BottomNavigationBarItem(
+                  icon: Icon(FontAwesomeIcons.boxes),
+                  title: Text('Encomendas')),
+              BottomNavigationBarItem(
+                icon: Icon(FontAwesomeIcons.users),
+                title: Text('Clientes'),
+              ),
             ],
             currentIndex: _controller.selectedIndex,
             onTap: _controller.changeIndexes,

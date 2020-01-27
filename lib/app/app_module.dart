@@ -1,15 +1,17 @@
-import 'package:eliana_app/app/pages/home_page_app/home_page_app_controller.dart';
+import 'package:eliana_app/app/app_repository.dart';
 import 'package:eliana_app/app/app_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 import 'package:eliana_app/app/app_widget.dart';
 import 'package:eliana_app/app/modules/home/home_module.dart';
+import 'package:hasura_connect/hasura_connect.dart';
 
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => HomePageAppController()),
         Bind((i) => AppController()),
+        Bind((i) => AppRepository(Inject<AppModule>.of().get())),
+        Bind((i) => HasuraConnect('http://192.168.42.212:8080/v1/graphql')),
       ];
 
   @override

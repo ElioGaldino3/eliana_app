@@ -6,10 +6,10 @@ class ProductViewController = _ProductViewBase with _$ProductViewController;
 
 abstract class _ProductViewBase with Store {
   @observable
-  int value = 0;
+  int totalProducts = 0;
 
   @action
-  void increment() {
-    value++;
+  void changeTotal(int total) {
+    totalProducts = total;
   }
 }

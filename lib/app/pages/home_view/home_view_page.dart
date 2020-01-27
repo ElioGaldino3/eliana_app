@@ -3,8 +3,6 @@ import 'package:eliana_app/app/app_repository.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/widgets/order_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class HomeViewPage extends StatefulWidget {
   final String title;
@@ -34,7 +32,7 @@ class _HomeViewPageState extends State<HomeViewPage> {
       children: <Widget>[
         Container(
           height: screenHeight,
-          color: Colors.black,
+          color: Colors.deepPurple,
         ),
         Container(
           height: 60,

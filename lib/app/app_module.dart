@@ -1,5 +1,6 @@
 import 'package:eliana_app/app/app_repository.dart';
 import 'package:eliana_app/app/app_controller.dart';
+import 'package:eliana_app/app/modules/add_product/add_product_page.dart';
 import 'package:eliana_app/app/pages/product_view/product_view_controller.dart';
 import 'package:eliana_app/app/pages/product_view/product_view_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -22,7 +23,10 @@ class AppModule extends MainModule {
   @override
   List<Router> get routers => [
         Router('/', module: HomeModule()),
-        Router('/add-product', module: AddProductModule()),
+        Router('/add-product/', module: AddProductModule()),
+        Router('/add-product/:id',
+            child: (_, args) =>
+                AddProductPage(id: int.parse(args.params['id'])))
       ];
 
   @override

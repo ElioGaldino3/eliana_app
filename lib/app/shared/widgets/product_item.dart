@@ -10,51 +10,56 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            colors: [Colors.purple, Colors.deepPurple],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(15))),
-      child: Padding(
-        padding: EdgeInsets.only(left: 15),
-        child: Row(
-          children: <Widget>[
-            IconButton(
-              icon: Icon(FontAwesomeIcons.archive),
-              onPressed: () {},
+    return GestureDetector(
+      child: Container(
+        height: 80,
+        decoration: BoxDecoration(
+            gradient: new LinearGradient(
+              colors: [Colors.purple, Colors.deepPurple],
             ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      data.name,
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                    Text(
-                      "R\$${data.value.toStringAsFixed(data.value.truncateToDouble() == data.value ? 0 : 2)}",
-                    )
-                  ],
+            borderRadius: BorderRadius.all(Radius.circular(15))),
+        child: Padding(
+          padding: EdgeInsets.only(left: 15),
+          child: Row(
+            children: <Widget>[
+              IconButton(
+                icon: Icon(FontAwesomeIcons.archive),
+                onPressed: () {},
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        data.name,
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        "R\$${data.value}",
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 6),
-              child: IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  print(data.id);
-                },
-              ),
-            )
-          ],
+              Padding(
+                padding: EdgeInsets.only(right: 6),
+                child: IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    print(data.id);
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
+      onTap: () {
+        Navigator.pushNamed(context, "/product/${data.id}");
+      },
     );
   }
 

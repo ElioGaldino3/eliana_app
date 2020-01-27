@@ -36,6 +36,7 @@ class AppRepository extends Disposable {
           id
           name
           value
+          photoUrl
           isRent
         }
       }
@@ -43,6 +44,21 @@ class AppRepository extends Disposable {
     Snapshot snapshot = connection.subscription(doc);
     return snapshot
         .map((jsonList) => Product.fromJsonList(jsonList['data']['products']));
+  }
+
+  Future<Product> getProduct(int id) {
+    var doc = """
+      query getProduct(\$id:Int!) {
+        products(where: {id: {_eq: \id}}) {
+          name
+          value
+          photoUrl
+          isRent
+        }
+      }
+    """;
+    print("Prinando o conection query:");
+    print(connection.query(doc));
   }
 
   @override

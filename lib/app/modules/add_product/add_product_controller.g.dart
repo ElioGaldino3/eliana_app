@@ -9,33 +9,42 @@ part of 'add_product_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AddProductController on _AddProductBase, Store {
-  final _$valueAtom = Atom(name: '_AddProductBase.value');
+  final _$textNameControllerAtom =
+      Atom(name: '_AddProductBase.textNameController');
 
   @override
-  int get value {
-    _$valueAtom.context.enforceReadPolicy(_$valueAtom);
-    _$valueAtom.reportObserved();
-    return super.value;
+  TextEditingController get textNameController {
+    _$textNameControllerAtom.context
+        .enforceReadPolicy(_$textNameControllerAtom);
+    _$textNameControllerAtom.reportObserved();
+    return super.textNameController;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.context.conditionallyRunInAction(() {
-      super.value = value;
-      _$valueAtom.reportChanged();
-    }, _$valueAtom, name: '${_$valueAtom.name}_set');
+  set textNameController(TextEditingController value) {
+    _$textNameControllerAtom.context.conditionallyRunInAction(() {
+      super.textNameController = value;
+      _$textNameControllerAtom.reportChanged();
+    }, _$textNameControllerAtom, name: '${_$textNameControllerAtom.name}_set');
   }
 
-  final _$_AddProductBaseActionController =
-      ActionController(name: '_AddProductBase');
+  final _$textValueControllerAtom =
+      Atom(name: '_AddProductBase.textValueController');
 
   @override
-  void increment() {
-    final _$actionInfo = _$_AddProductBaseActionController.startAction();
-    try {
-      return super.increment();
-    } finally {
-      _$_AddProductBaseActionController.endAction(_$actionInfo);
-    }
+  TextEditingController get textValueController {
+    _$textValueControllerAtom.context
+        .enforceReadPolicy(_$textValueControllerAtom);
+    _$textValueControllerAtom.reportObserved();
+    return super.textValueController;
+  }
+
+  @override
+  set textValueController(TextEditingController value) {
+    _$textValueControllerAtom.context.conditionallyRunInAction(() {
+      super.textValueController = value;
+      _$textValueControllerAtom.reportChanged();
+    }, _$textValueControllerAtom,
+        name: '${_$textValueControllerAtom.name}_set');
   }
 }

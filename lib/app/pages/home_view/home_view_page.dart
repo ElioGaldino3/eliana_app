@@ -1,8 +1,10 @@
 import 'package:eliana_app/app/app_module.dart';
 import 'package:eliana_app/app/app_repository.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
+import 'package:eliana_app/app/shared/widgets/order_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class HomeViewPage extends StatefulWidget {
   final String title;
@@ -25,24 +27,51 @@ class _HomeViewPageState extends State<HomeViewPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      body: StreamBuilder<List<Order>>(
-        stream: ordersOut,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          }
-          return ListView.builder(
-            itemCount: snapshot.data.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(snapshot.data[index].client.name),
-                subtitle: Text(snapshot.data[index].products),
+        body: Column(
+      children: <Widget>[
+        Container(
+          height: screenHeight,
+          color: Colors.black,
+        ),
+        Container(
+          height: 60,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              child: Text(
+                'Início',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+              ),
+              padding: EdgeInsets.only(left: 18),
+            ),
+          ),
+        ),
+        Expanded(
+          child: StreamBuilder<List<Order>>(
+            stream: ordersOut,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    child: Padding(
+                      padding: EdgeInsets.all(5),
+                      child: OrderItem(data: snapshot.data[index],),
+                    ),
+                  );
+                },
               );
             },
-          );
-        },
-      ),
-    );
+          ),
+        ),
+      ],
+    ));
   }
 }

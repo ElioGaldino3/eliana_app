@@ -9,7 +9,7 @@ class AppRepository extends Disposable {
   Stream<List<Order>> getOrders() {
     var doc = """
       subscription getOrders {
-        orders {
+        orders(order_by: {dateTime: asc}){
           id
           products
           dateTime
@@ -24,7 +24,7 @@ class AppRepository extends Disposable {
       }
     """;
     Snapshot snapshot = connection.subscription(doc);
-    snapshot.map((jsonList) => Order.fromJsonList(jsonList['data']['orders']));
+    return snapshot.map((jsonList) => Order.fromJsonList(jsonList['data']['orders']));
   }
 
   @override

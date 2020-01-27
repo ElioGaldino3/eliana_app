@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  flutter_staggered_animations: ^0.1.2
   hasura_connect: ^1.0.5
   font_awesome_flutter: ^8.5.0
   dio: ^3.0.8
@@ -78,6 +79,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: fonts/OpenSans-Bold.ttf
+        - asset: fonts/OpenSans-ExtraBold.ttf
+        - asset: fonts/OpenSans-Light.ttf
+        - asset: fonts/OpenSans-Regular.ttf
+        - asset: fonts/OpenSans-SemiBold.ttf
 scripts:
   mobx: flutter pub run build_runner watch --delete-conflicting-outputs
   clean: flutter pub run build_runner clean

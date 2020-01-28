@@ -6,11 +6,12 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: Modular.navigatorKey,
-      title: 'Eliana App',
-      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'OpenSans'),
+      title: 'Flutter Slidy',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       initialRoute: '/',
       onGenerateRoute: Modular.generateRoute,
-      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -14,16 +14,13 @@ description: &#x27;A new Flutter project. Created by Slidy&#x27;
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
-  flutter_staggered_animations: ^0.1.2
-  hasura_connect: ^1.0.5
-  font_awesome_flutter: ^8.5.0
   dio: ^3.0.8
-  flutter_mobx: ^0.3.6+2
-  mobx: ^0.4.0+4
-  flutter_modular: ^0.3.3+1
+  flutter_mobx: ^1.0.1
+  mobx: ^1.0.0
+  flutter_modular: ^0.3.5+1
   flutter:
     sdk: flutter
 
@@ -32,7 +29,7 @@ dependencies:
 
 dev_dependencies:
   mockito: ^4.1.1
-  mobx_codegen: ^0.4.2
+  mobx_codegen: ^1.0.1
   build_runner: ^1.7.3
   flutter_test:
     sdk: flutter

@@ -46,19 +46,21 @@ class AppRepository extends Disposable {
         .map((jsonList) => Product.fromJsonList(jsonList['data']['products']));
   }
 
-  Future<Product> getProduct(int id) {
+  Future<Product> getProduct(int id) async {
     var doc = """
       query getProduct(\$id:Int!) {
-        products(where: {id: {_eq: \id}}) {
+        products(where: {id: {_eq: \$id}}) {
+          id
           name
           value
-          photoUrl
           isRent
+          photoUrl
         }
       }
     """;
-    print("Prinando o conection query:");
-    print(connection.query(doc));
+    print("Printando o conection query:");
+    var data = await connection.query(doc, variables: {"id": id});
+    return Product.fromJson(data['data']['products'][0]);
   }
 
   @override

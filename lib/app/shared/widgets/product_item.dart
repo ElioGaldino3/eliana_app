@@ -1,6 +1,6 @@
-import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProductItem extends StatelessWidget {
@@ -58,7 +58,7 @@ class ProductItem extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Navigator.pushNamed(context, "/product/${data.id}");
+        Modular.to.pushNamed('/edit-product/${data.id.toString()}');
       },
     );
   }

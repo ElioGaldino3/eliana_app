@@ -78,22 +78,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
               },
             ),
           ),
-          Observer(
-            builder: (_) => Container(
-              height: 95,
-              color: Colors.white,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Text(
-                    "${productController.totalProducts} produtos",
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-          )
+          Container(height: 95, color: Colors.white),
         ],
       ),
       floatingActionButton: FloatingActionButton(

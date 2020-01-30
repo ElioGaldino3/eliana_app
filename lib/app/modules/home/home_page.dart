@@ -16,10 +16,23 @@ class HomePage extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else {
-          return Center(
-            child: Text(controller.orders.status == StreamStatus.active
-                ? controller.orders.status.toString()
-                : controller.orders.status.toString()),
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                controller.orders.status == StreamStatus.active
+                    ? controller.orders.status.toString()
+                    : controller.orders.status.toString(),
+                style: TextStyle(fontSize: 18),
+              ),
+              Divider(),
+              SingleChildScrollView(
+                child: Text(
+                  controller.orders.data['data']['orders'][0].toString(),
+                  style: TextStyle(fontSize: 15),
+                ),
+              )
+            ],
           );
         }
       },

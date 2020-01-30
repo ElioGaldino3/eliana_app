@@ -9,8 +9,6 @@ import 'package:hasura_connect/hasura_connect.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => AppRepository(i.get<HasuraConnect>())),
-        Bind((i) => HasuraConnect("http://192.168.42.212:8080/v1/graphql")),
         Bind((i) => AppController()),
       ];
 

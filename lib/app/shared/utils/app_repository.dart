@@ -8,14 +8,16 @@ class AppRepository extends Disposable {
 
   ObservableStream getOrders() {
     var query = """
-      subscription MySubscription {
-        orders(order_by: {deliveryDate: asc}, where: {isDelivery: {_eq: false}}) {
+      subscription getOrders {
+        orders(order_by: {dataDelivery: asc}, where: {isDelivery: {_eq: false}}) {
           id
           products
-          deliveryDate
-          isDelivery
+          dataDelivery
           client {
+            id
             name
+            phone
+            photoUrl
           }
         }
       }

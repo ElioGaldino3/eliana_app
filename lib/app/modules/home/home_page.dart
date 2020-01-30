@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController controller = Inject<HomeModule>.of().get();
+    double topPadding = MediaQuery.of(context).padding.top;
     return Observer(
       builder: (_) {
         if (controller.orders.data == null) {
@@ -16,23 +17,13 @@ class HomePage extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                controller.orders.status == StreamStatus.active
-                    ? controller.orders.status.toString()
-                    : controller.orders.status.toString(),
-                style: TextStyle(fontSize: 18),
-              ),
-              Divider(),
-              SingleChildScrollView(
-                child: Text(
-                  controller.orders.data['data']['orders'][0].toString(),
-                  style: TextStyle(fontSize: 15),
-                ),
-              )
-            ],
+          return Scaffold(
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(color: Colors.deepPurple,)
+              ],
+            ),
           );
         }
       },

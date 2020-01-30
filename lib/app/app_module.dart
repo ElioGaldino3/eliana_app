@@ -1,5 +1,4 @@
 import 'package:eliana_app/app/shared/utils/app_repository.dart';
-import 'package:eliana_app/app/shared/utils/repository_repository.dart';
 import 'package:eliana_app/app/app_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';

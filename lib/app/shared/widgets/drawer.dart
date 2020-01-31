@@ -1,6 +1,8 @@
 import 'package:eliana_app/app/modules/home/home_controller.dart';
 import 'package:eliana_app/app/modules/home/home_module.dart';
+import 'package:eliana_app/app/pages/clients/clients_page.dart';
 import 'package:eliana_app/app/pages/init/init_page.dart';
+import 'package:eliana_app/app/pages/orders/orders_page.dart';
 import 'package:eliana_app/app/pages/products/products_page.dart';
 import 'package:eliana_app/app/shared/widgets/menu_item_drawer.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,10 @@ class DrawerScaffold extends StatelessWidget {
         ),
         MenuItemDrawer(
           text: "Encomendas",
-          onTap: () {},
+          onTap: () {
+            controller.changePage(OrdersPage());
+            Navigator.pop(context);
+          },
           icon: FontAwesomeIcons.archive,
         ),
         MenuItemDrawer(
@@ -45,7 +50,10 @@ class DrawerScaffold extends StatelessWidget {
         ),
         MenuItemDrawer(
           text: "Clientes",
-          onTap: () {},
+          onTap: () {
+            controller.changePage(ClientsPage());
+            Navigator.pop(context);
+          },
           icon: FontAwesomeIcons.users,
         ),
       ],

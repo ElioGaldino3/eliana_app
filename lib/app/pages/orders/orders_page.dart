@@ -1,33 +1,34 @@
-import 'package:eliana_app/app/app_module.dart';
-import 'package:eliana_app/app/pages/products/products_controller.dart';
-import 'package:eliana_app/app/shared/models/product.dart';
-import 'package:eliana_app/app/shared/widgets/item_product.dart';
+import 'package:eliana_app/app/pages/orders/orders_controller.dart';
+import 'package:eliana_app/app/shared/models/order.dart';
+import 'package:eliana_app/app/shared/widgets/item_order.dart';
 import 'package:eliana_app/app/shared/widgets/title_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ProductsPage extends StatefulWidget {
+import '../../app_module.dart';
+
+class OrdersPage extends StatefulWidget {
   final String title;
-  const ProductsPage({Key key, this.title = "Products"}) : super(key: key);
+  const OrdersPage({Key key, this.title = "Orders"}) : super(key: key);
 
   @override
-  _ProductsPageState createState() => _ProductsPageState();
+  _OrdersPageState createState() => _OrdersPageState();
 }
 
-class _ProductsPageState extends State<ProductsPage> {
-  ProductsController controller = Inject<AppModule>.of().get();
+class _OrdersPageState extends State<OrdersPage> {
   @override
   Widget build(BuildContext context) {
+    OrdersController controller = Inject<AppModule>.of().get();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        TitlePage(title: "Produtos"),
+        TitlePage(title: "Encomendas"),
         Expanded(
           child: Observer(
             builder: (_) {
-              if (controller.products.data == null) {
+              if (controller.orders.data == null) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
@@ -37,12 +38,12 @@ class _ProductsPageState extends State<ProductsPage> {
                     Expanded(
                       child: ListView.builder(
                         itemCount:
-                            controller.products.data['data']['products'].length,
+                            controller.orders.data['data']['orders'].length,
                         itemBuilder: (BuildContext context, int index) {
-                          Product product = Product.fromJson(controller
-                              .products.data['data']['products'][index]);
+                          Order order = Order.fromJson(
+                              controller.orders.data['data']['orders'][index]);
                           return Container(
-                            child: ProductItem(product: product),
+                            child: OrderItem(order: order),
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 8),
                           );
@@ -60,7 +61,7 @@ class _ProductsPageState extends State<ProductsPage> {
                               return Padding(
                                 padding: const EdgeInsets.only(left: 13.0),
                                 child: Text(
-                                  '${controller.totalProducts.toString()} produtos',
+                                  '${controller.totalOrders.toString()} encomendas',
                                   style: TextStyle(fontSize: 18),
                                 ),
                               );

@@ -1,3 +1,5 @@
+import 'package:eliana_app/app/pages/clients/clients_controller.dart';
+import 'package:eliana_app/app/pages/orders/orders_controller.dart';
 import 'package:eliana_app/app/pages/products/products_controller.dart';
 import 'package:eliana_app/app/pages/init/init_controller.dart';
 import 'package:eliana_app/app/app_controller.dart';
@@ -9,6 +11,8 @@ import 'package:eliana_app/app/modules/home/home_module.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
+        Bind((i) => ClientsController()),
+        Bind((i) => OrdersController()),
         Bind((i) => ProductsController()),
         Bind((i) => InitController()),
         Bind((i) => AppController()),

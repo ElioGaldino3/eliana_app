@@ -11,7 +11,7 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 65,
+      height: 90,
       decoration: BoxDecoration(
           color: _getContainerColor(order.dataDelivery),
           borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -40,17 +40,24 @@ class OrderItem extends StatelessWidget {
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                 ),
                 AutoSizeText(
-                  "Falta ${order.dataDelivery.difference(DateTime.now()).inDays} dias para entregar",
+                  "${_dayDelivery(order.dataDelivery)}",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                ),
+                AutoSizeText(
+                  "${_dayWeek(order.dataDelivery)}",
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
-                )
+                ),
               ],
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.chevron_right,
-              size: 35,
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.chevron_right,
+                size: 35,
+              ),
             ),
           )
         ],
@@ -60,20 +67,53 @@ class OrderItem extends StatelessWidget {
 }
 
 Color _getContainerColor(DateTime data) {
-  int diffDay = data.difference(DateTime.now()).inDays;
+  int diffHours = data.difference(DateTime.now()).inHours;
 
-  switch (diffDay) {
+  if (diffHours <= 0) {
+    return Colors.red;
+  } else if (diffHours <= 24) {
+    return Colors.orange;
+  } else if (diffHours > 24 && diffHours < 48){
+    return Color.fromRGBO(255, 202, 40, 1);
+  } else {
+    return Colors.green;
+  }
+}
+
+String _dayDelivery(DateTime date) {
+  int diffHours = date.difference(DateTime.now()).inHours;
+  int diffDay = date.difference(DateTime.now()).inDays;
+  if (diffHours <= 0) {
+    return "Entregar hoje!";
+  } else if (diffHours <= 24) {
+    return "Entregar amanha!";
+  } else {
+    return "Falta ${diffDay + 1} dias para entregar!";
+  }
+}
+
+String _dayWeek(DateTime date) {
+  switch (date.weekday) {
     case 1:
-      return Colors.red;
+      return "Segunda-feira";
       break;
     case 2:
-      return Colors.orange;
+      return "Terça-feira";
       break;
     case 3:
-      return Color.fromRGBO(255, 202, 40, 1);
+      return "Quarta-feira";
       break;
-    default:
-      return Colors.green;
+    case 4:
+      return "Quinta-feira";
+      break;
+    case 5:
+      return "Sexta-feira";
+      break;
+    case 6:
+      return "Sábado";
+      break;
+    case 7:
+      return "Domingo";
       break;
   }
 }

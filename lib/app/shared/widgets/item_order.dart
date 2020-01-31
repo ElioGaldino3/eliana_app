@@ -44,7 +44,7 @@ class OrderItem extends StatelessWidget {
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                 ),
                 AutoSizeText(
-                  "${_dayWeek(order.dataDelivery)}",
+                  "${dayWeek(order.dataDelivery)}",
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
                 ),
               ],
@@ -85,7 +85,6 @@ Color _getContainerColor(DateTime data) {
 String _dayDelivery(DateTime date) {
   int diffHours = date.difference(DateTime.now()).inHours;
   int diffDay = date.difference(DateTime.now()).inDays;
-  print(diffDay);
   if (diffHours <= 0 && diffHours >= -24) {
     return "Entregar hoje!";
   } else if (diffHours < -24) {
@@ -97,7 +96,7 @@ String _dayDelivery(DateTime date) {
   }
 }
 
-String _dayWeek(DateTime date) {
+dayWeek(DateTime date) {
   switch (date.weekday) {
     case 1:
       return "Segunda-feira";

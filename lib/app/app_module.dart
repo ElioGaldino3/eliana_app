@@ -1,3 +1,4 @@
+import 'package:eliana_app/app/pages/add_client/add_client_controller.dart';
 import 'package:eliana_app/app/pages/rents/rents_controller.dart';
 import 'package:eliana_app/app/pages/clients/clients_controller.dart';
 import 'package:eliana_app/app/pages/orders/orders_controller.dart';
@@ -12,6 +13,7 @@ import 'package:eliana_app/app/modules/home/home_module.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
+        Bind((i) => AddClientController()),
         Bind((i) => RentsController()),
         Bind((i) => ClientsController()),
         Bind((i) => OrdersController()),

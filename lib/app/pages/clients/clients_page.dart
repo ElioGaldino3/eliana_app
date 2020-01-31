@@ -1,4 +1,8 @@
 import 'package:eliana_app/app/app_module.dart';
+import 'package:eliana_app/app/modules/home/home_controller.dart';
+import 'package:eliana_app/app/modules/home/home_module.dart';
+import 'package:eliana_app/app/pages/add_client/add_client_controller.dart';
+import 'package:eliana_app/app/pages/add_client/add_client_page.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/widgets/item_client.dart';
 import 'package:eliana_app/app/shared/widgets/title_page.dart';
@@ -19,6 +23,8 @@ class ClientsPage extends StatefulWidget {
 
 class _ClientsPageState extends State<ClientsPage> {
   ClientsController controller = Inject<AppModule>.of().get();
+  HomeController controllerApp = Inject<HomeModule>.of().get();
+  AddClientController addClientController = Inject<AppModule>.of().get();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,7 +49,12 @@ class _ClientsPageState extends State<ClientsPage> {
                           Client client = Client.fromJson(controller
                               .clients.data['data']['clients'][index]);
                           return Container(
-                            child: ClientItem(client: client),
+                            child: ClientItem(
+                                client: client,
+                                onTap: () {
+                                  addClientController.client = client;
+                                  controllerApp.changePage(AddClientPage());
+                                }),
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 8),
                           );
@@ -71,7 +82,9 @@ class _ClientsPageState extends State<ClientsPage> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: FloatingActionButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  controllerApp.changePage(AddClientPage());
+                                },
                                 child: Icon(
                                   FontAwesomeIcons.plus,
                                 ),

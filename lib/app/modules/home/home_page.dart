@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
                           controller.orders.data['data']['orders'][index]);
                       return Container(
                         child: OrderItem(order: order),
-                        padding: EdgeInsets.symmetric(horizontal: 13, vertical: 8),
+                        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 8),
                       );
                     },
                   ),

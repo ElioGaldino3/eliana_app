@@ -10,10 +10,10 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 65,
       decoration: BoxDecoration(
           color: _getContainerColor(order.dataDelivery),
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(5)),
           boxShadow: [
             BoxShadow(
                 color: Color.fromRGBO(0, 0, 0, .16),

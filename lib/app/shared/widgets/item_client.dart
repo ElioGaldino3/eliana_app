@@ -29,13 +29,12 @@ class ClientItem extends StatelessWidget {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: Container(
-                child: client.photoUrl.isEmpty
-                    ? Image.asset('images/icon-client.png')
-                    : Image(image: CachedNetworkImageProvider(client.photoUrl)),
-              ),
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: client.photoUrl.isEmpty
+                        ? AssetImage('images/icon-client.png')
+                        : CachedNetworkImageProvider(client.photoUrl),
+                  )),
             ),
           ),
           Expanded(

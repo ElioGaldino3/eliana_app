@@ -1,19 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:eliana_app/app/shared/models/order.dart';
+import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/utils/formatDate.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class OrderItem extends StatelessWidget {
-  final Order order;
+class ProductItem extends StatelessWidget {
+  final Product product;
 
-  const OrderItem({Key key, this.order}) : super(key: key);
+  const ProductItem({Key key, this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 65,
       decoration: BoxDecoration(
-          color: _getContainerColor(order.dataDelivery),
+          color: _getColor(product.isRent),
           borderRadius: BorderRadius.all(Radius.circular(5)),
           boxShadow: [
             BoxShadow(
@@ -26,8 +26,8 @@ class OrderItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 23),
             child: Icon(
-              FontAwesomeIcons.archive,
-              size: 27,
+              FontAwesomeIcons.box,
+              size: 32,
             ),
           ),
           Expanded(
@@ -36,12 +36,12 @@ class OrderItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 AutoSizeText(
-                  "${PortugueseLocale(order.dataDelivery).getDate()}",
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  "${product.name}",
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                 ),
                 AutoSizeText(
-                  "Falta ${order.dataDelivery.difference(DateTime.now()).inDays} dias para entregar",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+                  "R\$${product.value.toStringAsFixed(2)}",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                 )
               ],
             ),
@@ -49,31 +49,20 @@ class OrderItem extends StatelessWidget {
           IconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.chevron_right,
-              size: 35,
+              FontAwesomeIcons.plus,
+              size: 23,
             ),
-          )
+          ),
         ],
       ),
     );
   }
 }
 
-Color _getContainerColor(DateTime data) {
-  int diffDay = data.difference(DateTime.now()).inDays;
-
-  switch (diffDay) {
-    case 1:
-      return Colors.red;
-      break;
-    case 2:
-      return Colors.orange;
-      break;
-    case 3:
-      return Color.fromRGBO(255, 202, 40, 1);
-      break;
-    default:
-      return Colors.green;
-      break;
+Color _getColor(bool isRent) {
+  if (isRent) {
+    return Colors.deepPurple;
+  } else{
+    return Color(0xFF9B4DCB);
   }
 }

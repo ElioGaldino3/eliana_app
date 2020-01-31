@@ -53,6 +53,6 @@ class PortugueseLocale {
   }
 
   String getDate() {
-    return formatDay()+" "+formatMounth()+" "+date.year.toString();
+    return formatDay()+" de "+formatMounth()+" de "+date.year.toString();
   }
 }

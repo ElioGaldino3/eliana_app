@@ -1,8 +1,11 @@
+import 'package:eliana_app/app/app_module.dart';
 import 'package:eliana_app/app/modules/home/home_controller.dart';
 import 'package:eliana_app/app/modules/home/home_module.dart';
+import 'package:eliana_app/app/pages/init/init_controller.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/widgets/drawer.dart';
 import 'package:eliana_app/app/shared/widgets/item_order.dart';
+import 'package:eliana_app/app/shared/widgets/title_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -18,17 +21,11 @@ class InitPage extends StatefulWidget {
 class _InitPageState extends State<InitPage> {
   @override
   Widget build(BuildContext context) {
-    HomeController controller = Inject<HomeModule>.of().get();
+    InitController controller = Inject<AppModule>.of().get();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Padding(
-          child: Text(
-            "Início",
-            style: TextStyle(fontSize: 17),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        ),
+        TitlePage(title: "Início"),
         Expanded(
           child: Observer(
             builder: (_) {
@@ -45,7 +42,7 @@ class _InitPageState extends State<InitPage> {
                     return Container(
                       child: OrderItem(order: order),
                       padding:
-                          EdgeInsets.symmetric(horizontal: 25, vertical: 8),
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                     );
                   },
                 );

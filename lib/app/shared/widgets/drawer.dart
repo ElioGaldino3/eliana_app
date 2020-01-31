@@ -1,9 +1,11 @@
 import 'package:eliana_app/app/modules/home/home_controller.dart';
 import 'package:eliana_app/app/modules/home/home_module.dart';
 import 'package:eliana_app/app/pages/init/init_page.dart';
+import 'package:eliana_app/app/pages/products/products_page.dart';
 import 'package:eliana_app/app/shared/widgets/menu_item_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DrawerScaffold extends StatelessWidget {
   @override
@@ -18,30 +20,33 @@ class DrawerScaffold extends StatelessWidget {
         MenuItemDrawer(
           text: "Início",
           onTap: () {
-            controller.currentPage = InitPage();
+            controller.changePage(InitPage());
             Navigator.pop(context);
           },
-          icon: Icons.home,
+          icon: FontAwesomeIcons.home,
         ),
         MenuItemDrawer(
           text: "Encomendas",
           onTap: () {},
-          icon: Icons.shopping_cart,
+          icon: FontAwesomeIcons.archive,
         ),
         MenuItemDrawer(
           text: "Aluguéis",
           onTap: () {},
-          icon: Icons.event_seat,
+          icon: FontAwesomeIcons.chair,
         ),
         MenuItemDrawer(
           text: "Produtos",
-          onTap: () {},
-          icon: Icons.markunread_mailbox,
+          onTap: () {
+            controller.changePage(ProductsPage());
+            Navigator.pop(context);
+          },
+          icon: FontAwesomeIcons.cube,
         ),
         MenuItemDrawer(
           text: "Clientes",
           onTap: () {},
-          icon: Icons.face,
+          icon: FontAwesomeIcons.users,
         ),
       ],
     );

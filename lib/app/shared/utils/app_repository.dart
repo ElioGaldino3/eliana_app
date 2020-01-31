@@ -27,7 +27,23 @@ class AppRepository extends Disposable {
     return snapshot.asObservable();
   }
 
-  //dispose will be called automatically
+  ObservableStream getProducts() {
+    var query = """
+      subscription getProdutos {
+        products(order_by: {name: asc}) {
+          id
+          name
+          value
+          isRent
+          photoUrl
+        }
+      }
+    """;
+
+    Snapshot snapshot = connection.subscription(query);
+    return snapshot.asObservable();
+  }
+
   @override
   void dispose() {}
 }

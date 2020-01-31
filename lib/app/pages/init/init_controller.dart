@@ -1,3 +1,6 @@
+import 'package:eliana_app/app/modules/home/home_module.dart';
+import 'package:eliana_app/app/shared/utils/app_repository.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'init_controller.g.dart';
@@ -5,11 +8,14 @@ part 'init_controller.g.dart';
 class InitController = _InitBase with _$InitController;
 
 abstract class _InitBase with Store {
-  @observable
-  int value = 0;
+  
+  AppRepository repo = Inject<HomeModule>.of().get();
 
-  @action
-  void increment() {
-    value++;
+  @observable
+  ObservableStream orders;
+
+  _InitBase() {
+    orders = repo.getOrders();
   }
+
 }

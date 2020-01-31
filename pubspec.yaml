@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
+  auto_size_text: ^2.1.0
   date_format: ^1.0.8
   font_awesome_flutter: ^8.5.0
   hasura_connect: ^1.0.5

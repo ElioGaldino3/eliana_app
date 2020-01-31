@@ -59,6 +59,28 @@ class AppRepository extends Disposable {
     Snapshot snapshot = connection.subscription(query);
     return snapshot.asObservable();
   }
-  @override
+
+  ObservableStream getRents() {
+    var query = """
+      subscription MyQuery {
+        rents(where: {isFinished: {_eq: false}}, order_by: {dateRent: asc}) {
+          id
+          dateRent
+          products
+          client {
+            id
+            name
+            phone
+            photoUrl
+          }
+        }
+      }
+    """;
+
+    Snapshot snapshot = connection.subscription(query);
+    return snapshot.asObservable();
+  }
+  
+    @override
   void dispose() {}
 }

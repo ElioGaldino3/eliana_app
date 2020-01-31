@@ -4,6 +4,7 @@ import 'package:eliana_app/app/pages/clients/clients_page.dart';
 import 'package:eliana_app/app/pages/init/init_page.dart';
 import 'package:eliana_app/app/pages/orders/orders_page.dart';
 import 'package:eliana_app/app/pages/products/products_page.dart';
+import 'package:eliana_app/app/pages/rents/rents_page.dart';
 import 'package:eliana_app/app/shared/widgets/menu_item_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -37,7 +38,10 @@ class DrawerScaffold extends StatelessWidget {
         ),
         MenuItemDrawer(
           text: "Aluguéis",
-          onTap: () {},
+          onTap: () {
+            controller.changePage(RentsPage());
+            Navigator.pop(context);
+          },
           icon: FontAwesomeIcons.chair,
         ),
         MenuItemDrawer(

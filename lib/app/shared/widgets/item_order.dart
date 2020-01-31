@@ -37,11 +37,11 @@ class OrderItem extends StatelessWidget {
               children: <Widget>[
                 AutoSizeText(
                   "${PortugueseLocale(order.dataDelivery).getDate()}",
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 AutoSizeText(
                   "${_dayDelivery(order.dataDelivery)}",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                 ),
                 AutoSizeText(
                   "${_dayWeek(order.dataDelivery)}",
@@ -69,11 +69,13 @@ class OrderItem extends StatelessWidget {
 Color _getContainerColor(DateTime data) {
   int diffHours = data.difference(DateTime.now()).inHours;
 
-  if (diffHours <= 0) {
+  if (diffHours <= 0 && diffHours >= -24) {
     return Colors.red;
+  } else if (diffHours < -24) {
+    return Colors.grey;
   } else if (diffHours <= 24) {
     return Colors.orange;
-  } else if (diffHours > 24 && diffHours < 48){
+  } else if (diffHours > 24 && diffHours < 48) {
     return Color.fromRGBO(255, 202, 40, 1);
   } else {
     return Colors.green;
@@ -83,8 +85,11 @@ Color _getContainerColor(DateTime data) {
 String _dayDelivery(DateTime date) {
   int diffHours = date.difference(DateTime.now()).inHours;
   int diffDay = date.difference(DateTime.now()).inDays;
-  if (diffHours <= 0) {
+  print(diffDay);
+  if (diffHours <= 0 && diffHours >= -24) {
     return "Entregar hoje!";
+  } else if (diffHours < -24) {
+    return "Entrega atrasada!";
   } else if (diffHours <= 24) {
     return "Entregar amanha!";
   } else {

@@ -13,7 +13,7 @@ class ClientItem extends StatelessWidget {
     return Container(
       height: 90,
       decoration: BoxDecoration(
-          color: Colors.blueGrey[300],
+          color: Colors.deepPurple,
           borderRadius: BorderRadius.all(Radius.circular(5)),
           boxShadow: [
             BoxShadow(

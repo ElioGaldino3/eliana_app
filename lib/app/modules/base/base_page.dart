@@ -1,5 +1,6 @@
 import 'package:eliana_app/app/modules/base/base_controller.dart';
 import 'package:eliana_app/app/modules/orders/orders_page.dart';
+import 'package:eliana_app/app/modules/rents/rents_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -22,7 +23,7 @@ class _BasePageState extends State<BasePage> {
             physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
               OrdersPage(),
-              Container(color: Colors.blue),
+              RentsPage(),
               Container(color: Colors.red),
               Container(color: Colors.blue),
             ],

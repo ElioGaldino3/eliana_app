@@ -1,23 +1,27 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eliana_app/app/modules/publishers/add_client/add_client_controller.dart';
-import 'package:eliana_app/app/shared/models/client.dart';
+import 'package:eliana_app/app/shared/models/rent.dart';
+import 'package:eliana_app/app/shared/utils/container_color.dart';
+import 'package:eliana_app/app/shared/utils/date_format_portuguese.dart';
+import 'package:eliana_app/app/shared/utils/day_week.dart';
+import 'package:eliana_app/app/shared/utils/time_to_deliver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ClientItem extends StatelessWidget {
-  final Client client;
-  final Function onTap;
+class RentItem extends StatelessWidget {
+  final Rent rent;
 
-  const ClientItem(this.client, {Key key, this.onTap}) : super(key: key);
+  const RentItem({Key key, this.rent}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        Modular.to.pushNamed('/add-rent');
+      },
       child: Container(
         height: 90,
         decoration: BoxDecoration(
-            color: Colors.deepPurple,
+            color: ContainerColor.containerColor(rent.dateRent),
             borderRadius: BorderRadius.all(Radius.circular(5)),
             boxShadow: [
               BoxShadow(
@@ -29,16 +33,9 @@ class ClientItem extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 23),
-              child: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: client.photoUrl.isEmpty
-                          ? AssetImage('images/icon-client.png')
-                          : CachedNetworkImageProvider(client.photoUrl),
-                    )),
+              child: Icon(
+                FontAwesomeIcons.chair,
+                size: 27,
               ),
             ),
             Expanded(
@@ -47,13 +44,17 @@ class ClientItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   AutoSizeText(
-                    "${client.name}",
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                    "${DateFormatPortuguese.getString(rent.dateRent)}",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                   ),
                   AutoSizeText(
-                    "R\$${client.phone}",
+                    "${TimeToDeliver.timeToDeliver(rent.dateRent)}",
                     style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
-                  )
+                  ),
+                  AutoSizeText(
+                    "${DayWeek.dayWeek(rent.dateRent)}",
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
+                  ),
                 ],
               ),
             ),
@@ -62,19 +63,14 @@ class ClientItem extends StatelessWidget {
               child: IconButton(
                 onPressed: () {},
                 icon: Icon(
-                  FontAwesomeIcons.whatsapp,
-                  size: 32,
+                  Icons.chevron_right,
+                  size: 35,
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
-      onTap: () {
-        AddClientController addController = Modular.get();
-        addController.client.id = client.id;
-        Modular.to.pushNamed("/add-client/");
-      },
     );
   }
 }

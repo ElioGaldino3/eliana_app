@@ -1,3 +1,5 @@
+import 'package:eliana_app/app/modules/publishers/add_client/add_client_controller.dart';
+import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_clients.dart';
 import 'package:eliana_app/app/shared/widgets/custom_drawer/custom_drawer_widget.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class _ClientsPageState extends State<ClientsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Produtos"),
+        title: Text("Clientes"),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -50,7 +52,11 @@ class _ClientsPageState extends State<ClientsPage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(FontAwesomeIcons.plus),
-        onPressed: () {},
+        onPressed: () {
+          AddClientController addController = Modular.get();
+          addController.client = Client();
+          Modular.to.pushNamed("/add-client/");
+        },
       ),
       drawer: CustomDrawerWidget(),
     );

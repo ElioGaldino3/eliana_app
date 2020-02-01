@@ -1,6 +1,7 @@
 import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/clients/clients_module.dart';
 import 'package:eliana_app/app/modules/products/products_module.dart';
+import 'package:eliana_app/app/modules/publishers/add_client/add_client_module.dart';
 import 'package:eliana_app/app/modules/rents/rents_controller.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_hasura.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -23,6 +24,7 @@ class AppModule extends MainModule {
         Router('/rents/', module: RentsModule()),
         Router('/products/', module: ProductsModule()),
         Router('/clients/', module: ClientsModule()),
+        Router('/add-client/', module: AddClientModule()),
       ];
 
   @override

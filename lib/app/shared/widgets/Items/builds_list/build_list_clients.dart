@@ -1,7 +1,5 @@
 import 'package:eliana_app/app/modules/clients/clients_controller.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
-import 'package:eliana_app/app/shared/models/product.dart';
-import 'package:eliana_app/app/shared/widgets/Items/product_item.dart';
 import 'package:flutter/material.dart';
 import '../../alert_dialog_yes_no.dart';
 import '../item_client.dart';

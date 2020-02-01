@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 import 'package:eliana_app/app/shared/models/client.dart';
-import 'package:eliana_app/app/shared/models/product_order.dart';
+import 'package:eliana_app/app/shared/models/product_rent.dart';
 
 Rent rentFromJson(String str) => Rent.fromJson(json.decode(str));
 
@@ -15,7 +15,7 @@ class Rent {
   int id;
   DateTime dateRent;
   String adress;
-  List<ProductOrder> productRents;
+  List<ProductRent> productRents;
   Client client;
 
   Rent({
@@ -30,7 +30,7 @@ class Rent {
         id: json["id"],
         dateRent: DateTime.parse(json["dateRent"]),
         adress: json["adress"],
-        productRents: List<dynamic>.from(json["productRents"].map((x) => x)),
+        productRents: List<ProductRent>.from(json["productRents"].map((x) => x)),
         client: Client.fromJson(json["client"]),
       );
 

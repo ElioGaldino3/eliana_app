@@ -1,6 +1,6 @@
 import 'package:eliana_app/app/modules/rents/rents_controller.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:eliana_app/app/modules/rents/rents_page.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class RentsModule extends ChildModule {
   @override
@@ -10,7 +10,7 @@ class RentsModule extends ChildModule {
 
   @override
   List<Router> get routers => [
-        Router('/', child: (_, args) => RentsPage()),
+        Router('/', child: (_, args) => RentsPage(), transition: TransitionType.fadeIn),
       ];
 
   static Inject get to => Inject<RentsModule>.of();

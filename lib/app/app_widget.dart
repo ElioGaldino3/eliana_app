@@ -10,6 +10,7 @@ class AppWidget extends StatelessWidget {
       title: 'Eliana App',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
+        fontFamily: 'OpenSans'
       ),
       initialRoute: '/',
       onGenerateRoute: Modular.generateRoute,

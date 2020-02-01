@@ -16,7 +16,7 @@ class IconTile extends StatelessWidget {
         style: TextStyle(
             fontWeight: FontWeight.w600,
             letterSpacing: 0.8,
-            color: highlighted ? Colors.blue : Colors.black),
+            color: highlighted ? Colors.purple[700] : Colors.black),
       ),
       leading: Icon(
         iconData,

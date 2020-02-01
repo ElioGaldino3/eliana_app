@@ -5,9 +5,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BasePage extends StatefulWidget {
-  final String title;
-  const BasePage({Key key, this.title = "Base"}) : super(key: key);
-
   @override
   _BasePageState createState() => _BasePageState();
 }
@@ -18,18 +15,20 @@ class _BasePageState extends State<BasePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Observer(builder: (_) {
-        return PageView(
-          controller: controller.pageController,
-          physics: NeverScrollableScrollPhysics(),
-          children: <Widget>[
-            OrdersPage(),
-            Container(color: Colors.blue),
-            Container(color: Colors.red),
-            Container(color: Colors.blue),
-          ],
-        );
-      }),
+      body: Observer(
+        builder: (_) {
+          return PageView(
+            controller: controller.pageController,
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              OrdersPage(),
+              Container(color: Colors.blue),
+              Container(color: Colors.red),
+              Container(color: Colors.blue),
+            ],
+          );
+        },
+      ),
     );
   }
 }

@@ -9,7 +9,7 @@ class CustomHeader extends StatelessWidget {
       child: Container(
         height: 115,
         padding: const EdgeInsets.only(left: 40),
-        color: Colors.blue,
+        color: Colors.purple[700],
         child: Row(
           children: <Widget>[
             Icon(

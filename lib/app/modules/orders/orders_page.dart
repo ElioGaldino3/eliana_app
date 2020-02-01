@@ -1,3 +1,4 @@
+import 'package:eliana_app/app/shared/widgets/custom_drawer/custom_drawer_widget.dart';
 import 'package:flutter/material.dart';
 
 class OrdersPage extends StatefulWidget {
@@ -18,6 +19,7 @@ class _OrdersPageState extends State<OrdersPage> {
       body: Column(
         children: <Widget>[],
       ),
+      drawer: CustomDrawerWidget(),
     );
   }
 }

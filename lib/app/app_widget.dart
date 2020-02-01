@@ -9,8 +9,7 @@ class AppWidget extends StatelessWidget {
       navigatorKey: Modular.navigatorKey,
       title: 'Eliana App',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        fontFamily: "OpenSans"
+        primarySwatch: Colors.purple[800],
       ),
       initialRoute: '/',
       onGenerateRoute: Modular.generateRoute,

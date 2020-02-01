@@ -1,5 +1,8 @@
 import 'package:eliana_app/app/app_controller.dart';
+import 'package:eliana_app/app/modules/clients/clients_module.dart';
+import 'package:eliana_app/app/modules/products/products_module.dart';
 import 'package:eliana_app/app/modules/rents/rents_controller.dart';
+import 'package:eliana_app/app/shared/repositories/database/database_hasura.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 import 'package:eliana_app/app/app_widget.dart';
@@ -11,12 +14,15 @@ class AppModule extends MainModule {
   List<Bind> get binds => [
         Bind((i) => AppController()),
         Bind((i) => RentsController()),
+        Bind((i) => DataBaseHasura()),
       ];
 
   @override
   List<Router> get routers => [
         Router('/', module: OrdersModule()),
         Router('/rents/', module: RentsModule()),
+        Router('/products/', module: ProductsModule()),
+        Router('/clients/', module: ClientsModule()),
       ];
 
   @override

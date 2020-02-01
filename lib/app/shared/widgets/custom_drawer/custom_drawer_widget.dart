@@ -6,12 +6,27 @@ import 'widgets/icon_section.dart';
 class CustomDrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    double paddingTop = MediaQuery.of(context).padding.top;
     return Drawer(
-      child: ListView(
+      child: Column(
         children: <Widget>[
-          CustomHeader(),
-          IconSection(),
-          Divider(color: Colors.grey[500],)
+          Container(
+            height: paddingTop,
+            color: Colors.purple[700],
+          ),
+          Expanded(
+            
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                CustomHeader(),
+                IconSection(),
+                Divider(
+                  color: Colors.grey[500],
+                )
+              ],
+            ),
+          )
         ],
       ),
     );

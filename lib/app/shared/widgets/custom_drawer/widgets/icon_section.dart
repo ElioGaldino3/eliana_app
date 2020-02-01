@@ -35,7 +35,7 @@ class IconSection extends StatelessWidget {
           label: 'Produtos',
           iconData: FontAwesomeIcons.cube,
           onTap: () {
-            //_goToPage('/products/');
+            _goToPage('/products/');
           },
           highlighted: Modular.actualRoute == '/products/',
         ),
@@ -43,7 +43,7 @@ class IconSection extends StatelessWidget {
           label: 'Clientes',
           iconData: FontAwesomeIcons.users,
           onTap: () {
-            //_goToPage('/clients/');
+            _goToPage('/clients/');
           },
           highlighted: Modular.actualRoute == '/clients/',
         ),

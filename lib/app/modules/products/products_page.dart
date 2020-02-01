@@ -1,5 +1,10 @@
+import 'package:eliana_app/app/modules/products/products_controller.dart';
+import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_products.dart';
 import 'package:eliana_app/app/shared/widgets/custom_drawer/custom_drawer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProductsPage extends StatefulWidget {
   final String title;
@@ -10,14 +15,41 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
+  ProductsController controller = Modular.get();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Aluguéis"),
+        title: Text("Produtos"),
       ),
-      body: Center(
-        child: Text("Você está na página de produtos!"),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            child: Observer(
+              builder: (_) {
+                if (controller.products.data == null) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return BuildListProducts(
+                    listStream: controller.products.data['data']['products'],
+                    controller: controller,
+                  );
+                }
+              },
+            ),
+          ),
+          Container(
+            height: 90,
+            color: Colors.grey[200],
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(FontAwesomeIcons.plus),
+        onPressed: () {},
       ),
       drawer: CustomDrawerWidget(),
     );

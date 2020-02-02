@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:eliana_app/app/app_widget.dart';
 import 'modules/login/login_module.dart';
 import 'modules/orders/orders_module.dart';
+import 'modules/publishers/add_order/add_order_module.dart';
 import 'modules/rents/rents_module.dart';
 
 class AppModule extends MainModule {
@@ -27,6 +28,7 @@ class AppModule extends MainModule {
         Router('/products/', module: ProductsModule()),
         Router('/clients/', module: ClientsModule()),
         Router('/add-client/', module: AddClientModule()),
+        Router('/add-order/', module: AddOrderModule()),
       ];
 
   @override

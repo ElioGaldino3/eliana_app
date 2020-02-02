@@ -13,7 +13,7 @@ abstract class _ProductsBase with Store {
   ObservableStream products;
 
   _ProductsBase() {
-    products = _hasura.getProducts();
+    products = _hasura.getStreamProducts();
   }
 
   @computed

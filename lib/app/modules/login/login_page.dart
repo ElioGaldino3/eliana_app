@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: RaisedButton(
                 onPressed: () {
-                  Modular.to.pushReplacementNamed('/clients/');
+                  Modular.to.pushReplacementNamed('/orders/');
                 },
                 child: Text(
                   "Fazer login com o Google",

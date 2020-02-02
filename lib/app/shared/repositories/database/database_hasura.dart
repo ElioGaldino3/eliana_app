@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
@@ -74,7 +73,7 @@ class DataBaseHasura implements IDatabase {
   }
 
   @override
-  ObservableStream getClients() {
+  ObservableStream getStreamClients() {
     var query = """
       subscription getClients {
         clients(order_by: {name: asc}) {
@@ -91,7 +90,7 @@ class DataBaseHasura implements IDatabase {
   }
 
   @override
-  ObservableStream getOrders() {
+  ObservableStream getStreamOrders() {
     var query = """
       subscription MySubscription {
         orders(order_by: {dataDelivery: asc}, where: {isDelivery: {_eq: false}}) {
@@ -115,7 +114,7 @@ class DataBaseHasura implements IDatabase {
   }
 
   @override
-  ObservableStream getProducts() {
+  ObservableStream getStreamProducts() {
     var query = """
       subscription getProdutos {
         products(order_by: {name: asc}) {
@@ -133,7 +132,7 @@ class DataBaseHasura implements IDatabase {
   }
 
   @override
-  ObservableStream getRents() {
+  ObservableStream getStreamRents() {
     var query = """
       subscription MySubscription {
         rents(order_by: {dateRent: asc}, where: {isFinished: {_eq: false}}) {
@@ -265,7 +264,7 @@ class DataBaseHasura implements IDatabase {
     }
     """;
 
-    var data = await connection.mutation(query, variables: {
+    var data = await connection.query(query, variables: {
       "id": id,
     });
 
@@ -293,7 +292,7 @@ class DataBaseHasura implements IDatabase {
     }
     """;
 
-    var data = await connection.mutation(query, variables: {
+    var data = await connection.query(query, variables: {
       "id": id,
     });
 
@@ -314,7 +313,7 @@ class DataBaseHasura implements IDatabase {
     }
     """;
 
-    var data = await connection.mutation(query, variables: {
+    var data = await connection.query(query, variables: {
       "id": id,
     });
 
@@ -342,7 +341,7 @@ class DataBaseHasura implements IDatabase {
     }
     """;
 
-    var data = await connection.mutation(query, variables: {
+    var data = await connection.query(query, variables: {
       "id": id,
     });
 
@@ -355,10 +354,51 @@ class DataBaseHasura implements IDatabase {
     StorageUploadTask task = FirebaseStorage.instance
         .ref()
         .child("clientesPhotos")
-        .child(DateTime.now().millisecondsSinceEpoch.toString())
+        .child(id.toString())
         .putFile(file);
     StorageTaskSnapshot snapshot = await task.onComplete;
 
     return await snapshot.ref.getDownloadURL();
+  }
+
+  @override
+  Future<List<Client>> getClients() async {
+    var query = """
+      query getClients {
+        clients(order_by: {name: asc}) {
+          id
+          name
+          phone
+          photoUrl
+        }
+      }
+    """;
+
+    var data = await connection.query(query);
+    List<Client> clients = List<Client>();
+    for (var item in data['data']['clients']) {
+      Client client = Client.fromJson(item);
+
+      clients.add(client);
+    }
+    return clients;
+  }
+
+  @override
+  Future<List<Order>> getOrders() {
+    // TODO: implement getOrders
+    return null;
+  }
+
+  @override
+  Future<List<Product>> getProducts() {
+    // TODO: implement getProducts
+    return null;
+  }
+
+  @override
+  Future<List<Rent>> getRents() {
+    // TODO: implement getRents
+    return null;
   }
 }

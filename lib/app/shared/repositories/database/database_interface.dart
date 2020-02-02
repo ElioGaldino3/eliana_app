@@ -7,11 +7,11 @@ import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:mobx/mobx.dart';
 
 abstract class IDatabase {
-  ObservableStream getOrders();
-  ObservableStream getRents();
-  ObservableStream getProducts();
-  ObservableStream getClients();
-  Future<Order> putOrder(Order order,{bool isDelivery = false});
+  ObservableStream getStreamOrders();
+  ObservableStream getStreamRents();
+  ObservableStream getStreamProducts();
+  ObservableStream getStreamClients();
+  Future<Order> putOrder(Order order, {bool isDelivery = false});
   Future<Rent> putRent(Rent rent, {bool isFinished = false});
   Future<Product> putProduct(Product product);
   Future<Client> putClient(Client client);
@@ -21,7 +21,10 @@ abstract class IDatabase {
   Future<bool> deleteOrder(int id);
   Future<bool> deleteProduct(int id);
   Future<bool> deleteClient(int id);
-
+  Future<List<Product>> getProducts();
+  Future<List<Client>> getClients();
+  Future<List<Order>> getOrders();
+  Future<List<Rent>> getRents();
   Future<Order> getOrder(int id);
   Future<Rent> getRent(int id);
   Future<Product> getProduct(int id);

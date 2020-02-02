@@ -13,7 +13,7 @@ abstract class _ClientsBase with Store {
   ObservableStream clients;
 
   _ClientsBase() {
-    clients = _hasura.getClients();
+    clients = _hasura.getStreamClients();
   }
 
   @computed

@@ -17,6 +17,8 @@ environment:
   sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
+  share_extend: ^1.1.1
+  path_provider: ^1.6.0
   url_launcher: ^5.4.1
   oktoast: ^2.3.0
   image_cropper: ^1.2.1

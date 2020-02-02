@@ -13,7 +13,7 @@ abstract class _RentsBase with Store {
   ObservableStream rents;
 
   _RentsBase() {
-    rents = _hasura.getRents();
+    rents = _hasura.getStreamRents();
   }
 
   @computed

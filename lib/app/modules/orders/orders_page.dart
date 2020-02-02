@@ -1,4 +1,5 @@
 import 'package:eliana_app/app/modules/orders/orders_controller.dart';
+import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_orders.dart';
 import 'package:eliana_app/app/shared/widgets/Items/order_item.dart';
@@ -65,7 +66,11 @@ class _OrdersPageState extends State<OrdersPage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(FontAwesomeIcons.plus),
-        onPressed: () {},
+        onPressed: () {
+          Modular.to.pushNamed("/add-order/");
+          AddOrderController addController = Modular.get();
+          addController.order = Order();
+        },
       ),
     );
   }

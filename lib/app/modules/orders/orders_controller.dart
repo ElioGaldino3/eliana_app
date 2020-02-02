@@ -13,11 +13,14 @@ abstract class _OrdersBase with Store {
   ObservableStream orders;
 
   _OrdersBase() {
-    orders = _hasura.getOrders();
+    orders = _hasura.getStreamOrders();
   }
 
+
   @computed
-  int get total => orders.data == null ? 0 : orders.data['data']['orders'].length;
+  int get total =>
+      orders.data == null ? 0 : orders.data['data']['orders'].length;
+
 
   @action
   deleteOrder(int id) {

@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_interface.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hasura_connect/hasura_connect.dart';
 import 'package:mobx/mobx.dart';
 
@@ -25,7 +27,7 @@ class DataBaseHasura implements IDatabase {
       }
     """;
 
-    var data = await connection.mutation(query, variables: {"id": id});
+    var data = await connection.mutation(query);
     return data['data']['delete_clients']['affected_rows'] >= 1;
   }
 
@@ -157,45 +159,41 @@ class DataBaseHasura implements IDatabase {
   }
 
   @override
-  Future<bool> putClient(Client client) async {
+  Future<Client> putClient(Client client) async {
     var query = """
-      mutation MyMutation(\$name: String!, \$phone: String!, \$photoUrl: String!){
-        insert_clients(objects: {name: \$name, phone: \$phone, photoUrl: \$photoUrl}) {
-          affected_rows
+      mutation MyMutation {
+        insert_clients(objects: {name: \"${client.name}\", phone: \"${client.phone}\", photoUrl: \"${client.photoUrl}\"}) {
+          returning {
+            id
+            name
+            phone
+            photoUrl
+          }
         }
-      }    
+      }  
     """;
 
-    var data = await connection.mutation(query, variables: {
-      'name': client.name,
-      'phone': client.phone,
-      'photoUrl': client.photoUrl
-    });
-    return data['data']['insert_clients']['affected_rows'] >= 1;
+    var data = await connection.mutation(query);
+    return Client.fromJson(data['data']['insert_clients']['returning'][0]);
   }
 
   @override
-  Future<bool> putOrder(Order order, {bool isDelivery = false}) async {
+  Future<Order> putOrder(Order order, {bool isDelivery = false}) async {
     var query = """
       mutation MyMutation(\$clientId, \$dataDelivery, \$products, \$isDelivery){
         insert_orders(objects: {clientId: \$clientId, dataDelivery: \$dataDelivery, isDelivery: \$isDelivery,
         productOrders: {data: \$products}}) {
-          affected_rows
+          
         }
       }    
     """;
 
-    var data = await connection.mutation(query, variables: {
-      "clientId": order.client.id,
-      "dataDelivery": order.dataDelivery,
-      "products": order.productOrders,
-      "isDelivery": isDelivery
-    });
-    return data['data']['insert_orders']['affected_rows'] >= 1;
+    var data = await connection.mutation(query);
+    return Order();
   }
 
   @override
-  Future<bool> putProduct(Product product) async {
+  Future<Product> putProduct(Product product) async {
     var query = """
       mutation putProdutos(\$name, \$value, \$isRent, \$photoUrl) {
         insert_products(objects: {name: "", value: "", isRent: false, photoUrl: ""}) {
@@ -204,17 +202,12 @@ class DataBaseHasura implements IDatabase {
       }   
     """;
 
-    var data = await connection.mutation(query, variables: {
-      "name": product.name,
-      "value": product.value,
-      "isRent": product.isRent,
-      "photoUrl": product.photoUrl
-    });
-    return data['data']['insert_products']['affected_rows'] >= 1;
+    var data = await connection.mutation(query);
+    return Product();
   }
 
   @override
-  Future<bool> putRent(Rent rent, {bool isFinished = false}) async {
+  Future<Rent> putRent(Rent rent, {bool isFinished = false}) async {
     var query = """
       mutation MyMutation(\$idClient, \$dateRent, \$isFinished, \$adress, \$productRents){
         insert_rents(objects: {idClient: \$idClient, dateRent: \$dateRent, isFinished: \$isFinished,adress: \$adress, productRents: {data: \$productRents}}) {
@@ -223,31 +216,20 @@ class DataBaseHasura implements IDatabase {
       }  
     """;
 
-    var data = await connection.mutation(query, variables: {
-      "idClient": rent.client.id,
-      "dateRent": rent.dateRent,
-      "adress": rent.adress,
-      "productRents": rent.productRents,
-      "isFinished": isFinished
-    });
-    return data['data']['insert_products']['affected_rows'] >= 1;
+    var data = await connection.mutation(query);
+    return Rent();
   }
 
   @override
   Future<bool> updateClient(Client client) async {
     var query = """
-    mutation MyMutation(\$id, \$name, \$phone, \$photoUrl){
-      update_clients(where: {id: {_eq: \$id}}, _set: {name: \$name, phone: \$phone, photoUrl: \$photoUrl}) {
+    mutation MyMutation{
+      update_clients(where: {id: {_eq: ${client.id}}}, _set: {name: \"${client.name}\", phone: \"${client.phone}\", photoUrl: \"${client.photoUrl}\"}) {
         affected_rows
       }
     }
     """;
-    var data = await connection.mutation(query, variables: {
-      "id": client.id,
-      "name": client.name,
-      "phone": client.phone,
-      "photoUrl": client.photoUrl
-    });
+    var data = await connection.mutation(query);
     return data['data']['update_clients']['affected_rows'] >= 1;
   }
 
@@ -268,11 +250,6 @@ class DataBaseHasura implements IDatabase {
       "photoUrl": product.photoUrl
     });
     return data['data']['update_products']['affected_rows'] >= 1;
-  }
-
-  @override
-  Future<String> uploadImage(File file) {
-    return null;
   }
 
   @override
@@ -370,5 +347,18 @@ class DataBaseHasura implements IDatabase {
     });
 
     return Rent.fromJson(data['data']['rents'][0]);
+  }
+
+  //utilizando o firebase
+  @override
+  Future<String> uploadImage(File file, int id) async {
+    StorageUploadTask task = FirebaseStorage.instance
+        .ref()
+        .child("clientesPhotos")
+        .child(DateTime.now().millisecondsSinceEpoch.toString())
+        .putFile(file);
+    StorageTaskSnapshot snapshot = await task.onComplete;
+
+    return await snapshot.ref.getDownloadURL();
   }
 }

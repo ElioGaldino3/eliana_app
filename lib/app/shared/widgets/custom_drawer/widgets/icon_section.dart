@@ -9,7 +9,7 @@ class IconSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _goToPage(String page) {
-      Navigator.pop(context);
+      //Navigator.pop(context);
       Modular.to.pushNamed(page);
     }
 

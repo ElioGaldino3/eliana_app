@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eliana_app/app/modules/publishers/add_client/add_client_controller.dart';
+import 'package:eliana_app/app/shared/widgets/image_source_sheet.dart';
+import 'package:eliana_app/app/shared/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -22,7 +26,10 @@ class _AddClientPageState extends State<AddClientPage> {
             : "Adicionar Cliente"),
         actions: <Widget>[
           IconButton(
-            icon: Icon(FontAwesomeIcons.redoAlt, size: 18,),
+            icon: Icon(
+              FontAwesomeIcons.redoAlt,
+              size: 18,
+            ),
             onPressed: () {},
           )
         ],
@@ -47,6 +54,7 @@ class _AddClientPageState extends State<AddClientPage> {
                     }
                     return null;
                   },
+                  textCapitalization: TextCapitalization.words,
                 ),
                 SizedBox(height: 8),
                 TextFormField(
@@ -58,26 +66,85 @@ class _AddClientPageState extends State<AddClientPage> {
                   keyboardType: TextInputType.phone,
                 ),
                 SizedBox(height: 15),
-                Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey[200],
-                      image: DecorationImage(
+                GestureDetector(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: 230,
+                      width: 230,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey[200],
+                        image: DecorationImage(
                           fit: BoxFit.cover,
                           image: controller.client.photoUrl.isEmpty
                               ? AssetImage('images/icon-client.png')
                               : CachedNetworkImageProvider(
-                                  controller.client.photoUrl))),
+                                  controller.client.photoUrl),
+                        ),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    if (controller.client.id == null) {
+                      ShowToast.showCustomToast(FontAwesomeIcons.camera,
+                          "Salve o cliente primeiro", context, Colors.red[400]);
+                      return;
+                    }
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) => ImageSourceSheet(
+                              onImageSelected: (File file) {
+                                if (file != null) {
+                                  controller.uploadImage(file);
+                                }
+                              },
+                            ));
+                  },
+                  onLongPress: () {},
                 ),
+                SizedBox(height: 10),
                 Center(
                   child: Text(controller.client.photoUrl.isEmpty
                       ? "Aperte para adicionar uma foto"
                       : "Aperte para alterar a foto"),
                 ),
+                Center(
+                  child: Text(controller.client.photoUrl.isEmpty
+                      ? ""
+                      : "Segure para compartilhar"),
+                ),
               ],
             ),
           );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(FontAwesomeIcons.save),
+        onPressed: () {
+          if (controller.nameController.text.isEmpty) {
+            ShowToast.showCustomToast(FontAwesomeIcons.user,
+                "Coloque o nome do cliente", context, Colors.red[400]);
+            return;
+          }
+          bool isNew;
+          if (controller.client.id != null)
+            isNew = false;
+          else
+            isNew = true;
+          FocusScope.of(context).requestFocus(FocusNode());
+          controller.addClient();
+          isNew
+              ? ShowToast.showCustomToast(
+                  FontAwesomeIcons.solidCheckCircle,
+                  "${controller.client.name} adicionado(a)",
+                  context,
+                  Colors.green[400])
+              : ShowToast.showCustomToast(
+                  FontAwesomeIcons.solidCheckCircle,
+                  "${controller.client.name} editado(a)",
+                  context,
+                  Colors.green[400]);
         },
       ),
     );

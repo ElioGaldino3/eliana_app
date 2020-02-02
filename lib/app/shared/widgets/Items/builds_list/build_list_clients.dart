@@ -29,6 +29,7 @@ class BuildListClients extends StatelessWidget {
                           content:
                               "Você realmente quer deletar o(a) ${list.name}?",
                           yesFunction: () {
+                            print('deletando o cliente com id: ${list.id}');
                             controller.deleteClient(list.id);
                           },
                         ),

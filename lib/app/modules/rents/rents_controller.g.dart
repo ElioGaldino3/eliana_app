@@ -9,6 +9,11 @@ part of 'rents_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$RentsController on _RentsBase, Store {
+  Computed<int> _$totalComputed;
+
+  @override
+  int get total => (_$totalComputed ??= Computed<int>(() => super.total)).value;
+
   final _$rentsAtom = Atom(name: '_RentsBase.rents');
 
   @override

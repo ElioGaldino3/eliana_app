@@ -6,7 +6,8 @@ class AlertDialogYesNo extends StatelessWidget {
   final String content;
   final Function yesFunction;
 
-  const AlertDialogYesNo({Key key, this.title, this.content, this.yesFunction}) : super(key: key);
+  const AlertDialogYesNo({Key key, this.title, this.content, this.yesFunction})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,10 @@ class AlertDialogYesNo extends StatelessWidget {
         ),
         FlatButton(
           child: Text("Sim"),
-          onPressed: yesFunction,
+          onPressed: () {
+            yesFunction();
+            Navigator.of(context).pop();
+          },
         ),
       ],
     );

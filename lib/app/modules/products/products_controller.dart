@@ -16,6 +16,9 @@ abstract class _ProductsBase with Store {
     products = _hasura.getProducts();
   }
 
+  @computed
+  int get total => products.data == null ? 0 : products.data['data']['products'].length;
+
   @action
   deleteProduct(int id) {
     _hasura.deleteProduct(id);

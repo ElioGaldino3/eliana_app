@@ -11,10 +11,10 @@ abstract class IDatabase {
   ObservableStream getRents();
   ObservableStream getProducts();
   ObservableStream getClients();
-  Future<bool> putOrder(Order order,{bool isDelivery = false});
-  Future<bool> putRent(Rent rent, {bool isFinished = false});
-  Future<bool> putProduct(Product product);
-  Future<bool> putClient(Client client);
+  Future<Order> putOrder(Order order,{bool isDelivery = false});
+  Future<Rent> putRent(Rent rent, {bool isFinished = false});
+  Future<Product> putProduct(Product product);
+  Future<Client> putClient(Client client);
   Future<bool> updateProduct(Product product);
   Future<bool> updateClient(Client client);
   Future<bool> deleteRent(int id);
@@ -27,5 +27,5 @@ abstract class IDatabase {
   Future<Product> getProduct(int id);
   Future<Client> getClient(int id);
 
-  Future<String> uploadImage(File file);
+  Future<String> uploadImage(File file, int id);
 }

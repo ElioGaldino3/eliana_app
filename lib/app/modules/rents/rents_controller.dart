@@ -16,6 +16,9 @@ abstract class _RentsBase with Store {
     rents = _hasura.getRents();
   }
 
+  @computed
+  int get total => rents.data == null ? 0 : rents.data['data']['rents'].length;
+
   @action
   deleteRent(int id) {
     _hasura.deleteRent(id);

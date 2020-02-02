@@ -48,6 +48,18 @@ class _OrdersPageState extends State<OrdersPage> {
           Container(
             height: 90,
             color: Colors.grey[200],
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 23.0),
+                child: Observer(builder: (_) {
+                  return Text(
+                    "${controller.total} clientes",
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  );
+                }),
+              ),
+            ),
           )
         ],
       ),

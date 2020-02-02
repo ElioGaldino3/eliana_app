@@ -5,12 +5,24 @@ import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientItem extends StatelessWidget {
   final Client client;
   final Function onTap;
 
   const ClientItem(this.client, {Key key, this.onTap}) : super(key: key);
+
+  void whatsAppOpen() async {
+    print('55${client.phone}');
+    var whatsappUrl =
+        "whatsapp://send?phone= 55${client.phone}&text=Olá ${client.name}.";
+    await canLaunch(whatsappUrl)
+        ? launch(whatsappUrl)
+        : print(
+            "open whatsapp app link or do a snackbar with notification that there is no whatsapp installed");
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -51,7 +63,7 @@ class ClientItem extends StatelessWidget {
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                   ),
                   AutoSizeText(
-                    "R\$${client.phone}",
+                    "${client.phone}",
                     style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                   )
                 ],
@@ -60,7 +72,9 @@ class ClientItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  whatsAppOpen();
+                },
                 icon: Icon(
                   FontAwesomeIcons.whatsapp,
                   size: 32,

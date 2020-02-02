@@ -65,4 +65,18 @@ mixin _$AddClientController on _AddClientBase, Store {
       _$phoneControllerAtom.reportChanged();
     }, _$phoneControllerAtom, name: '${_$phoneControllerAtom.name}_set');
   }
+
+  final _$uploadImageAsyncAction = AsyncAction('uploadImage');
+
+  @override
+  Future uploadImage(File image) {
+    return _$uploadImageAsyncAction.run(() => super.uploadImage(image));
+  }
+
+  final _$addClientAsyncAction = AsyncAction('addClient');
+
+  @override
+  Future addClient() {
+    return _$addClientAsyncAction.run(() => super.addClient());
+  }
 }

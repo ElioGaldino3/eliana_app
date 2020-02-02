@@ -1,4 +1,6 @@
+import 'package:eliana_app/app/modules/login/login_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class LoginPage extends StatefulWidget {
   final String title;
@@ -9,6 +11,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  LoginController controller = Modular.get();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +44,9 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Modular.to.pushReplacementNamed('/clients/');
+                },
                 child: Text(
                   "Fazer login com o Google",
                   style: TextStyle(

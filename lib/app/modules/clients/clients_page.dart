@@ -31,7 +31,7 @@ class _ClientsPageState extends State<ClientsPage> {
           Expanded(
             child: Observer(
               builder: (_) {
-                if (controller.clients.data == null) {
+                if (controller.clients?.data == null) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
@@ -47,6 +47,18 @@ class _ClientsPageState extends State<ClientsPage> {
           Container(
             height: 90,
             color: Colors.grey[200],
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 23.0),
+                child: Observer(builder: (_) {
+                  return Text(
+                    "${controller.total} clientes",
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  );
+                }),
+              ),
+            ),
           )
         ],
       ),

@@ -16,6 +16,9 @@ abstract class _ClientsBase with Store {
     clients = _hasura.getClients();
   }
 
+  @computed
+  int get total => clients.data == null ? 0 : clients.data['data']['clients'].length;
+
   @action
   deleteClient(int id) {
     _hasura.deleteClient(id);

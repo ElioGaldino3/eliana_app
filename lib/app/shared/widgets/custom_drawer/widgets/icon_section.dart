@@ -19,9 +19,9 @@ class IconSection extends StatelessWidget {
           label: 'Encomendas',
           iconData: FontAwesomeIcons.archive,
           onTap: () {
-            _goToPage('/');
+            _goToPage('/orders');
           },
-          highlighted: Modular.actualRoute == '/',
+          highlighted: Modular.actualRoute == '/orders/',
         ),
         IconTile(
           label: 'Aluguéis',

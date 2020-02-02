@@ -8,4 +8,21 @@ part of 'app_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$AppController on _AppBase, Store {}
+mixin _$AppController on _AppBase, Store {
+  final _$userLoginAtom = Atom(name: '_AppBase.userLogin');
+
+  @override
+  bool get userLogin {
+    _$userLoginAtom.context.enforceReadPolicy(_$userLoginAtom);
+    _$userLoginAtom.reportObserved();
+    return super.userLogin;
+  }
+
+  @override
+  set userLogin(bool value) {
+    _$userLoginAtom.context.conditionallyRunInAction(() {
+      super.userLogin = value;
+      _$userLoginAtom.reportChanged();
+    }, _$userLoginAtom, name: '${_$userLoginAtom.name}_set');
+  }
+}

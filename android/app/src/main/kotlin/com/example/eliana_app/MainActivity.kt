@@ -1,4 +1,4 @@
-package com.example.eliana_app
+package br.com.galdino.eliana_app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

@@ -7,6 +7,7 @@ import 'package:eliana_app/app/shared/repositories/database/database_hasura.dart
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 import 'package:eliana_app/app/app_widget.dart';
+import 'modules/login/login_module.dart';
 import 'modules/orders/orders_module.dart';
 import 'modules/rents/rents_module.dart';
 
@@ -20,7 +21,8 @@ class AppModule extends MainModule {
 
   @override
   List<Router> get routers => [
-        Router('/', module: OrdersModule()),
+        Router('/', module: LoginModule()),
+        Router('/orders', module: OrdersModule()),
         Router('/rents/', module: RentsModule()),
         Router('/products/', module: ProductsModule()),
         Router('/clients/', module: ClientsModule()),

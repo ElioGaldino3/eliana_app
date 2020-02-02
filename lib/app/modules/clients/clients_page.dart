@@ -53,9 +53,9 @@ class _ClientsPageState extends State<ClientsPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(FontAwesomeIcons.plus),
         onPressed: () {
+          Modular.to.pushNamed("/add-client/");
           AddClientController addController = Modular.get();
           addController.client = Client();
-          Modular.to.pushNamed("/add-client/");
         },
       ),
       drawer: CustomDrawerWidget(),

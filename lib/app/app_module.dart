@@ -7,6 +7,7 @@ import 'package:eliana_app/app/shared/repositories/database/database_hasura.dart
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 import 'package:eliana_app/app/app_widget.dart';
+import 'package:hasura_connect/hasura_connect.dart';
 import 'modules/login/login_module.dart';
 import 'modules/orders/orders_module.dart';
 import 'modules/publishers/add_order/add_order_module.dart';
@@ -17,7 +18,8 @@ class AppModule extends MainModule {
   List<Bind> get binds => [
         Bind((i) => AppController()),
         Bind((i) => RentsController()),
-        Bind((i) => DataBaseHasura()),
+        Bind((i) => DataBaseHasura(i.get<HasuraConnect>())),
+        Bind((i) => HasuraConnect('http://192.168.42.212:8080/v1/graphql')),
       ];
 
   @override

@@ -5,347 +5,142 @@ import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_interface.dart';
+import 'package:eliana_app/app/shared/repositories/database/operations_hasura/delivered.dart';
+import 'package:eliana_app/app/shared/repositories/database/operations_hasura/get_stream.dart';
+import 'package:eliana_app/app/shared/repositories/database/operations_hasura/gets.dart';
+import 'package:eliana_app/app/shared/repositories/database/operations_hasura/put.dart';
+import 'package:eliana_app/app/shared/repositories/database/operations_hasura/update.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hasura_connect/hasura_connect.dart';
 import 'package:mobx/mobx.dart';
 
+import 'operations_hasura/delete.dart';
+import 'operations_hasura/get.dart';
+
 class DataBaseHasura implements IDatabase {
   HasuraConnect connection;
 
-  DataBaseHasura() {
-    connection = HasuraConnect('http://192.168.42.212:8080/v1/graphql');
-  }
+  DataBaseHasura(this.connection);
 
   @override
   Future<bool> deleteClient(int id) async {
-    String query = """
-      mutation MyMutation{
-        delete_clients(where: {id: {_eq: $id}}) {
-          affected_rows
-        }
-      }
-    """;
-
-    var data = await connection.mutation(query);
-    return data['data']['delete_clients']['affected_rows'] >= 1;
+    return await deleteClientOperation(id, connection);
   }
 
   @override
   Future<bool> deleteOrder(int id) async {
-    String query = """
-      mutation MyMutation{
-        delete_orders(where: {id: {_eq: $id}}) {
-          affected_rows
-        }
-      }
-    """;
-
-    var data = await connection.mutation(query);
-    return data['data']['delete_orders']['affected_rows'] >= 1;
+    return await deleteOrderOperation(id, connection);
   }
 
   @override
   Future<bool> deleteProduct(int id) async {
-    String query = """
-      mutation MyMutation{
-        delete_products(where: {id: {_eq: $id}}) {
-          affected_rows
-        }
-      }
-    """;
-
-    var data = await connection.mutation(query, variables: {"id": id});
-    return data['data']['delete_products']['affected_rows'] >= 1;
+    return await deleteProductOperation(id, connection);
   }
 
   @override
   Future<bool> deleteRent(int id) async {
-    String query = """
-      mutation MyMutation{
-        delete_rents(where: {id: {_eq: $id}}) {
-          affected_rows
-        }
-      }
-    """;
-
-    var data = await connection.mutation(query, variables: {"id": id});
-    return data['data']['delete_rents']['affected_rows'] >= 1;
+    return await deleteRentOperation(id, connection);
   }
 
   @override
   ObservableStream getStreamClients() {
-    var query = """
-      subscription getClients {
-        clients(order_by: {name: asc}) {
-          id
-          name
-          phone
-          photoUrl
-        }
-      }
-    """;
-
-    Snapshot snapshot = connection.subscription(query);
-    return snapshot.asObservable();
+    return getStreamClientsOperation(connection);
   }
 
   @override
   ObservableStream getStreamOrders() {
-    var query = """
-      subscription MySubscription {
-        orders(order_by: {dataDelivery: asc}, where: {isDelivery: {_eq: false}}) {
-          id
-          dataDelivery
-          productOrders {
-            idProduct
-            amount
-          }
-          client {
-            id
-            name
-            phone
-            photoUrl
-          }
-        }
-      }
-    """;
-    Snapshot snapshot = connection.subscription(query);
-    return snapshot.asObservable();
+    return getStreamOrdersOperation(connection);
   }
 
   @override
   ObservableStream getStreamProducts() {
-    var query = """
-      subscription getProdutos {
-        products(order_by: {name: asc}) {
-          id
-          name
-          value
-          isRent
-          photoUrl
-        }
-      }
-    """;
-
-    Snapshot snapshot = connection.subscription(query);
-    return snapshot.asObservable();
+    return getStreamProductsOperation(connection);
   }
 
   @override
   ObservableStream getStreamRents() {
-    var query = """
-      subscription MySubscription {
-        rents(order_by: {dateRent: asc}, where: {isFinished: {_eq: false}}) {
-          id
-          dateRent
-          productRents {
-            id
-            amount
-          }
-          client {
-            id
-            name
-            phone
-            photoUrl
-          }
-          
-        }
-      }
-    """;
-
-    Snapshot snapshot = connection.subscription(query);
-    return snapshot.asObservable();
+    return getStreamRentsOperation(connection);
   }
 
   @override
   Future<Client> putClient(Client client) async {
-    var query = """
-      mutation MyMutation {
-        insert_clients(objects: {name: \"${client.name}\", phone: \"${client.phone}\", photoUrl: \"${client.photoUrl}\"}) {
-          returning {
-            id
-            name
-            phone
-            photoUrl
-          }
-        }
-      }  
-    """;
-
-    var data = await connection.mutation(query);
-    return Client.fromJson(data['data']['insert_clients']['returning'][0]);
+    return await putClientOperation(client, connection);
   }
 
   @override
-  Future<Order> putOrder(Order order, {bool isDelivery = false}) async {
-    var query = """
-      mutation MyMutation(\$clientId, \$dataDelivery, \$products, \$isDelivery){
-        insert_orders(objects: {clientId: \$clientId, dataDelivery: \$dataDelivery, isDelivery: \$isDelivery,
-        productOrders: {data: \$products}}) {
-          
-        }
-      }    
-    """;
-
-    var data = await connection.mutation(query);
-    return Order();
+  Future<Order> putOrder(Order order) async {
+    return await putOrderOperation(order, connection);
   }
 
   @override
   Future<Product> putProduct(Product product) async {
-    var query = """
-      mutation putProdutos(\$name, \$value, \$isRent, \$photoUrl) {
-        insert_products(objects: {name: "", value: "", isRent: false, photoUrl: ""}) {
-          affected_rows
-        }
-      }   
-    """;
-
-    var data = await connection.mutation(query);
-    return Product();
+    return await putProductOperation(product, connection);
   }
 
   @override
-  Future<Rent> putRent(Rent rent, {bool isFinished = false}) async {
-    var query = """
-      mutation MyMutation(\$idClient, \$dateRent, \$isFinished, \$adress, \$productRents){
-        insert_rents(objects: {idClient: \$idClient, dateRent: \$dateRent, isFinished: \$isFinished,adress: \$adress, productRents: {data: \$productRents}}) {
-          affected_rows
-        }
-      }  
-    """;
-
-    var data = await connection.mutation(query);
-    return Rent();
+  Future<Rent> putRent(Rent rent) async {
+    return await putRentOperation(rent, connection);
   }
 
   @override
   Future<bool> updateClient(Client client) async {
-    var query = """
-    mutation MyMutation{
-      update_clients(where: {id: {_eq: ${client.id}}}, _set: {name: \"${client.name}\", phone: \"${client.phone}\", photoUrl: \"${client.photoUrl}\"}) {
-        affected_rows
-      }
-    }
-    """;
-    var data = await connection.mutation(query);
-    return data['data']['update_clients']['affected_rows'] >= 1;
+    return await updateClientOperation(client, connection);
   }
 
   @override
   Future<bool> updateProduct(Product product) async {
-    var query = """
-    mutation MyMutation(\$id, \$name, \$value, \$isRent, \$photoUrl){
-      update_products(where: {id: {_eq: \$id}}, _set: {name: \$name, value: \$value, isRent: \$isRent, photoUrl: \$photoUrl}) {
-        affected_rows
-      }
-    }
-    """;
-    var data = await connection.mutation(query, variables: {
-      "id": product.id,
-      "name": product.name,
-      "value": product.value,
-      "isRent": product.isRent,
-      "photoUrl": product.photoUrl
-    });
-    return data['data']['update_products']['affected_rows'] >= 1;
+    return await updateProductOperation(product, connection);
   }
 
   @override
   Future<Client> getClient(int id) async {
-    var query = """
-    query getClient(\$id){
-      clients(where: {id: {_eq: \$id}}) {
-        id
-        name
-        phone
-        photoUrl
-      }
-    }
-    """;
-
-    var data = await connection.query(query, variables: {
-      "id": id,
-    });
-
-    return Client.fromJson(data['data']['clients'][0]);
+    return await getClientOperation(id, connection);
   }
 
   @override
   Future<Order> getOrder(int id) async {
-    var query = """
-    query getOrder(\$id){
-      orders(where: {id: {_eq: \$id}}) {
-        id
-        dataDelivery
-        productOrders {
-          idProduct
-          amount
-        }
-        client {
-          id
-          name
-          phone
-          photoUrl
-        }
-      }
-    }
-    """;
-
-    var data = await connection.query(query, variables: {
-      "id": id,
-    });
-
-    return Order.fromJson(data['data']['orders'][0]);
+    return await getOrderOperation(id, connection);
   }
 
   @override
   Future<Product> getProduct(int id) async {
-    var query = """
-    query getProduto(\$id){
-      products(where: {id: {_eq: \$id}}) {
-        id
-        name
-        value
-        isRent
-        photoUrl
-      }
-    }
-    """;
-
-    var data = await connection.query(query, variables: {
-      "id": id,
-    });
-
-    return Product.fromJson(data['data']['products'][0]);
+    return await getProductOperation(id, connection);
   }
 
   @override
   Future<Rent> getRent(int id) async {
-    var query = """
-    query getRent(\$id){
-      rents(where: {id: {_eq: \$id}}) {
-        id
-        dateRent
-        productRents {
-          id
-          amount
-        }
-        client {
-          id
-          name
-          phone
-          photoUrl
-        }
-      }
-    }
-    """;
+    return await getRentOperation(id, connection);
+  }
 
-    var data = await connection.query(query, variables: {
-      "id": id,
-    });
 
-    return Rent.fromJson(data['data']['rents'][0]);
+  @override
+  Future<List<Client>> getClients() async {
+    return await getClientsOperation(connection);
+  }
+
+  @override
+  Future<List<Order>> getOrders() async {
+    return await getOrdersOperation(connection);
+  }
+
+  @override
+  Future<List<Product>> getProducts() async {
+    return await getProductsOperation(connection);
+  }
+
+  @override
+  Future<List<Rent>> getRents() async {
+    return await getRentsOperation(connection);
+  }
+
+  @override
+  Future<bool> deliveredOrder(Order order) async {
+    return await deliveredOrderOperation(order, connection);
+  }
+
+  @override
+  Future<bool> deliveredRent(Rent rent) async {
+    return await deliveredRentOperation(rent, connection);
   }
 
   //utilizando o firebase
@@ -361,44 +156,4 @@ class DataBaseHasura implements IDatabase {
     return await snapshot.ref.getDownloadURL();
   }
 
-  @override
-  Future<List<Client>> getClients() async {
-    var query = """
-      query getClients {
-        clients(order_by: {name: asc}) {
-          id
-          name
-          phone
-          photoUrl
-        }
-      }
-    """;
-
-    var data = await connection.query(query);
-    List<Client> clients = List<Client>();
-    for (var item in data['data']['clients']) {
-      Client client = Client.fromJson(item);
-
-      clients.add(client);
-    }
-    return clients;
-  }
-
-  @override
-  Future<List<Order>> getOrders() {
-    // TODO: implement getOrders
-    return null;
-  }
-
-  @override
-  Future<List<Product>> getProducts() {
-    // TODO: implement getProducts
-    return null;
-  }
-
-  @override
-  Future<List<Rent>> getRents() {
-    // TODO: implement getRents
-    return null;
-  }
 }

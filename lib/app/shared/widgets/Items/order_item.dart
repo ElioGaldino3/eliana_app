@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/utils/container_color.dart';
 import 'package:eliana_app/app/shared/utils/date_format_portuguese.dart';
@@ -17,6 +18,8 @@ class OrderItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Modular.to.pushNamed('/add-order');
+        AddOrderController addController = Modular.get();
+        addController.order = order;
       },
       child: Container(
         height: 90,

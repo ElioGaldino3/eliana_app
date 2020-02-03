@@ -25,13 +25,6 @@ abstract class _AddClientBase with Store {
   @computed
   String get nameText => nameController.text;
 
-  _AddClientBase() {
-    if (client.name != null) {
-      nameController.text = client.name;
-      phoneController.text = client.phone;
-    }
-  }
-
   @action
   uploadImage(File image) async {
     String urlPhoto = await _hasura.uploadImage(image, client.id);

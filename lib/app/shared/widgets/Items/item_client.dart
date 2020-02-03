@@ -87,10 +87,7 @@ class ClientItem extends StatelessWidget {
       onTap: () {
         Modular.to.pushNamed("/add-client/");
         AddClientController addController = Modular.get();
-        addController.client.id = client.id;
-        addController.client.name = client.name;
-        addController.client.phone = client.phone;
-        addController.client.photoUrl = client.photoUrl;
+        addController.client = client;
         addController.nameController.text = client.name;
         addController.phoneController.text = client.phone;
       },

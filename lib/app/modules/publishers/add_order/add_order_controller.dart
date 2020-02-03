@@ -16,6 +16,10 @@ abstract class _AddOrderBase with Store {
 
   ClientsController clientsControlller;
 
+  _AddOrderBase() {
+    getClients();
+  }
+
   @observable
   List<Client> clients = List<Client>();
 
@@ -26,17 +30,16 @@ abstract class _AddOrderBase with Store {
   List<DropdownMenuItem<Client>> dropDownMenuItems;
 
   @observable
-  var order = Order();
-
-  _AddOrderBase() {
-    getClients();
-  }
+  Order order = Order(dataDelivery: DateTime.now());
 
   @action
   getClients() async {
     clients = await _hasura.getClients();
     dropDownMenuItems = buildDropdownMenuItems(clients);
     selectedClient = dropDownMenuItems[0].value;
+    if (order.id != null) {
+      changeOption(order.client.id);
+    }
   }
 
   @action

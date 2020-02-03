@@ -1,8 +1,11 @@
 import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
+import 'package:eliana_app/app/shared/widgets/custom_date_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobx/mobx.dart';
 
 class AddOrderPage extends StatefulWidget {
@@ -29,27 +32,60 @@ class _AddOrderPageState extends State<AddOrderPage> {
               children: <Widget>[
                 Text("Cliente:"),
                 Observer(builder: (_) {
-                  return DropdownButton(
-                    value: controller.selectedClient,
-                    items: controller.dropDownMenuItems,
-                    onChanged: (Client s) {
-                      controller.selectedClient = s;
-                    },
+                  return Row(
+                    children: <Widget>[
+                      Icon(FontAwesomeIcons.users),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: DropdownButton(
+                          value: controller.selectedClient,
+                          items: controller.dropDownMenuItems,
+                          onChanged: (Client s) {
+                            controller.selectedClient = s;
+                          },
+                        ),
+                      ),
+                    ],
                   );
                 }),
                 SizedBox(
                   height: 20,
                 ),
-                RaisedButton(
-                  onPressed: () {
-                    controller.changeOption(4);
+                Text("Data de entrega:"),
+                Observer(builder: (_) {
+                  return CustomDatePicker(controller.order.dataDelivery,
+                      locale: LocaleType.pt);
+                }),
+                SizedBox(
+                  height: 7,
+                ),
+                Text("Carrinho de Produtos:"),
+                SizedBox(height: 15),
+                GestureDetector(
+                  child: Container(
+                    color: Color.fromRGBO(0, 0, 0, .0000004),
+                    child: Row(
+                      children: <Widget>[
+                        Icon(FontAwesomeIcons.shoppingCart),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 9.0),
+                          child: Text("Ir para o carrinho"),
+                        ),
+                      ],
+                    ),
+                  ),
+                  onTap: () {
+                    print("indo para o carrinho");
                   },
-                  child: Text("velhooo"),
-                )
+                ),
               ],
             ),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(FontAwesomeIcons.save),
       ),
     );
   }

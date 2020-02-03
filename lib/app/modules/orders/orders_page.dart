@@ -68,8 +68,6 @@ class _OrdersPageState extends State<OrdersPage> {
         child: Icon(FontAwesomeIcons.plus),
         onPressed: () {
           Modular.to.pushNamed("/add-order/");
-          AddOrderController addController = Modular.get();
-          addController.order = Order();
         },
       ),
     );

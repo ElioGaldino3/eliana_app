@@ -55,7 +55,7 @@ class _OrdersPageState extends State<OrdersPage> {
                 padding: const EdgeInsets.only(left: 23.0),
                 child: Observer(builder: (_) {
                   return Text(
-                    "${controller.total} clientes",
+                    "${controller.total} encomendas",
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                   );
                 }),

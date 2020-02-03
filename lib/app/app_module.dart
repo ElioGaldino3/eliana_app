@@ -11,6 +11,7 @@ import 'package:hasura_connect/hasura_connect.dart';
 import 'modules/login/login_module.dart';
 import 'modules/orders/orders_module.dart';
 import 'modules/publishers/add_order/add_order_module.dart';
+import 'modules/publishers/add_product/add_product_module.dart';
 import 'modules/rents/rents_module.dart';
 
 class AppModule extends MainModule {
@@ -19,7 +20,8 @@ class AppModule extends MainModule {
         Bind((i) => AppController()),
         Bind((i) => RentsController()),
         Bind((i) => DataBaseHasura(i.get<HasuraConnect>())),
-        Bind((i) => HasuraConnect('http://192.168.42.212:8080/v1/graphql')),
+        Bind((i) =>
+            HasuraConnect('http://localhost:8080/v1/graphql')),
       ];
 
   @override
@@ -31,6 +33,7 @@ class AppModule extends MainModule {
         Router('/clients/', module: ClientsModule()),
         Router('/add-client/', module: AddClientModule()),
         Router('/add-order/', module: AddOrderModule()),
+        Router('/add-product/', module: AddProductModule()),
       ];
 
   @override

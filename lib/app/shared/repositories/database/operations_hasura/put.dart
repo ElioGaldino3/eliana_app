@@ -5,8 +5,9 @@ import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:hasura_connect/hasura_connect.dart';
 
 @override
-  Future<Client> putClientOperation(Client client, HasuraConnect connection) async {
-    var query = """
+Future<Client> putClientOperation(
+    Client client, HasuraConnect connection) async {
+  var query = """
       mutation MyMutation {
         insert_clients(objects: {name: \"${client.name}\", phone: \"${client.phone}\", photoUrl: \"${client.photoUrl}\"}) {
           returning {
@@ -19,12 +20,12 @@ import 'package:hasura_connect/hasura_connect.dart';
       }  
     """;
 
-    var data = await connection.mutation(query);
-    return Client.fromJson(data['data']['insert_clients']['returning'][0]);
-  }
+  var data = await connection.mutation(query);
+  return Client.fromJson(data['data']['insert_clients']['returning'][0]);
+}
 
-  Future<Order> putOrderOperation(Order order, HasuraConnect connection) async {
-    var query = """
+Future<Order> putOrderOperation(Order order, HasuraConnect connection) async {
+  var query = """
       mutation MyMutation(\$clientId, \$dataDelivery, \$products){
         insert_orders(objects: {clientId: \$clientId, dataDelivery: \$dataDelivery, 
         productOrders: {data: \$products}}) {
@@ -46,18 +47,15 @@ import 'package:hasura_connect/hasura_connect.dart';
       }    
     """;
 
-    var data = await connection.mutation(query, variables: {
-      "clientId": order.client.id,
-      "dataDelivery": order.dataDelivery,
-      "products": order.productOrders,
-    });
-    return Order.fromJson(data['data']['insert_orders']['returning'][0]);
-  }
+  var data = await connection.mutation(query);
+  return Order.fromJson(data['data']['insert_orders']['returning'][0]);
+}
 
-  Future<Product> putProductOperation(Product product, HasuraConnect connection) async {
-    var query = """
-      mutation putProdutos(\$name, \$value, \$isRent, \$photoUrl) {
-        insert_products(objects: {name: \$name, value: \$value, isRent: \$isRent, photoUrl: \$photoUrl}) {
+Future<Product> putProductOperation(
+    Product product, HasuraConnect connection) async {
+  var query = """
+      mutation putProdutos {
+        insert_products(objects: {name: "${product.name}", value: ${product.value}, isRent: ${product.isRent}, photoUrl: "${product.photoUrl}"}) {
           returning {
             id
             name
@@ -69,17 +67,12 @@ import 'package:hasura_connect/hasura_connect.dart';
       }   
     """;
 
-    var data = await connection.mutation(query, variables: {
-      "name": product.name,
-      "value": product.value,
-      "isRent": product.isRent,
-      "photoUrl": product.photoUrl
-    });
-    return Product.fromJson(data['data']['insert_products']['returning'][0]);
-  }
+  var data = await connection.mutation(query);
+  return Product.fromJson(data['data']['insert_products']['returning'][0]);
+}
 
-  Future<Rent> putRentOperation(Rent rent, HasuraConnect connection) async {
-    var query = """
+Future<Rent> putRentOperation(Rent rent, HasuraConnect connection) async {
+  var query = """
       mutation MyMutation(\$idClient, \$dateRent, \$adress, \$productRents){
         insert_rents(objects: {idClient: \$idClient, dateRent: \$dateRent, adress: \$adress, productRents: {data: \$productRents}}) {
           returning{
@@ -100,11 +93,6 @@ import 'package:hasura_connect/hasura_connect.dart';
       }  
     """;
 
-    var data = await connection.mutation(query, variables: {
-      "idClient": rent.client.id,
-      "dateRent": rent.dateRent,
-      "adress": rent.adress,
-      "productRents": rent.productRents
-    });
-    return Rent.fromJson(data['data']['insert_rents']['returning'][0]);
-  }
+  var data = await connection.mutation(query);
+  return Rent.fromJson(data['data']['insert_rents']['returning'][0]);
+}

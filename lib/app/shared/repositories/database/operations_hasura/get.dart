@@ -52,7 +52,7 @@ import 'package:hasura_connect/hasura_connect.dart';
 
   Future<Product> getProductOperation(int id, HasuraConnect connection) async {
     var query = """
-    query getProduto(\$id){
+    query getProduto(\$id:Int!){
       products(where: {id: {_eq: \$id}}) {
         id
         name

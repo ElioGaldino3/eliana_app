@@ -35,7 +35,7 @@ Future<bool> deleteProductOperation(int id, HasuraConnect connection) async {
       }
     """;
 
-  var data = await connection.mutation(query, variables: {"id": id});
+  var data = await connection.mutation(query);
   return data['data']['delete_products']['affected_rows'] >= 1;
 }
 

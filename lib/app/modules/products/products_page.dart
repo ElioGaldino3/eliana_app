@@ -50,7 +50,7 @@ class _ProductsPageState extends State<ProductsPage> {
                 padding: const EdgeInsets.only(left: 23.0),
                 child: Observer(builder: (_) {
                   return Text(
-                    "${controller.total} clientes",
+                    "${controller.total} produtos",
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                   );
                 }),
@@ -61,7 +61,9 @@ class _ProductsPageState extends State<ProductsPage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(FontAwesomeIcons.plus),
-        onPressed: () {},
+        onPressed: () {
+          Modular.to.pushNamed("/add-product/");
+        },
       ),
       drawer: CustomDrawerWidget(),
     );

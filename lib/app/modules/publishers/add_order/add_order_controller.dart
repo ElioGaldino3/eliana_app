@@ -1,6 +1,7 @@
 import 'package:eliana_app/app/modules/clients/clients_controller.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
+import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_interface.dart';
 import 'package:eliana_app/app/shared/utils/build_dropdown_clients.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,17 @@ abstract class _AddOrderBase with Store {
 
   @observable
   Order order = Order(dataDelivery: DateTime.now());
+
+  @computed
+  double get total {
+    double totalCart = 0.0;
+    if (order.productOrders != null || order.productOrders.isEmpty) return 0.0;
+    order.productOrders.forEach((produto) async {
+      Product product = await _hasura.getProduct(produto.idProduct);
+      totalCart += product.value * produto.amount;
+    });
+    return totalCart;
+  }
 
   @action
   getClients() async {

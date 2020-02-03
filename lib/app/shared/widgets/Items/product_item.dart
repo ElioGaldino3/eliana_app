@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:eliana_app/app/modules/publishers/add_product/add_product_controller.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -12,7 +13,9 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Modular.to.pushNamed('/add-product');
+        Modular.to.pushNamed("/add-product/");
+        AddProductController addController = Modular.get();
+        addController.product = item;
       },
       child: Container(
         height: 90,

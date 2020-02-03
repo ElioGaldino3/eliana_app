@@ -9,6 +9,12 @@ part of 'add_order_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AddOrderController on _AddOrderBase, Store {
+  Computed<double> _$totalComputed;
+
+  @override
+  double get total =>
+      (_$totalComputed ??= Computed<double>(() => super.total)).value;
+
   final _$clientsAtom = Atom(name: '_AddOrderBase.clients');
 
   @override

@@ -80,6 +80,21 @@ class _AddOrderPageState extends State<AddOrderPage> {
                 ),
               ],
             ),
+          ),
+          Expanded(
+            child: Container(),
+          ),
+          Container(
+            padding: EdgeInsets.all(20),
+            color: Colors.white,
+            height: 90,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Total: R\$${controller.total.toStringAsFixed(2)}",
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+              ),
+            ),
           )
         ],
       ),

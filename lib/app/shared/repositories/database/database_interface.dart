@@ -46,5 +46,5 @@ abstract class IDatabase {
   Future<bool> deliveredRent(Rent rent);
 
   //Upload Image
-  Future<String> uploadImage(File file, int id);
+  Future<String> uploadImage(File file, int id, String type);
 }

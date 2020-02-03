@@ -48,7 +48,7 @@ class _RentsPageState extends State<RentsPage> {
                 padding: const EdgeInsets.only(left: 23.0),
                 child: Observer(builder: (_) {
                   return Text(
-                    "${controller.total} clientes",
+                    "${controller.total} aluguéis",
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                   );
                 }),

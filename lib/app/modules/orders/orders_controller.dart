@@ -16,11 +16,9 @@ abstract class _OrdersBase with Store {
     orders = _hasura.getStreamOrders();
   }
 
-
   @computed
   int get total =>
       orders.data == null ? 0 : orders.data['data']['orders'].length;
-
 
   @action
   deleteOrder(int id) {

@@ -145,10 +145,10 @@ class DataBaseHasura implements IDatabase {
 
   //utilizando o firebase
   @override
-  Future<String> uploadImage(File file, int id) async {
+  Future<String> uploadImage(File file, int id, String type) async {
     StorageUploadTask task = FirebaseStorage.instance
         .ref()
-        .child("clientesPhotos")
+        .child(type)
         .child(id.toString())
         .putFile(file);
     StorageTaskSnapshot snapshot = await task.onComplete;

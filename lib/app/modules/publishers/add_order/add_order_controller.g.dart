@@ -66,6 +66,23 @@ mixin _$AddOrderController on _AddOrderBase, Store {
     }, _$dropDownMenuItemsAtom, name: '${_$dropDownMenuItemsAtom.name}_set');
   }
 
+  final _$productsAtom = Atom(name: '_AddOrderBase.products');
+
+  @override
+  List<Product> get products {
+    _$productsAtom.context.enforceReadPolicy(_$productsAtom);
+    _$productsAtom.reportObserved();
+    return super.products;
+  }
+
+  @override
+  set products(List<Product> value) {
+    _$productsAtom.context.conditionallyRunInAction(() {
+      super.products = value;
+      _$productsAtom.reportChanged();
+    }, _$productsAtom, name: '${_$productsAtom.name}_set');
+  }
+
   final _$orderAtom = Atom(name: '_AddOrderBase.order');
 
   @override
@@ -90,18 +107,15 @@ mixin _$AddOrderController on _AddOrderBase, Store {
     return _$getClientsAsyncAction.run(() => super.getClients());
   }
 
-  final _$_AddOrderBaseActionController =
-      ActionController(name: '_AddOrderBase');
+  final _$putOrderAsyncAction = AsyncAction('putOrder');
 
   @override
-  dynamic changeBagulho() {
-    final _$actionInfo = _$_AddOrderBaseActionController.startAction();
-    try {
-      return super.changeBagulho();
-    } finally {
-      _$_AddOrderBaseActionController.endAction(_$actionInfo);
-    }
+  Future putOrder() {
+    return _$putOrderAsyncAction.run(() => super.putOrder());
   }
+
+  final _$_AddOrderBaseActionController =
+      ActionController(name: '_AddOrderBase');
 
   @override
   dynamic changeOption(int id) {

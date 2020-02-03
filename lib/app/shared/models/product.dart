@@ -19,7 +19,7 @@ class Product {
     this.id,
     this.name,
     this.value,
-    this.isRent,
+    this.isRent = false,
     this.photoUrl = "",
   });
 

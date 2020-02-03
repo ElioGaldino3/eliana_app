@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eliana_app/app/modules/publishers/add_product/add_product_controller.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ class ProductItem extends StatelessWidget {
         Modular.to.pushNamed("/add-product/");
         AddProductController addController = Modular.get();
         addController.product = item;
+        addController.nameController.text = item.name;
+        addController.valueController.text = item.value.toString();
       },
       child: Container(
         height: 90,
@@ -32,9 +35,16 @@ class ProductItem extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 23),
-              child: Icon(
-                FontAwesomeIcons.box,
-                size: 32,
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: item.photoUrl.isEmpty
+                          ? AssetImage('images/icon-product.png')
+                          : CachedNetworkImageProvider(item.photoUrl),
+                    )),
               ),
             ),
             Expanded(

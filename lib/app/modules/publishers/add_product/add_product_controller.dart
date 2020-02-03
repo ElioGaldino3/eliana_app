@@ -25,6 +25,11 @@ abstract class _AddProductBase with Store {
   @computed
   String get nameText => nameController.text;
 
+  _AddProductBase() {
+    nameController.text = product.name;
+    valueController.text = product.value.toString();
+  }
+
   @action
   uploadImage(File image) async {
     String urlPhoto = await _hasura.uploadImage(image, product.id, "products");
@@ -58,6 +63,8 @@ abstract class _AddProductBase with Store {
 
   @action
   changeOptionRent(bool isRent) {
-    product.isRent = isRent;
+    Product newProduct = product;
+    newProduct.isRent = isRent;
+    product = newProduct;
   }
 }

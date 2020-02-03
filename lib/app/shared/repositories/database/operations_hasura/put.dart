@@ -3,6 +3,7 @@ import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:hasura_connect/hasura_connect.dart';
+import 'package:intl/intl.dart';
 
 @override
 Future<Client> putClientOperation(
@@ -25,12 +26,14 @@ Future<Client> putClientOperation(
 }
 
 Future<Order> putOrderOperation(Order order, HasuraConnect connection) async {
-  var query = """
-      mutation MyMutation(\$clientId, \$dataDelivery, \$products){
-        insert_orders(objects: {clientId: \$clientId, dataDelivery: \$dataDelivery, 
-        productOrders: {data: \$products}}) {
-          returning {
-            id
+  Map<String, dynamic> produtos = {
+    "data" : order.productOrders
+  };
+  var query = r"""
+      mutation putOrder($clientId: Int!, $productOrders: productOrder_arr_rel_insert_input!, $date: date!) {
+      insert_orders(objects: {clientId: $clientId, dataDelivery: $date, productOrders: $productOrders,}) {
+        returning {
+          id
           dataDelivery
           productOrders {
             idProduct
@@ -42,12 +45,16 @@ Future<Order> putOrderOperation(Order order, HasuraConnect connection) async {
             phone
             photoUrl
           }
-          }
         }
-      }    
+      }
+    }   
     """;
 
-  var data = await connection.mutation(query);
+  var data = await connection.mutation(query, variables: {
+    "clientId": order.client.id,
+    "productOrders": produtos,
+    "date": DateFormat('yyyy-MM-dd').format(order.dataDelivery)
+  });
   return Order.fromJson(data['data']['insert_orders']['returning'][0]);
 }
 

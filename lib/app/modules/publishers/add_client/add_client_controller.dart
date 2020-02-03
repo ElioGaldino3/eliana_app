@@ -28,11 +28,8 @@ abstract class _AddClientBase with Store {
   @action
   uploadImage(File image) async {
     String urlPhoto = await _hasura.uploadImage(image, client.id, "clients");
-    Client newClient = Client(
-        id: client.id,
-        name: client.name,
-        phone: client.phone,
-        photoUrl: urlPhoto);
+    Client newClient = client;
+    newClient.photoUrl = urlPhoto;
     client = newClient;
     _hasura.updateClient(newClient);
   }

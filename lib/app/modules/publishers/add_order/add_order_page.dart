@@ -99,7 +99,10 @@ class _AddOrderPageState extends State<AddOrderPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+          controller.putOrder();
+        },
         child: Icon(FontAwesomeIcons.save),
       ),
     );

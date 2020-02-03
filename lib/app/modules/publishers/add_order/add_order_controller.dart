@@ -2,6 +2,7 @@ import 'package:eliana_app/app/modules/clients/clients_controller.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
+import 'package:eliana_app/app/shared/models/product_order.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_interface.dart';
 import 'package:eliana_app/app/shared/utils/build_dropdown_clients.dart';
 import 'package:flutter/material.dart';
@@ -31,22 +32,27 @@ abstract class _AddOrderBase with Store {
   List<DropdownMenuItem<Client>> dropDownMenuItems;
 
   @observable
+  List<Product> products = List<Product>();
+
+  @observable
   Order order = Order(dataDelivery: DateTime.now());
 
   @computed
   double get total {
+    print("querendo total");
     double totalCart = 0.0;
-    if (order.productOrders != null || order.productOrders.isEmpty) return 0.0;
-    order.productOrders.forEach((produto) async {
-      Product product = await _hasura.getProduct(produto.idProduct);
-      totalCart += product.value * produto.amount;
-    });
+    if (order.productOrders == null) return 0.0;
+    for (ProductOrder productOrder in order.productOrders) {
+      Product product = products[products.indexWhere((product) => product.id == productOrder.idProduct)];
+      totalCart += product.value * productOrder.amount;
+    }
     return totalCart;
   }
 
   @action
   getClients() async {
     clients = await _hasura.getClients();
+    products = await _hasura.getProducts();
     dropDownMenuItems = buildDropdownMenuItems(clients);
     selectedClient = dropDownMenuItems[0].value;
     if (order.id != null) {
@@ -55,15 +61,20 @@ abstract class _AddOrderBase with Store {
   }
 
   @action
-  changeBagulho() {
-    selectedClient =
-        Client(id: 1, name: "Veiii", phone: "12312311", photoUrl: "asdas.jpg");
-  }
-
-  @action
   changeOption(int id) {
     selectedClient = dropDownMenuItems[
             dropDownMenuItems.indexWhere((client) => client.value.id == id)]
         .value;
+  }
+
+  @action
+  putOrder() async {
+    order.productOrders = [];
+    order.client = selectedClient;
+    order.productOrders.add(ProductOrder(idProduct: 1, amount: 5));
+    order.productOrders.add(ProductOrder(idProduct: 2, amount: 6));
+    order.productOrders.add(ProductOrder(idProduct: 3, amount: 2));
+    Order newOrder = await _hasura.putOrder(order);
+    order = newOrder;
   }
 }

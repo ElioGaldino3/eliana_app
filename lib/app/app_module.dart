@@ -36,20 +36,33 @@ class AppModule extends MainModule {
   List<Router> get routers => [
         Router('/', child: (_, args) => SplashPage()),
         Router('/login', module: LoginModule()),
-        Router('/orders', module: OrdersModule()),
-        Router('/rents/', module: RentsModule()),
-        Router('/products/', module: ProductsModule()),
-        Router('/clients/', module: ClientsModule()),
-        Router('/add-client/', module: AddClientModule()),
-        Router('/add-product/', module: AddProductModule()),
-        Router('/add-order/', module: AddOrderModule()),
-        Router('/add-rent/', module: AddRentModule()),
-        Router('/add-product-list/', module: ProductsCartModule()),
-        Router('/add-product-list-rent/', module: ProductsCartRentModule()),
+        Router('/orders', module: OrdersModule(), guards: [IsUserGuard()]),
+        Router('/rents/', module: RentsModule(), guards: [IsUserGuard()]),
+        Router('/products/', module: ProductsModule(), guards: [IsUserGuard()]),
+        Router('/clients/', module: ClientsModule(), guards: [IsUserGuard()]),
+        Router('/add-client/',
+            module: AddClientModule(), guards: [IsUserGuard()]),
+        Router('/add-product/',
+            module: AddProductModule(), guards: [IsUserGuard()]),
+        Router('/add-order/',
+            module: AddOrderModule(), guards: [IsUserGuard()]),
+        Router('/add-rent/', module: AddRentModule(), guards: [IsUserGuard()]),
+        Router('/add-product-list/',
+            module: ProductsCartModule(), guards: [IsUserGuard()]),
+        Router('/add-product-list-rent/',
+            module: ProductsCartRentModule(), guards: [IsUserGuard()]),
       ];
 
   @override
   Widget get bootstrap => AppWidget();
 
   static Inject get to => Inject<AppModule>.of();
+}
+
+class IsUserGuard implements RouteGuard {
+  AuthController auth = Modular.get();
+  @override
+  bool canActivate(String url) {
+    return auth.userDB.isUser;
+  }
 }

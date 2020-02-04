@@ -21,8 +21,6 @@ abstract class IDatabase {
 
   //Updaters
   Future<bool> updateProduct(Product product);
-  Future<bool> updateOrder(Order order);
-  Future<bool> updateRent(Rent rent);
   Future<bool> updateClient(Client client);
 
   //Deletters

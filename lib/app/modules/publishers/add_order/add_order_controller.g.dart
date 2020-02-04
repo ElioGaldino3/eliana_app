@@ -103,7 +103,7 @@ mixin _$AddOrderController on _AddOrderBase, Store {
   final _$getClientsAsyncAction = AsyncAction('getClients');
 
   @override
-  Future getClients() {
+  Future<dynamic> getClients() {
     return _$getClientsAsyncAction.run(() => super.getClients());
   }
 

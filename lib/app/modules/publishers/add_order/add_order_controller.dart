@@ -21,7 +21,7 @@ abstract class _AddOrderBase with Store {
   ClientsController clientsControlller;
 
   _AddOrderBase() {
-    getClients();
+    //getClients();
   }
 
   @observable
@@ -53,7 +53,7 @@ abstract class _AddOrderBase with Store {
   }
 
   @action
-  getClients() async {
+  Future getClients() async {
     clients = await _hasura.getClients();
     products = await _hasura.getProducts();
     dropDownMenuItems = buildDropdownMenuItems(clients);

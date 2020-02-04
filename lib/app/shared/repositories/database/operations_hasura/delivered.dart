@@ -4,9 +4,9 @@ import 'package:hasura_connect/hasura_connect.dart';
 
 Future<bool> deliveredOrderOperation(
     Order order, HasuraConnect connection) async {
-  var query = """
-    mutation deliveredOrder(\$id){
-      update_orders(where: {id: {_eq: \$id}}, _set: {isDelivery: true}) {
+  var query = r"""
+    mutation deliveredOrder($id: Int!){
+      update_orders(where: {id: {_eq: $id}}, _set: {isDelivery: true}) {
         affected_rows
       }
     }
@@ -16,9 +16,9 @@ Future<bool> deliveredOrderOperation(
 }
 
 Future<bool> deliveredRentOperation(Rent rent, HasuraConnect connection) async {
-  var query = """
-    mutation deliveredRent(\$id){
-      update_rents(where: {id: {_eq: \$id}}, _set: {isFinished: true}) {
+  var query = r"""
+    mutation deliveredRent($id: Int!){
+      update_rents(where: {id: {_eq: $id}}, _set: {isFinished: true}) {
         affected_rows
       }
     }

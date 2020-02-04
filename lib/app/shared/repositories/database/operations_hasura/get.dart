@@ -5,9 +5,9 @@ import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:hasura_connect/hasura_connect.dart';
 
   Future<Client> getClientOperation(int id, HasuraConnect connection) async {
-    var query = """
-    query getClient(\$id){
-      clients(where: {id: {_eq: \$id}}) {
+    var query = r"""
+    query getClient($id: Int!){
+      clients(where: {id: {_eq: $id}}) {
         id
         name
         phone
@@ -24,9 +24,9 @@ import 'package:hasura_connect/hasura_connect.dart';
   }
 
   Future<Order> getOrderOperation(int id, HasuraConnect connection) async {
-    var query = """
-    query getOrder(\$id){
-      orders(where: {id: {_eq: \$id}}) {
+    var query = r"""
+    query getOrder($id: Int!){
+      orders(where: {id: {_eq: $id}}) {
         id
         dataDelivery
         productOrders {
@@ -51,9 +51,9 @@ import 'package:hasura_connect/hasura_connect.dart';
   }
 
   Future<Product> getProductOperation(int id, HasuraConnect connection) async {
-    var query = """
-    query getProduto(\$id:Int!){
-      products(where: {id: {_eq: \$id}}) {
+    var query = r"""
+    query getProduto($id: Int!){
+      products(where: {id: {_eq: $id}}) {
         id
         name
         value
@@ -71,9 +71,9 @@ import 'package:hasura_connect/hasura_connect.dart';
   }
 
   Future<Rent> getRentOperation(int id, HasuraConnect connection) async {
-    var query = """
-    query getRent(\$id){
-      rents(where: {id: {_eq: \$id}}) {
+    var query = r"""
+    query getRent($id: Int!){
+      rents(where: {id: {_eq: $id}}) {
         id
         dateRent
         productRents {

@@ -2,6 +2,7 @@ import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/products_cart/products_cart_controller.dart';
 import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
+import 'package:eliana_app/app/shared/models/product_order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -24,7 +25,8 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
           IconButton(
             icon: Icon(FontAwesomeIcons.archive),
             onPressed: () {
-              Modular.to.pushNamedAndRemoveUntil('/add-order/', ModalRoute.withName('/orders/'));
+              Modular.to.pushNamedAndRemoveUntil(
+                  '/add-order/', ModalRoute.withName('/orders/'));
               AddOrderController addController = Modular.get();
               addController.order.productOrders = appController.productsOrder;
               Order newOrder = addController.order;
@@ -69,11 +71,16 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
                           SizedBox(
                             width: 30,
                           ),
-                          SizedBox(
-                            width: 30,
-                            child: Text(appController
-                                .productsOrder[index].amount
-                                .toString()),
+                          GestureDetector(
+                            child: SizedBox(
+                              width: 30,
+                              child: Text(appController
+                                  .productsOrder[index].amount
+                                  .toString()),
+                            ),
+                            onTap: () {
+                              _showDialog(context, index);
+                            },
                           ),
                           SizedBox(
                             width: 15,
@@ -101,5 +108,55 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
         ],
       ),
     );
+  }
+
+  _showDialog(BuildContext context, int index) async {
+    TextEditingController textController = TextEditingController();
+    textController.text = appController.productsOrder[index].amount.toString();
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Text("Quantidade"),
+            content: TextField(
+              autofocus: true,
+              keyboardType: TextInputType.numberWithOptions(decimal: false),
+              controller: textController,
+              onEditingComplete: () {
+                if (textController.text.isEmpty)
+                  appController.productsOrder[index].amount = 0;
+                else
+                  appController.productsOrder[index].amount =
+                      int.parse(textController.text);
+                Navigator.pop(context);
+                List<ProductOrder> newList = appController.productsOrder;
+
+                appController.productsOrder = newList;
+              },
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Cancelar"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              FlatButton(
+                child: Text("Confirmar"),
+                onPressed: () {
+                  if (textController.text.isEmpty)
+                    appController.productsOrder[index].amount = 0;
+                  else
+                    appController.productsOrder[index].amount =
+                        int.parse(textController.text);
+                  Navigator.pop(context);
+                  List<ProductOrder> newList = appController.productsOrder;
+
+                  appController.productsOrder = newList;
+                },
+              ),
+            ],
+          );
+        });
   }
 }

@@ -42,4 +42,21 @@ mixin _$AppController on _AppBase, Store {
       _$productsOrderAtom.reportChanged();
     }, _$productsOrderAtom, name: '${_$productsOrderAtom.name}_set');
   }
+
+  final _$productsRentAtom = Atom(name: '_AppBase.productsRent');
+
+  @override
+  List<ProductRent> get productsRent {
+    _$productsRentAtom.context.enforceReadPolicy(_$productsRentAtom);
+    _$productsRentAtom.reportObserved();
+    return super.productsRent;
+  }
+
+  @override
+  set productsRent(List<ProductRent> value) {
+    _$productsRentAtom.context.conditionallyRunInAction(() {
+      super.productsRent = value;
+      _$productsRentAtom.reportChanged();
+    }, _$productsRentAtom, name: '${_$productsRentAtom.name}_set');
+  }
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class ImageSourceSheet extends StatelessWidget {
-
-  const ImageSourceSheet({Key key}) : super(key: key);
+class ListProductsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {

@@ -3,11 +3,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/publishers/add_product/add_product_controller.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
-import 'package:eliana_app/app/shared/models/product_order.dart';
-import 'package:eliana_app/app/shared/models/product_rent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../add_product_order_button.dart';
+import '../add_product_rent_button.dart';
 
 class ProductItem extends StatefulWidget {
   final Product item;
@@ -74,45 +73,10 @@ class _ProductItemState extends State<ProductItem> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: appController.productsOrder
-                          .indexWhere((s) => s.idProduct == widget.item.id) ==
-                      -1
-                  ? IconButton(
-                      onPressed: () {
-                        setState(() {
-                          if (widget.item.isRent)
-                            appController.productsRent.add(ProductRent(
-                                idProduct: widget.item.id, amount: 1));
-                          else
-                            appController.productsOrder.add(ProductOrder(
-                                idProduct: widget.item.id, amount: 1));
-                        });
-                      },
-                      icon: Icon(
-                        FontAwesomeIcons.plus,
-                        size: 23,
-                      ),
-                    )
-                  : IconButton(
-                      onPressed: () {
-                        setState(() {
-                          
-
-                          if (widget.item.isRent)
-                            appController.productsRent.removeWhere(
-                                (t) => t.idProduct == widget.item.id);
-                          else
-                            appController.productsOrder.removeWhere(
-                                (t) => t.idProduct == widget.item.id);
-                        });
-                      },
-                      icon: Icon(
-                        FontAwesomeIcons.minus,
-                        size: 23,
-                      ),
-                    ),
-            ),
+                padding: const EdgeInsets.only(right: 16.0),
+                child: widget.item.isRent
+                    ? AddProductRentButton(widget.item)
+                    : AddProductOrderButton(widget.item)),
           ],
         ),
       ),

@@ -13,6 +13,8 @@ abstract class _AppBase with Store {
 
   @observable
   List<ProductOrder> productsOrder = [];
+
+  @observable
   List<ProductRent> productsRent = [];
 
 }

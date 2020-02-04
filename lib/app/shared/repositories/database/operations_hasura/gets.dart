@@ -31,17 +31,18 @@ Future<List<Order>> getOrdersOperation(HasuraConnect connection) async {
       query getOrder {
         orders(order_by: {dataDelivery: asc}) {
           id
-          dataDelivery
-          productOrders {
-            idProduct
-            amount
-          }
-          client {
-            id
-            name
-            phone
-            photoUrl
-          }
+            dataDelivery
+            comment
+            productOrders {
+              idProduct
+              amount
+            }
+            client {
+              id
+              name
+              phone
+              photoUrl
+            }
         }
       }
     """;
@@ -84,17 +85,19 @@ Future<List<Rent>> getRentsOperation(HasuraConnect connection) async {
       query getRents {
         rents(order_by: {name: asc}) {
           id
-          dateRent
-          productRents {
-            id
-            amount
-          }
-          client {
-            id
-            name
-            phone
-            photoUrl
-          }
+            dateRent
+            adress
+            comment
+            productRents {
+              productId
+              amount
+            }
+            client {
+              id
+              name
+              phone
+              photoUrl
+            }
         }
       }
     """;

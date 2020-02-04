@@ -22,17 +22,18 @@ ObservableStream getStreamOrdersOperation(HasuraConnect connection) {
       subscription MySubscription {
         orders(order_by: {dataDelivery: asc}, where: {isDelivery: {_eq: false}}) {
           id
-          dataDelivery
-          productOrders {
-            idProduct
-            amount
-          }
-          client {
-            id
-            name
-            phone
-            photoUrl
-          }
+            dataDelivery
+            comment
+            productOrders {
+              idProduct
+              amount
+            }
+            client {
+              id
+              name
+              phone
+              photoUrl
+            }
         }
       }
     """;
@@ -62,19 +63,19 @@ ObservableStream getStreamRentsOperation(HasuraConnect connection) {
       subscription getRents {
         rents(order_by: {dateRent: asc}, where: {isFinished: {_eq: false}}) {
           id
-          dateRent
-          adress
-          productRents {
-            productId
-            amount
-          }
-          client {
-            id
-            name
-            phone
-            photoUrl
-          }
-          
+            dateRent
+            adress
+            comment
+            productRents {
+              productId
+              amount
+            }
+            client {
+              id
+              name
+              phone
+              photoUrl
+            }
         }
       }
     """;

@@ -33,30 +33,32 @@ Future<Client> putClientOperation(
 Future<Order> putOrderOperation(Order order, HasuraConnect connection) async {
   Map<String, dynamic> produtos = {"data": order.productOrders};
   var query = r"""
-      mutation putOrder($clientId: Int!, $productOrders: productOrder_arr_rel_insert_input!, $date: date!) {
-      insert_orders(objects: {clientId: $clientId, dataDelivery: $date, productOrders: $productOrders,}) {
-        returning {
-          id
-          dataDelivery
-          productOrders {
-            idProduct
-            amount
-          }
-          client {
+      mutation putOrder($clientId: Int!, $productOrders: productOrder_arr_rel_insert_input!, $date: date!, $comment: String!) {
+        insert_orders(objects: {clientId: $clientId, dataDelivery: $date, productOrders: $productOrders, comment: $comment}) {
+          returning {
             id
-            name
-            phone
-            photoUrl
+            dataDelivery
+            comment
+            productOrders {
+              idProduct
+              amount
+            }
+            client {
+              id
+              name
+              phone
+              photoUrl
+            }
           }
         }
-      }
     }   
     """;
 
   var data = await connection.mutation(query, variables: {
     "clientId": order.client.id,
     "productOrders": produtos,
-    "date": DateFormat('yyyy-MM-dd').format(order.dataDelivery)
+    "date": DateFormat('yyyy-MM-dd').format(order.dataDelivery),
+    "comment": order.comment ?? ""
   });
   return Order.fromJson(data['data']['insert_orders']['returning'][0]);
 }
@@ -88,8 +90,8 @@ Future<Product> putProductOperation(
 
 Future<Rent> putRentOperation(Rent rent, HasuraConnect connection) async {
   var query = r"""
-      mutation MyMutation($idClient: Int!, $dateRent: date!, $adress: String!, $productRents: productRent_arr_rel_insert_input!){
-        insert_rents(objects: {idClient: $idClient, dateRent: $dateRent, adress: $adress, productRents: $productRents}) {
+      mutation MyMutation($idClient: Int!, $dateRent: date!, $adress: String!, $comment: String!, $productRents: productRent_arr_rel_insert_input!){
+        insert_rents(objects: {idClient: $idClient, dateRent: $dateRent, comment: $comment, adress: $adress, productRents: $productRents}) {
           returning{
             id
             dateRent
@@ -106,14 +108,15 @@ Future<Rent> putRentOperation(Rent rent, HasuraConnect connection) async {
             }
           }
         }
-      }  
+      }   
     """;
 
   var data = await connection.mutation(query, variables: {
     "idClient": rent.client.id,
     "dateRent": DateFormat('yyyy-MM-dd').format(rent.dateRent),
     "adress": rent.adress ?? "",
-    "productRents": {"data": rent.productRents ?? []}
+    "comment": rent.comment ?? "",
+    "productRents": {"data": rent.productRents ?? []},
   });
   return Rent.fromJson(data['data']['insert_rents']['returning'][0]);
 }

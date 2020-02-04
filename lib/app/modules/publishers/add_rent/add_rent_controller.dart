@@ -25,6 +25,12 @@ abstract class _AddRentBase with Store {
   List<Client> clients = List<Client>();
 
   @observable
+  TextEditingController adressController = TextEditingController();
+
+  @observable
+  TextEditingController commentController = TextEditingController();
+
+  @observable
   Client selectedClient = Client();
 
   @observable
@@ -57,6 +63,8 @@ abstract class _AddRentBase with Store {
     products = await _hasura.getProducts();
     dropDownMenuItems = buildDropdownMenuItems(clients);
     selectedClient = dropDownMenuItems[0].value;
+    adressController.text = rent.adress;
+    commentController.text = rent.comment;
     if (rent.id != null) {
       changeOption(rent.client.id);
     }
@@ -73,7 +81,8 @@ abstract class _AddRentBase with Store {
   putRent() async {
     rent.client = selectedClient;
     rent.productRents = appController.productsRent;
-
+    rent.adress = adressController.text;
+    rent.comment = commentController.text;
     if (rent.id != null) {
       if (await _hasura.deleteRent(rent.id)) {
         Rent newRent = await _hasura.putRent(rent);

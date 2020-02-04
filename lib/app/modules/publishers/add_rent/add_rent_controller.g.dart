@@ -32,6 +32,40 @@ mixin _$AddRentController on _AddRentBase, Store {
     }, _$clientsAtom, name: '${_$clientsAtom.name}_set');
   }
 
+  final _$adressControllerAtom = Atom(name: '_AddRentBase.adressController');
+
+  @override
+  TextEditingController get adressController {
+    _$adressControllerAtom.context.enforceReadPolicy(_$adressControllerAtom);
+    _$adressControllerAtom.reportObserved();
+    return super.adressController;
+  }
+
+  @override
+  set adressController(TextEditingController value) {
+    _$adressControllerAtom.context.conditionallyRunInAction(() {
+      super.adressController = value;
+      _$adressControllerAtom.reportChanged();
+    }, _$adressControllerAtom, name: '${_$adressControllerAtom.name}_set');
+  }
+
+  final _$commentControllerAtom = Atom(name: '_AddRentBase.commentController');
+
+  @override
+  TextEditingController get commentController {
+    _$commentControllerAtom.context.enforceReadPolicy(_$commentControllerAtom);
+    _$commentControllerAtom.reportObserved();
+    return super.commentController;
+  }
+
+  @override
+  set commentController(TextEditingController value) {
+    _$commentControllerAtom.context.conditionallyRunInAction(() {
+      super.commentController = value;
+      _$commentControllerAtom.reportChanged();
+    }, _$commentControllerAtom, name: '${_$commentControllerAtom.name}_set');
+  }
+
   final _$selectedClientAtom = Atom(name: '_AddRentBase.selectedClient');
 
   @override

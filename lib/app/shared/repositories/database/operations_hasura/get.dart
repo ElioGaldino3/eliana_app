@@ -29,17 +29,18 @@ Future<Order> getOrderOperation(int id, HasuraConnect connection) async {
     query getOrder($id: Int!){
       orders(where: {id: {_eq: $id}}) {
         id
-        dataDelivery
-        productOrders {
-          idProduct
-          amount
-        }
-        client {
-          id
-          name
-          phone
-          photoUrl
-        }
+            dataDelivery
+            comment
+            productOrders {
+              idProduct
+              amount
+            }
+            client {
+              id
+              name
+              phone
+              photoUrl
+            }
       }
     }
     """;
@@ -75,18 +76,20 @@ Future<Rent> getRentOperation(int id, HasuraConnect connection) async {
   var query = r"""
     query getRent($id: Int!){
       rents(where: {id: {_eq: $id}}) {
-        id
-        dateRent
-        productRents {
-          id
-          amount
-        }
-        client {
-          id
-          name
-          phone
-          photoUrl
-        }
+            id
+            dateRent
+            adress
+            comment
+            productRents {
+              productId
+              amount
+            }
+            client {
+              id
+              name
+              phone
+              photoUrl
+            }
       }
     }
     """;
@@ -110,6 +113,6 @@ Future<User> getUserOperation(String uid, HasuraConnect connection) async {
       }
     """;
 
-  var data = await connection.query(query, variables: {"uid": uid});
+  var data = await connection.query(query, variables: {"uid": uid}); 
   return User.fromJson(data['data']['users'][0]);
 }

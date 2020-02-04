@@ -50,7 +50,7 @@ class _ProductItemState extends State<ProductItem> {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: widget.item.photoUrl.isEmpty
+                      image: widget.item.photoUrl == null || widget.item.photoUrl.isEmpty
                           ? AssetImage('images/icon-product.png')
                           : CachedNetworkImageProvider(widget.item.photoUrl),
                     )),

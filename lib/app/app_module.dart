@@ -13,6 +13,7 @@ import 'modules/orders/orders_module.dart';
 import 'modules/products_cart/products_cart_module.dart';
 import 'modules/publishers/add_order/add_order_module.dart';
 import 'modules/publishers/add_product/add_product_module.dart';
+import 'modules/publishers/add_rent/add_rent_module.dart';
 import 'modules/rents/rents_module.dart';
 
 class AppModule extends MainModule {
@@ -32,8 +33,9 @@ class AppModule extends MainModule {
         Router('/products/', module: ProductsModule()),
         Router('/clients/', module: ClientsModule()),
         Router('/add-client/', module: AddClientModule()),
-        Router('/add-order/', module: AddOrderModule()),
         Router('/add-product/', module: AddProductModule()),
+        Router('/add-order/', module: AddOrderModule()),
+        Router('/add-remt/', module: AddRentModule()),
         Router('/add-product-list/', module: ProductsCartModule()),
       ];
 

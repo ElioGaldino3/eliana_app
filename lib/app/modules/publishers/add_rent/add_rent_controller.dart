@@ -1,20 +1,22 @@
-import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/clients/clients_controller.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
-import 'package:eliana_app/app/shared/models/product_order.dart';
+import 'package:eliana_app/app/shared/models/product_rent.dart';
+import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_interface.dart';
 import 'package:eliana_app/app/shared/utils/build_dropdown_clients.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
-part 'add_order_controller.g.dart';
+import '../../../app_controller.dart';
 
-class AddOrderController = _AddOrderBase with _$AddOrderController;
+part 'add_rent_controller.g.dart';
 
-abstract class _AddOrderBase with Store {
+class AddRentController = _AddRentBase with _$AddRentController;
+
+abstract class _AddRentBase with Store {
   IDatabase _hasura = Modular.get();
   AppController appController = Modular.get();
 
@@ -33,17 +35,17 @@ abstract class _AddOrderBase with Store {
   List<Product> products = List<Product>();
 
   @observable
-  Order order = Order(dataDelivery: DateTime.now(), productOrders: []);
+  Rent rent = Rent(dateRent: DateTime.now(), productRents: []);
 
   @computed
   double get total {
     double totalCart = 0.0;
-    if (order.productOrders == null) return 0.0;
+    if (rent.productRents == null) return 0.0;
     if (products.isEmpty) return 0.0;
-    for (ProductOrder productOrder in order.productOrders) {
+    for (ProductRent productRent in rent.productRents) {
       Product product = products[products
-          .indexWhere((product) => product.id == productOrder.idProduct)];
-      totalCart += product.value * productOrder.amount;
+          .indexWhere((product) => product.id == productRent.idProduct)];
+      totalCart += product.value * productRent.amount;
     }
     return totalCart;
   }
@@ -54,8 +56,8 @@ abstract class _AddOrderBase with Store {
     products = await _hasura.getProducts();
     dropDownMenuItems = buildDropdownMenuItems(clients);
     selectedClient = dropDownMenuItems[0].value;
-    if (order.id != null) {
-      changeOption(order.client.id);
+    if (rent.id != null) {
+      changeOption(rent.client.id);
     }
   }
 
@@ -68,17 +70,17 @@ abstract class _AddOrderBase with Store {
 
   @action
   putOrder() async {
-    order.client = selectedClient;
-    order.productOrders = appController.productsOrder;
+    rent.client = selectedClient;
+    rent.productRents = appController.productsRent;
 
-    if (order.id != null) {
-      if (await _hasura.deleteOrder(order.id)) {
-        Order newOrder = await _hasura.putOrder(order);
-        order = newOrder;
+    if (rent.id != null) {
+      if (await _hasura.deleteOrder(rent.id)) {
+        Rent newRent = await _hasura.putRent(rent);
+        rent = newRent;
       }
     } else {
-      Order newOrder = await _hasura.putOrder(order);
-      order = newOrder;
+      Rent newRent = await _hasura.putRent(rent);
+      rent = newRent;
     }
   }
 }

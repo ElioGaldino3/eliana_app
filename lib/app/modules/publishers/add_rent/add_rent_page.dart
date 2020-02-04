@@ -1,5 +1,3 @@
-import 'package:eliana_app/app/app_controller.dart';
-import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/widgets/custom_date_picker.dart';
 import 'package:eliana_app/app/shared/widgets/show_toast.dart';
@@ -9,19 +7,25 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AddOrderPage extends StatefulWidget {
+import '../../../app_controller.dart';
+import 'add_rent_controller.dart';
+
+class AddRentPage extends StatefulWidget {
+  final String title;
+  const AddRentPage({Key key, this.title = "AddRent"}) : super(key: key);
+
   @override
-  _AddOrderPageState createState() => _AddOrderPageState();
+  _AddRentPageState createState() => _AddRentPageState();
 }
 
-class _AddOrderPageState extends State<AddOrderPage> {
-  AddOrderController controller = Modular.get();
+class _AddRentPageState extends State<AddRentPage> {
+  AddRentController controller = Modular.get();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Adicionar Encomenda"),
+        title: Text("Adicionar Aluguél"),
       ),
       body: FutureBuilder(
           future: controller.getClients(),
@@ -33,10 +37,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
                   child: CircularProgressIndicator(),
                 );
                 break;
-              case ConnectionState.active:
-                return Text("Ele está ativo!");
-                break;
-              case ConnectionState.done:
+              default:
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
@@ -70,7 +71,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
                           Text("Data de entrega:"),
                           Observer(builder: (_) {
                             return CustomDatePicker(
-                                controller: controller,
+                                rentController: controller,
                                 locale: LocaleType.pt);
                           }),
                           SizedBox(
@@ -94,9 +95,9 @@ class _AddOrderPageState extends State<AddOrderPage> {
                             ),
                             onTap: () {
                               AppController appController = Modular.get();
-                              Modular.to.pushNamed('/add-product-list/');
-                              appController.productsOrder =
-                                  controller.order.productOrders;
+                              Modular.to.pushNamed('/add-product-list-rent/');
+                              appController.productsRent =
+                                  controller.rent.productRents;
                             },
                           ),
                         ],
@@ -130,7 +131,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
           FocusScope.of(context).requestFocus(FocusNode());
           controller.putOrder();
           ShowToast.showCustomToast(FontAwesomeIcons.solidCheckCircle,
-              "Encomenda salvada com sucesso!", context, Colors.green[400]);
+              "Aluguél salvo com sucesso!", context, Colors.green[400]);
         },
         child: Icon(FontAwesomeIcons.save),
       ),

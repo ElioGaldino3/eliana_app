@@ -1,6 +1,5 @@
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
 
 List<DropdownMenuItem<Client>> buildDropdownMenuItems(
     List clients) {

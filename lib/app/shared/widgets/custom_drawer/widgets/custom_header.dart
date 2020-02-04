@@ -1,4 +1,6 @@
+import 'package:eliana_app/app/shared/repositories/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomHeader extends StatelessWidget {
@@ -34,14 +36,20 @@ class CustomHeader extends StatelessWidget {
                     ),
                     overflow: TextOverflow.clip,
                   ),
-                  Text(
-                    "Clique aqui",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
+                  GestureDetector(
+                    onTap: () {
+                      Modular.get<AuthController>().logout();
+                      Modular.to.pushReplacementNamed('/login/');
+                    },
+                    child: Text(
+                      "Saia agora!",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      overflow: TextOverflow.clip,
                     ),
-                    overflow: TextOverflow.clip,
                   )
                 ],
               ),

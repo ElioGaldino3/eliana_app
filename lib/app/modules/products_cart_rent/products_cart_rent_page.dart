@@ -42,7 +42,7 @@ class _ProductsCartRentPageState extends State<ProductsCartRentPage> {
                       icon: Icon(FontAwesomeIcons.archive),
                       onPressed: () {
                         Modular.to.pushNamedAndRemoveUntil(
-                            '/add-rent/', ModalRoute.withName('/rents/'));
+                            '/add-rent/', ModalRoute.withName('/orders/'));
                         AddRentController addController = Modular.get();
                         addController.rent.productRents =
                             appController.productsRent;

@@ -1,6 +1,10 @@
 import 'package:eliana_app/app/modules/login/login_controller.dart';
+import 'package:eliana_app/app/shared/repositories/auth_controller.dart';
+import 'package:eliana_app/app/shared/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   final String title;
@@ -12,6 +16,19 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   LoginController controller = Modular.get();
+  AuthController auth = Modular.get();
+  @override
+  void initState() {
+    if (auth.userDB != null) {
+      if (auth.userDB.isUser && auth.status == AuthStatus.login)
+        Modular.to.pushReplacementNamed('/orders/');
+      else if (!auth.userDB.isUser && auth.status == AuthStatus.login)
+        controller.tryAcess = true;
+    }
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,22 +58,37 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 100,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: RaisedButton(
-                onPressed: () {
-                  Modular.to.pushReplacementNamed('/orders/');
-                },
-                child: Text(
-                  "Fazer login com o Google",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white),
-                ),
-                color: Colors.purple[700],
-              ),
-            )
+            Observer(builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: controller.tryAcess
+                    ? Column(
+                        children: <Widget>[
+                          Text("Você não tem acesso ao aplicativo",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w700)),
+                          Text("para mais informações contate-me:",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w600)),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text("eliogaldino79@outlook.com",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w500))
+                        ],
+                      )
+                    : RaisedButton(
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text("Faça o login com o Google!"),
+                        ),
+                        onPressed: () async {
+                          controller.loginWithGoogle();
+                        },
+                      ),
+              );
+            })
           ],
         ),
       ),

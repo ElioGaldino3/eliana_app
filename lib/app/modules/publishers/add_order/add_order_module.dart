@@ -10,7 +10,7 @@ class AddOrderModule extends ChildModule {
 
   @override
   List<Router> get routers => [
-        Router('/', child: (_, args) => AddOrderPage(), transition: TransitionType.fadeIn),
+        Router('/', child: (_, args) => AddOrderPage()),
       ];
 
   static Inject get to => Inject<AddOrderModule>.of();

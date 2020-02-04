@@ -4,6 +4,7 @@ import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
+import 'package:eliana_app/app/shared/models/user.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_interface.dart';
 import 'package:eliana_app/app/shared/repositories/database/operations_hasura/delivered.dart';
 import 'package:eliana_app/app/shared/repositories/database/operations_hasura/get_stream.dart';
@@ -153,5 +154,15 @@ class DataBaseHasura implements IDatabase {
     StorageTaskSnapshot snapshot = await task.onComplete;
 
     return await snapshot.ref.getDownloadURL();
+  }
+
+  @override
+  Future<User> newUser(String uid) async {
+    return await putUserOperation(uid, connection);
+  }
+
+  @override
+  Future<User> getUser(String uid) async {
+    return await getUserOperation(uid, connection);
   }
 }

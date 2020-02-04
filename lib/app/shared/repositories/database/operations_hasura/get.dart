@@ -2,10 +2,11 @@ import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
+import 'package:eliana_app/app/shared/models/user.dart';
 import 'package:hasura_connect/hasura_connect.dart';
 
-  Future<Client> getClientOperation(int id, HasuraConnect connection) async {
-    var query = r"""
+Future<Client> getClientOperation(int id, HasuraConnect connection) async {
+  var query = r"""
     query getClient($id: Int!){
       clients(where: {id: {_eq: $id}}) {
         id
@@ -16,15 +17,15 @@ import 'package:hasura_connect/hasura_connect.dart';
     }
     """;
 
-    var data = await connection.query(query, variables: {
-      "id": id,
-    });
+  var data = await connection.query(query, variables: {
+    "id": id,
+  });
 
-    return Client.fromJson(data['data']['clients'][0]);
-  }
+  return Client.fromJson(data['data']['clients'][0]);
+}
 
-  Future<Order> getOrderOperation(int id, HasuraConnect connection) async {
-    var query = r"""
+Future<Order> getOrderOperation(int id, HasuraConnect connection) async {
+  var query = r"""
     query getOrder($id: Int!){
       orders(where: {id: {_eq: $id}}) {
         id
@@ -43,15 +44,15 @@ import 'package:hasura_connect/hasura_connect.dart';
     }
     """;
 
-    var data = await connection.query(query, variables: {
-      "id": id,
-    });
+  var data = await connection.query(query, variables: {
+    "id": id,
+  });
 
-    return Order.fromJson(data['data']['orders'][0]);
-  }
+  return Order.fromJson(data['data']['orders'][0]);
+}
 
-  Future<Product> getProductOperation(int id, HasuraConnect connection) async {
-    var query = r"""
+Future<Product> getProductOperation(int id, HasuraConnect connection) async {
+  var query = r"""
     query getProduto($id: Int!){
       products(where: {id: {_eq: $id}}) {
         id
@@ -63,15 +64,15 @@ import 'package:hasura_connect/hasura_connect.dart';
     }
     """;
 
-    var data = await connection.query(query, variables: {
-      "id": id,
-    });
+  var data = await connection.query(query, variables: {
+    "id": id,
+  });
 
-    return Product.fromJson(data['data']['products'][0]);
-  }
+  return Product.fromJson(data['data']['products'][0]);
+}
 
-  Future<Rent> getRentOperation(int id, HasuraConnect connection) async {
-    var query = r"""
+Future<Rent> getRentOperation(int id, HasuraConnect connection) async {
+  var query = r"""
     query getRent($id: Int!){
       rents(where: {id: {_eq: $id}}) {
         id
@@ -90,9 +91,25 @@ import 'package:hasura_connect/hasura_connect.dart';
     }
     """;
 
-    var data = await connection.query(query, variables: {
-      "id": id,
-    });
+  var data = await connection.query(query, variables: {
+    "id": id,
+  });
 
-    return Rent.fromJson(data['data']['rents'][0]);
-  }
+  return Rent.fromJson(data['data']['rents'][0]);
+}
+
+Future<User> getUserOperation(String uid, HasuraConnect connection) async {
+  var query = r"""
+      query MyQuery($uid: String!) {
+        users(where: {uid: {_eq: $uid}}) {
+          id
+          uid
+          isUser
+          isAdmin
+        }
+      }
+    """;
+
+  var data = await connection.query(query, variables: {"uid": uid});
+  return User.fromJson(data['data']['users'][0]);
+}

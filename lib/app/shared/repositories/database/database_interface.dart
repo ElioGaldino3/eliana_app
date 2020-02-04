@@ -4,6 +4,7 @@ import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
+import 'package:eliana_app/app/shared/models/user.dart';
 import 'package:mobx/mobx.dart';
 
 abstract class IDatabase {
@@ -13,7 +14,7 @@ abstract class IDatabase {
   ObservableStream getStreamProducts();
   ObservableStream getStreamClients();
 
-  //Putters 
+  //Putters
   Future<Order> putOrder(Order order);
   Future<Rent> putRent(Rent rent);
   Future<Product> putProduct(Product product);
@@ -40,6 +41,7 @@ abstract class IDatabase {
   Future<Rent> getRent(int id);
   Future<Product> getProduct(int id);
   Future<Client> getClient(int id);
+  Future<User> getUser(String uid);
 
   //Update Delivered
   Future<bool> deliveredOrder(Order order);
@@ -47,4 +49,7 @@ abstract class IDatabase {
 
   //Upload Image
   Future<String> uploadImage(File file, int id, String type);
+
+  //New User
+  Future<User> newUser(String uid);
 }

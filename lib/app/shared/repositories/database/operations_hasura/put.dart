@@ -2,6 +2,7 @@ import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
+import 'package:eliana_app/app/shared/models/user.dart';
 import 'package:hasura_connect/hasura_connect.dart';
 import 'package:intl/intl.dart';
 
@@ -115,4 +116,22 @@ Future<Rent> putRentOperation(Rent rent, HasuraConnect connection) async {
     "productRents": {"data": rent.productRents ?? []}
   });
   return Rent.fromJson(data['data']['insert_rents']['returning'][0]);
+}
+
+Future<User> putUserOperation(String uid, HasuraConnect connection) async {
+  var query = r"""
+    mutation newUser($uid: String!) {
+      insert_users(objects: {uid: $uid}) {
+        returning {
+          id
+          uid
+          isUser
+          isAdmin
+        }
+      }
+    }
+  """;
+
+  var data = await connection.mutation(query, variables: {"uid": uid});
+  return User.fromJson(data['data']['insert_users']['returning'][0]);
 }

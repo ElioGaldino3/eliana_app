@@ -10,7 +10,7 @@ class ProductsModule extends ChildModule {
 
   @override
   List<Router> get routers => [
-        Router('/', child: (_, args) => ProductsPage(), transition: TransitionType.fadeIn),
+        Router('/', child: (_, args) => ProductsPage()),
       ];
 
   static Inject get to => Inject<ProductsModule>.of();

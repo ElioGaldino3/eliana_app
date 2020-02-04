@@ -3,6 +3,8 @@ import 'package:eliana_app/app/modules/clients/clients_module.dart';
 import 'package:eliana_app/app/modules/products/products_module.dart';
 import 'package:eliana_app/app/modules/publishers/add_client/add_client_module.dart';
 import 'package:eliana_app/app/modules/rents/rents_controller.dart';
+import 'package:eliana_app/app/shared/repositories/auth/auth_repository.dart';
+import 'package:eliana_app/app/shared/repositories/auth_controller.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_hasura.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,8 @@ import 'modules/publishers/add_order/add_order_module.dart';
 import 'modules/publishers/add_product/add_product_module.dart';
 import 'modules/publishers/add_rent/add_rent_module.dart';
 import 'modules/rents/rents_module.dart';
+import 'shared/repositories/auth/auth_repository_interface.dart';
+import 'splash/splash_page.dart';
 
 class AppModule extends MainModule {
   @override
@@ -24,11 +28,14 @@ class AppModule extends MainModule {
         Bind((i) => RentsController()),
         Bind((i) => DataBaseHasura(i.get<HasuraConnect>())),
         Bind((i) => HasuraConnect('http://192.168.42.212:8080/v1/graphql')),
+        Bind<IAuth>((i) => AuthRepository()),
+        Bind((i) => AuthController()),
       ];
 
   @override
   List<Router> get routers => [
-        Router('/', module: LoginModule()),
+        Router('/', child: (_, args) => SplashPage()),
+        Router('/login', module: LoginModule()),
         Router('/orders', module: OrdersModule()),
         Router('/rents/', module: RentsModule()),
         Router('/products/', module: ProductsModule()),

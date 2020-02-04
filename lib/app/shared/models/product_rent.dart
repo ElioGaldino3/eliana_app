@@ -1,19 +1,19 @@
 class ProductRent {
-    int idProduct;
+    int productId;
     int amount;
 
     ProductRent({
-        this.idProduct,
+        this.productId,
         this.amount,
     });
 
     factory ProductRent.fromJson(Map<String, dynamic> json) => ProductRent(
-        idProduct: json["idProduct"],
+        productId: json["productId"],
         amount: json["amount"],
     );
 
     Map<String, dynamic> toJson() => {
-        "idProduct": idProduct,
+        "productId": productId,
         "amount": amount,
     };
 }

@@ -1,3 +1,4 @@
+import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -22,5 +23,10 @@ abstract class _RentsBase with Store {
   @action
   deleteRent(int id) {
     _hasura.deleteRent(id);
+  }
+
+  @action
+  deliveredRent(int id) {
+    _hasura.deliveredRent(Rent(id: id));
   }
 }

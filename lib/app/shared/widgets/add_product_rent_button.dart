@@ -1,6 +1,5 @@
 import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
-import 'package:eliana_app/app/shared/models/product_order.dart';
 import 'package:eliana_app/app/shared/models/product_rent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -18,18 +17,18 @@ class AddProductRentButton extends StatelessWidget {
     return Observer(
       builder: (_) {
         return appController.productsRent
-                    .indexWhere((s) => s.idProduct == product.id) ==
+                    .indexWhere((s) => s.productId == product.id) ==
                 -1
             ? IconButton(
                 onPressed: () {
                   appController.productsRent
-                      .add(ProductRent(idProduct: product.id, amount: 1));
+                      .add(ProductRent(productId: product.id, amount: 1));
 
                   List<ProductRent> newList = appController.productsRent;
                   appController.productsRent = newList;
 
                   for (ProductRent item in appController.productsRent) {
-                    print(item.idProduct);
+                    print(item.productId);
                   }
                 },
                 icon: Icon(
@@ -40,13 +39,13 @@ class AddProductRentButton extends StatelessWidget {
             : IconButton(
                 onPressed: () {
                   appController.productsRent
-                      .removeWhere((t) => t.idProduct == product.id);
+                      .removeWhere((t) => t.productId == product.id);
 
                   List<ProductRent> newList = appController.productsRent;
                   appController.productsRent = newList;
 
                   for (ProductRent item in appController.productsRent) {
-                    print(item.idProduct);
+                    print(item.productId);
                   }
                 },
                 icon: Icon(

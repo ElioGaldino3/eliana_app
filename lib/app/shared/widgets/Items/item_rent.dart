@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:eliana_app/app/app_controller.dart';
+import 'package:eliana_app/app/modules/publishers/add_rent/add_rent_controller.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:eliana_app/app/shared/utils/container_color.dart';
 import 'package:eliana_app/app/shared/utils/date_format_portuguese.dart';
@@ -17,6 +19,10 @@ class RentItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Modular.to.pushNamed('/add-rent');
+        AddRentController addController = Modular.get();
+        AppController appController = Modular.get();
+        addController.rent = rent;
+        appController.productsRent = rent.productRents;
       },
       child: Container(
         height: 90,

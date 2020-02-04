@@ -59,7 +59,9 @@ class _RentsPageState extends State<RentsPage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(FontAwesomeIcons.plus),
-        onPressed: () {},
+        onPressed: () {
+          Modular.to.pushNamed("/add-rent/");
+        },
       ),
     );
   }

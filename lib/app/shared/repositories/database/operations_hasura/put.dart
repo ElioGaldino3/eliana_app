@@ -92,8 +92,9 @@ Future<Rent> putRentOperation(Rent rent, HasuraConnect connection) async {
           returning{
             id
             dateRent
+            adress
             productRents {
-              id
+              productId
               amount
             }
             client {
@@ -111,7 +112,7 @@ Future<Rent> putRentOperation(Rent rent, HasuraConnect connection) async {
     "idClient": rent.client.id,
     "dateRent": DateFormat('yyyy-MM-dd').format(rent.dateRent),
     "adress": rent.adress ?? "",
-    "productRents": {"data": rent.productRents}
+    "productRents": {"data": rent.productRents ?? []}
   });
   return Rent.fromJson(data['data']['insert_rents']['returning'][0]);
 }

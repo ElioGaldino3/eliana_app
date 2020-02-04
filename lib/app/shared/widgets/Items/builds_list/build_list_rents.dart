@@ -11,36 +11,48 @@ class BuildListRents extends StatelessWidget {
   final List listStream;
   final RentsController controller;
 
-  const BuildListRents({Key key, this.listStream, this.controller}) : super(key: key);
+  const BuildListRents({Key key, this.listStream, this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-                    itemCount: controller.rents.data['data']['rents'].length,
-                    itemBuilder: (BuildContext context, int index) {
-                      Rent rent = Rent.fromJson(
-                          controller.rents.data['data']['rents'][index]);
-                      return Container(
-                        child: Dismissible(
-                            key: ValueKey(rent.id),
-                            child: RentItem(rent: rent),
-                            confirmDismiss: (_) async {
-                              await showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialogYesNo(
-                                        title: "Excluir Aluguél",
-                                        content:
-                                            "Você deseja excluir este aluguél?",
-                                        yesFunction: () {
-                                          controller.deleteRent(rent.id);
-                                        },
-                                      ),
-                                  barrierDismissible: false);
-                            }),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                      );
-                    },
-                  );
+      itemCount: controller.rents.data['data']['rents'].length,
+      itemBuilder: (BuildContext context, int index) {
+        var json = controller.rents.data['data']['rents'][index];
+        Rent rent = Rent.fromJson(json);
+        return Container(
+          child: Dismissible(
+              key: ValueKey(rent.id),
+              child: RentItem(rent: rent),
+              confirmDismiss: (_) async {
+                if (_ == DismissDirection.startToEnd)
+                  await showDialog(
+                      context: context,
+                      builder: (_) => AlertDialogYesNo(
+                            title: "Excluir Aluguél",
+                            content: "Você deseja excluir este aluguél?",
+                            yesFunction: () {
+                              controller.deleteRent(rent.id);
+                            },
+                          ),
+                      barrierDismissible: false);
+                else
+                  await showDialog(
+                      context: context,
+                      builder: (_) => AlertDialogYesNo(
+                            title: "Aluguél Finalizado",
+                            content:
+                                "Você deseja marcar este aluguel como finalizado?",
+                            yesFunction: () {
+                              controller.deliveredRent(rent.id);
+                            },
+                          ),
+                      barrierDismissible: false);
+              }),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        );
+      },
+    );
   }
 }

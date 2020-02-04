@@ -1,3 +1,4 @@
+import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -24,5 +25,10 @@ abstract class _OrdersBase with Store {
   @action
   deleteOrder(int id) {
     _hasura.deleteOrder(id);
+  }
+
+  @action
+  deliveredOrder(int id) {
+    _hasura.deliveredOrder(Order(id: id));
   }
 }

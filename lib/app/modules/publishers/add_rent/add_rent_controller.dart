@@ -1,6 +1,5 @@
 import 'package:eliana_app/app/modules/clients/clients_controller.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
-import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/product_rent.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
@@ -40,12 +39,14 @@ abstract class _AddRentBase with Store {
   @computed
   double get total {
     double totalCart = 0.0;
-    if (rent.productRents == null) return 0.0;
+    if (rent.productRents == null || rent.productRents == []) return 0.0;
     if (products.isEmpty) return 0.0;
     for (ProductRent productRent in rent.productRents) {
-      Product product = products[products
-          .indexWhere((product) => product.id == productRent.idProduct)];
-      totalCart += product.value * productRent.amount;
+      if (productRent.productId != null) {
+        Product product = products[products
+            .indexWhere((product) => product.id == productRent.productId)];
+        totalCart += product.value * productRent.amount;
+      }
     }
     return totalCart;
   }
@@ -69,12 +70,12 @@ abstract class _AddRentBase with Store {
   }
 
   @action
-  putOrder() async {
+  putRent() async {
     rent.client = selectedClient;
     rent.productRents = appController.productsRent;
 
     if (rent.id != null) {
-      if (await _hasura.deleteOrder(rent.id)) {
+      if (await _hasura.deleteRent(rent.id)) {
         Rent newRent = await _hasura.putRent(rent);
         rent = newRent;
       }

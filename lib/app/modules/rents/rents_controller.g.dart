@@ -42,4 +42,14 @@ mixin _$RentsController on _RentsBase, Store {
       _$_RentsBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  dynamic deliveredRent(int id) {
+    final _$actionInfo = _$_RentsBaseActionController.startAction();
+    try {
+      return super.deliveredRent(id);
+    } finally {
+      _$_RentsBaseActionController.endAction(_$actionInfo);
+    }
+  }
 }

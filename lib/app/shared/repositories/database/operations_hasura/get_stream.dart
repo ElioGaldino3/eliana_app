@@ -58,13 +58,14 @@ ObservableStream getStreamProductsOperation(HasuraConnect connection) {
 }
 
 ObservableStream getStreamRentsOperation(HasuraConnect connection) {
-  var query = """
-      subscription MySubscription {
+  var query = r"""
+      subscription getRents {
         rents(order_by: {dateRent: asc}, where: {isFinished: {_eq: false}}) {
           id
           dateRent
+          adress
           productRents {
-            id
+            productId
             amount
           }
           client {

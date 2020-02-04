@@ -70,7 +70,8 @@ class _AddOrderPageState extends State<AddOrderPage> {
                           Text("Data de entrega:"),
                           Observer(builder: (_) {
                             return CustomDatePicker(
-                                controller: controller,
+                                false,
+                                date: controller.order.dataDelivery,
                                 locale: LocaleType.pt);
                           }),
                           SizedBox(

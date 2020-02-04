@@ -33,6 +33,7 @@ class _AddRentPageState extends State<AddRentPage> {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
               case ConnectionState.waiting:
+                print(snapshot.connectionState);
                 return Center(
                   child: CircularProgressIndicator(),
                 );
@@ -70,8 +71,8 @@ class _AddRentPageState extends State<AddRentPage> {
                           ),
                           Text("Data de entrega:"),
                           Observer(builder: (_) {
-                            return CustomDatePicker(
-                                rentController: controller,
+                            return CustomDatePicker(true,
+                                date: controller.rent.dateRent,
                                 locale: LocaleType.pt);
                           }),
                           SizedBox(
@@ -129,7 +130,7 @@ class _AddRentPageState extends State<AddRentPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           FocusScope.of(context).requestFocus(FocusNode());
-          controller.putOrder();
+          controller.putRent();
           ShowToast.showCustomToast(FontAwesomeIcons.solidCheckCircle,
               "Aluguél salvo com sucesso!", context, Colors.green[400]);
         },

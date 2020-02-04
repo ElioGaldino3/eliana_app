@@ -107,11 +107,11 @@ mixin _$AddRentController on _AddRentBase, Store {
     return _$getClientsAsyncAction.run(() => super.getClients());
   }
 
-  final _$putOrderAsyncAction = AsyncAction('putOrder');
+  final _$putRentAsyncAction = AsyncAction('putRent');
 
   @override
-  Future putOrder() {
-    return _$putOrderAsyncAction.run(() => super.putOrder());
+  Future putRent() {
+    return _$putRentAsyncAction.run(() => super.putRent());
   }
 
   final _$_AddRentBaseActionController = ActionController(name: '_AddRentBase');

@@ -17,12 +17,8 @@ abstract class _ProductsCartBase with Store {
   @observable
   List<Product> products = [];
 
-  _ProductsCartBase() {
-    getProducts();
-  }
-
   @action
-  getProducts() async {
+  Future getProducts() async {
     products = await _hasura.getProducts();
   }
 

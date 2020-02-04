@@ -9,36 +9,48 @@ class BuildListOrders extends StatelessWidget {
   final List listStream;
   final OrdersController controller;
 
-  const BuildListOrders({Key key, this.listStream, this.controller}) : super(key: key);
+  const BuildListOrders({Key key, this.listStream, this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-                    itemCount: controller.orders.data['data']['orders'].length,
-                    itemBuilder: (BuildContext context, int index) {
-                      Order order = Order.fromJson(
-                          controller.orders.data['data']['orders'][index]);
-                      return Container(
-                        child: Dismissible(
-                            key: ValueKey(order.id),
-                            child: OrderItem(order: order),
-                            confirmDismiss: (_) async {
-                              await showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialogYesNo(
-                                        title: "Excluir Encomenda",
-                                        content:
-                                            "Você deseja excluir a encomenda?",
-                                        yesFunction: () {
-                                          controller.deleteOrder(order.id);
-                                        },
-                                      ),
-                                  barrierDismissible: false);
-                            }),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                      );
-                    },
-                  );
+      itemCount: controller.orders.data['data']['orders'].length,
+      itemBuilder: (BuildContext context, int index) {
+        Order order =
+            Order.fromJson(controller.orders.data['data']['orders'][index]);
+        return Container(
+          child: Dismissible(
+              key: ValueKey(order.id),
+              child: OrderItem(order: order),
+              confirmDismiss: (_) async {
+                if (_ == DismissDirection.startToEnd)
+                  await showDialog(
+                      context: context,
+                      builder: (_) => AlertDialogYesNo(
+                            title: "Excluir Encomenda",
+                            content: "Você deseja excluir a encomenda?",
+                            yesFunction: () {
+                              controller.deleteOrder(order.id);
+                            },
+                          ),
+                      barrierDismissible: false);
+                else
+                  await showDialog(
+                      context: context,
+                      builder: (_) => AlertDialogYesNo(
+                            title: "Encomenda Entregue",
+                            content:
+                                "Você deseja marcar a encomenda como entregue?",
+                            yesFunction: () {
+                              controller.deliveredOrder(order.id);
+                            },
+                          ),
+                      barrierDismissible: false);
+              }),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        );
+      },
+    );
   }
 }

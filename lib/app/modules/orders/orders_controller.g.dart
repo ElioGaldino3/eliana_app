@@ -42,4 +42,14 @@ mixin _$OrdersController on _OrdersBase, Store {
       _$_OrdersBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  dynamic deliveredOrder(int id) {
+    final _$actionInfo = _$_OrdersBaseActionController.startAction();
+    try {
+      return super.deliveredOrder(id);
+    } finally {
+      _$_OrdersBaseActionController.endAction(_$actionInfo);
+    }
+  }
 }

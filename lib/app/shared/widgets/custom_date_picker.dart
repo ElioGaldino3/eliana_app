@@ -1,23 +1,29 @@
 import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
 import 'package:eliana_app/app/modules/publishers/add_rent/add_rent_controller.dart';
+import 'package:eliana_app/app/modules/rents/rents_controller.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:eliana_app/app/shared/utils/date_format_portuguese.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomDatePicker extends StatelessWidget {
   final LocaleType locale;
-  final AddRentController rentController;
-  final AddOrderController controller;
+  final bool isRent;
+  final DateTime date;
 
-  const CustomDatePicker(
-      {Key key, this.locale, this.rentController, this.controller})
-      : super(key: key);
+  const CustomDatePicker(this.isRent, {Key key, this.locale, this.date}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    bool isRent = rentController != null;
+    AddRentController rentController;
+    AddOrderController controller;
+    if (isRent)
+      rentController = Modular.get();
+    else
+      controller = Modular.get();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: GestureDetector(

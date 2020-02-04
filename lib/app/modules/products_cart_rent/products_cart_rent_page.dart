@@ -1,21 +1,26 @@
-import 'package:eliana_app/app/app_controller.dart';
-import 'package:eliana_app/app/modules/products_cart/products_cart_controller.dart';
-import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
-import 'package:eliana_app/app/shared/models/order.dart';
-import 'package:eliana_app/app/shared/models/product_order.dart';
+import 'package:eliana_app/app/modules/products_cart_rent/products_cart_rent_controller.dart';
+import 'package:eliana_app/app/modules/publishers/add_rent/add_rent_controller.dart';
+import 'package:eliana_app/app/shared/models/product_rent.dart';
+import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ProductsCartPage extends StatefulWidget {
+import '../../app_controller.dart';
+
+class ProductsCartRentPage extends StatefulWidget {
+  final String title;
+  const ProductsCartRentPage({Key key, this.title = "ProductsCartRent"})
+      : super(key: key);
+
   @override
-  _ProductsCartPageState createState() => _ProductsCartPageState();
+  _ProductsCartRentPageState createState() => _ProductsCartRentPageState();
 }
 
-class _ProductsCartPageState extends State<ProductsCartPage> {
+class _ProductsCartRentPageState extends State<ProductsCartRentPage> {
   AppController appController = Modular.get();
-  ProductsCartController controller = Modular.get();
+  ProductsCartRentController controller = Modular.get();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -31,18 +36,18 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
             default:
               return Scaffold(
                 appBar: AppBar(
-                  title: Text("Carrinho de Produtos"),
+                  title: Text("Carrinho de Alugáveis"),
                   actions: <Widget>[
                     IconButton(
                       icon: Icon(FontAwesomeIcons.archive),
                       onPressed: () {
                         Modular.to.pushNamedAndRemoveUntil(
-                            '/add-order/', ModalRoute.withName('/orders/'));
-                        AddOrderController addController = Modular.get();
-                        addController.order.productOrders =
-                            appController.productsOrder;
-                        Order newOrder = addController.order;
-                        addController.order = newOrder;
+                            '/add-rent/', ModalRoute.withName('/rents/'));
+                        AddRentController addController = Modular.get();
+                        addController.rent.productRents =
+                            appController.productsRent;
+                        Rent newRent = addController.rent;
+                        addController.rent = newRent;
                       },
                     )
                   ],
@@ -51,7 +56,7 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
                   children: <Widget>[
                     Expanded(
                       child: ListView.builder(
-                        itemCount: appController.productsOrder.length,
+                        itemCount: appController.productsRent.length,
                         itemBuilder: (context, index) {
                           return Observer(
                             builder: (_) {
@@ -61,7 +66,7 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
                                 );
                               return Dismissible(
                                 key: ValueKey(appController
-                                    .productsOrder[index].idProduct),
+                                    .productsRent[index].productId),
                                 background: Container(
                                   alignment: Alignment.centerLeft,
                                   padding: EdgeInsets.only(left: 20.0),
@@ -79,8 +84,8 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
                                                 .indexWhere((s) =>
                                                     s.id ==
                                                     appController
-                                                        .productsOrder[index]
-                                                        .idProduct)]
+                                                        .productsRent[index]
+                                                        .productId)]
                                             .name),
                                       ),
                                       GestureDetector(
@@ -101,7 +106,7 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
                                         child: SizedBox(
                                           width: 30,
                                           child: Text(appController
-                                              .productsOrder[index].amount
+                                              .productsRent[index].amount
                                               .toString()),
                                         ),
                                         onTap: () {
@@ -123,10 +128,10 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
                                 ),
                                 direction: DismissDirection.startToEnd,
                                 onDismissed: (direction) {
-                                  appController.productsOrder.removeWhere((t) =>
-                                      t.idProduct ==
+                                  appController.productsRent.removeWhere((t) =>
+                                      t.productId ==
                                       appController
-                                          .productsOrder[index].idProduct);
+                                          .productsRent[index].productId);
                                 },
                               );
                             },
@@ -150,7 +155,7 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
 
   _showDialog(BuildContext context, int index) async {
     TextEditingController textController = TextEditingController();
-    textController.text = appController.productsOrder[index].amount.toString();
+    textController.text = appController.productsRent[index].amount.toString();
     showDialog(
         context: context,
         builder: (_) {
@@ -162,14 +167,14 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
               controller: textController,
               onEditingComplete: () {
                 if (textController.text.isEmpty)
-                  appController.productsOrder[index].amount = 0;
+                  appController.productsRent[index].amount = 0;
                 else
-                  appController.productsOrder[index].amount =
+                  appController.productsRent[index].amount =
                       int.parse(textController.text);
                 Navigator.pop(context);
-                List<ProductOrder> newList = appController.productsOrder;
+                List<ProductRent> newList = appController.productsRent;
 
-                appController.productsOrder = newList;
+                appController.productsRent = newList;
               },
             ),
             actions: <Widget>[
@@ -183,14 +188,14 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
                 child: Text("Confirmar"),
                 onPressed: () {
                   if (textController.text.isEmpty)
-                    appController.productsOrder[index].amount = 0;
+                    appController.productsRent[index].amount = 0;
                   else
-                    appController.productsOrder[index].amount =
+                    appController.productsRent[index].amount =
                         int.parse(textController.text);
                   Navigator.pop(context);
-                  List<ProductOrder> newList = appController.productsOrder;
+                  List<ProductRent> newList = appController.productsRent;
 
-                  appController.productsOrder = newList;
+                  appController.productsRent = newList;
                 },
               ),
             ],

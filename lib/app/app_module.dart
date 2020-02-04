@@ -11,6 +11,7 @@ import 'package:hasura_connect/hasura_connect.dart';
 import 'modules/login/login_module.dart';
 import 'modules/orders/orders_module.dart';
 import 'modules/products_cart/products_cart_module.dart';
+import 'modules/products_cart_rent/products_cart_rent_module.dart';
 import 'modules/publishers/add_order/add_order_module.dart';
 import 'modules/publishers/add_product/add_product_module.dart';
 import 'modules/publishers/add_rent/add_rent_module.dart';
@@ -35,8 +36,9 @@ class AppModule extends MainModule {
         Router('/add-client/', module: AddClientModule()),
         Router('/add-product/', module: AddProductModule()),
         Router('/add-order/', module: AddOrderModule()),
-        Router('/add-remt/', module: AddRentModule()),
+        Router('/add-rent/', module: AddRentModule()),
         Router('/add-product-list/', module: ProductsCartModule()),
+        Router('/add-product-list-rent/', module: ProductsCartRentModule()),
       ];
 
   @override

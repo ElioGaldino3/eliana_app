@@ -47,7 +47,7 @@ class ClientItem extends StatelessWidget {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: client.photoUrl.isEmpty
+                      image: client.photoUrl == null || client.photoUrl.isEmpty
                           ? AssetImage('images/icon-client.png')
                           : CachedNetworkImageProvider(client.photoUrl),
                     )),

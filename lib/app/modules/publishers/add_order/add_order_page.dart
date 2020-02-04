@@ -38,73 +38,94 @@ class _AddOrderPageState extends State<AddOrderPage> {
                 break;
               case ConnectionState.done:
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(25),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    Expanded(
+                      child: ListView(
                         children: <Widget>[
-                          Text("Cliente:"),
-                          Observer(builder: (_) {
-                            return Row(
-                              children: <Widget>[
-                                Icon(FontAwesomeIcons.users),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
-                                  child: DropdownButton(
-                                    value: controller.selectedClient,
-                                    items: controller.dropDownMenuItems,
-                                    onChanged: (Client s) {
-                                      controller.selectedClient = s;
-                                    },
-                                  ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.all(25),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text("Cliente:"),
+                                    Observer(builder: (_) {
+                                      return Row(
+                                        children: <Widget>[
+                                          Icon(FontAwesomeIcons.users),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15.0),
+                                            child: DropdownButton(
+                                              value: controller.selectedClient,
+                                              items:
+                                                  controller.dropDownMenuItems,
+                                              onChanged: (Client s) {
+                                                controller.selectedClient = s;
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text("Data de entrega:"),
+                                    Observer(builder: (_) {
+                                      return CustomDatePicker(false,
+                                          date: controller.order.dataDelivery,
+                                          locale: LocaleType.pt);
+                                    }),
+                                    SizedBox(
+                                      height: 7,
+                                    ),
+                                    Text("Carrinho de Produtos:"),
+                                    SizedBox(height: 15),
+                                    GestureDetector(
+                                      child: Container(
+                                        color:
+                                            Color.fromRGBO(0, 0, 0, .0000004),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Icon(FontAwesomeIcons.shoppingCart),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 9.0),
+                                              child: Text("Ir para o carrinho"),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        AppController appController =
+                                            Modular.get();
+                                        Modular.to
+                                            .pushNamed('/add-product-list/');
+                                        appController.productsOrder =
+                                            controller.order.productOrders;
+                                      },
+                                    ),
+                                    SizedBox(height: 15),
+                                    TextField(
+                                      controller: controller.commentController,
+                                      decoration: InputDecoration(
+                                        labelText: "Comentário",
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      keyboardType: TextInputType.multiline,
+                                      maxLines: null,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            );
-                          }),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Data de entrega:"),
-                          Observer(builder: (_) {
-                            return CustomDatePicker(
-                                false,
-                                date: controller.order.dataDelivery,
-                                locale: LocaleType.pt);
-                          }),
-                          SizedBox(
-                            height: 7,
-                          ),
-                          Text("Carrinho de Produtos:"),
-                          SizedBox(height: 15),
-                          GestureDetector(
-                            child: Container(
-                              color: Color.fromRGBO(0, 0, 0, .0000004),
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(FontAwesomeIcons.shoppingCart),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 9.0),
-                                    child: Text("Ir para o carrinho"),
-                                  ),
-                                ],
                               ),
-                            ),
-                            onTap: () {
-                              AppController appController = Modular.get();
-                              Modular.to.pushNamed('/add-product-list/');
-                              appController.productsOrder =
-                                  controller.order.productOrders;
-                            },
-                          ),
+                            ],
+                          )
                         ],
                       ),
-                    ),
-                    Expanded(
-                      child: Container(),
                     ),
                     Container(
                       padding: EdgeInsets.all(20),

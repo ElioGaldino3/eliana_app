@@ -49,6 +49,23 @@ mixin _$AddOrderController on _AddOrderBase, Store {
     }, _$selectedClientAtom, name: '${_$selectedClientAtom.name}_set');
   }
 
+  final _$commentControllerAtom = Atom(name: '_AddOrderBase.commentController');
+
+  @override
+  TextEditingController get commentController {
+    _$commentControllerAtom.context.enforceReadPolicy(_$commentControllerAtom);
+    _$commentControllerAtom.reportObserved();
+    return super.commentController;
+  }
+
+  @override
+  set commentController(TextEditingController value) {
+    _$commentControllerAtom.context.conditionallyRunInAction(() {
+      super.commentController = value;
+      _$commentControllerAtom.reportChanged();
+    }, _$commentControllerAtom, name: '${_$commentControllerAtom.name}_set');
+  }
+
   final _$dropDownMenuItemsAtom = Atom(name: '_AddOrderBase.dropDownMenuItems');
 
   @override

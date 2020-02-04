@@ -27,6 +27,9 @@ abstract class _AddOrderBase with Store {
   Client selectedClient = Client();
 
   @observable
+  TextEditingController commentController = TextEditingController();
+
+  @observable
   List<DropdownMenuItem<Client>> dropDownMenuItems;
 
   @observable
@@ -54,6 +57,7 @@ abstract class _AddOrderBase with Store {
     products = await _hasura.getProducts();
     dropDownMenuItems = buildDropdownMenuItems(clients);
     selectedClient = dropDownMenuItems[0].value;
+    commentController.text = order.comment;
     if (order.id != null) {
       changeOption(order.client.id);
     }
@@ -70,7 +74,7 @@ abstract class _AddOrderBase with Store {
   putOrder() async {
     order.client = selectedClient;
     order.productOrders = appController.productsOrder;
-
+    order.comment = commentController.text;
     if (order.id != null) {
       if (await _hasura.deleteOrder(order.id)) {
         Order newOrder = await _hasura.putOrder(order);

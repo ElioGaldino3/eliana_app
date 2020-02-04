@@ -83,7 +83,8 @@ class _AddClientPageState extends State<AddClientPage> {
                         color: Colors.grey[200],
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: controller.client.photoUrl.isEmpty
+                          image: controller.client.photoUrl == null ||
+                                  controller.client.photoUrl.isEmpty
                               ? AssetImage('images/icon-client.png')
                               : CachedNetworkImageProvider(
                                   controller.client.photoUrl),
@@ -110,7 +111,8 @@ class _AddClientPageState extends State<AddClientPage> {
                 ),
                 SizedBox(height: 10),
                 Center(
-                  child: Text(controller.client.photoUrl.isEmpty
+                  child: Text(controller.client.photoUrl == null ||
+                          controller.client.photoUrl.isEmpty
                       ? "Aperte para adicionar uma foto"
                       : "Aperte para alterar a foto"),
                 ),

@@ -103,7 +103,7 @@ Future<Rent> getRentOperation(int id, HasuraConnect connection) async {
 
 Future<User> getUserOperation(String uid, HasuraConnect connection) async {
   var query = r"""
-      query MyQuery($uid: String!) {
+      query getUser($uid: String!) {
         users(where: {uid: {_eq: $uid}}) {
           id
           uid
@@ -113,6 +113,11 @@ Future<User> getUserOperation(String uid, HasuraConnect connection) async {
       }
     """;
 
-  var data = await connection.query(query, variables: {"uid": uid}); 
-  return User.fromJson(data['data']['users'][0]);
+  var data = await connection.query(query, variables: {"uid": uid});
+  var json = data['data']['users'];
+  if (json == []) {
+    return null;
+  } else {
+    return User.fromJson(data['data']['users'][0]);
+  }
 }

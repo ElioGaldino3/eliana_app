@@ -22,7 +22,6 @@ class DataBaseHasura implements IDatabase {
   HasuraConnect connection;
 
   DataBaseHasura(this.connection);
-
   @override
   Future<bool> deleteClient(int id) async {
     return await deleteClientOperation(id, connection);

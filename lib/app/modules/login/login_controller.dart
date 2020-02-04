@@ -17,7 +17,7 @@ abstract class _LoginBase with Store {
   @observable
   bool tryAcess = false;
   @action
-  Future<bool> loginWithGoogle() async {
+  Future loginWithGoogle() async {
     try {
       loading = true;
       await auth.loginWithGoogle();

@@ -21,6 +21,15 @@ class _ProductsPageState extends State<ProductsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Produtos"),
+        actions: <Widget>[
+          IconButton(
+            color: Colors.white,
+            icon: Icon(FontAwesomeIcons.list),
+            onPressed: () {
+              Modular.to.pushNamed('/add-product-list/');
+            },
+          )
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

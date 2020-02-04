@@ -1,12 +1,14 @@
+import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
+import 'package:eliana_app/app/shared/widgets/alert_dialog_yes_no.dart';
 import 'package:eliana_app/app/shared/widgets/custom_date_picker.dart';
+import 'package:eliana_app/app/shared/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mobx/mobx.dart';
 
 class AddOrderPage extends StatefulWidget {
   @override
@@ -75,7 +77,10 @@ class _AddOrderPageState extends State<AddOrderPage> {
                     ),
                   ),
                   onTap: () {
-                    print("indo para o carrinho");
+                    AppController appController = Modular.get();
+                    Modular.to.pushNamed('/add-product-list/');
+                    appController.productsOrder =
+                        controller.order.productOrders;
                   },
                 ),
               ],
@@ -90,10 +95,12 @@ class _AddOrderPageState extends State<AddOrderPage> {
             height: 90,
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                "Total: R\$${controller.total.toStringAsFixed(2)}",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-              ),
+              child: Observer(builder: (_) {
+                return Text(
+                  "Total: R\$${controller.total.toStringAsFixed(2)}",
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                );
+              }),
             ),
           )
         ],
@@ -102,6 +109,8 @@ class _AddOrderPageState extends State<AddOrderPage> {
         onPressed: () {
           FocusScope.of(context).requestFocus(FocusNode());
           controller.putOrder();
+          ShowToast.showCustomToast(FontAwesomeIcons.solidCheckCircle,
+              "Encomenda salvada com sucesso!", context, Colors.green[400]);
         },
         child: Icon(FontAwesomeIcons.save),
       ),

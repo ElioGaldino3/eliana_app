@@ -30,7 +30,7 @@ class ShowToast {
           ],
         ),
       ),
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 2),
       animationCurve: Curves.easeIn,
       dismissOtherToast: true,
       position: ToastPosition.bottom,

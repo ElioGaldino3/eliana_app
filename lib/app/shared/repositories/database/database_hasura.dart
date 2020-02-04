@@ -93,6 +93,16 @@ class DataBaseHasura implements IDatabase {
   }
 
   @override
+  Future<bool> updateOrder(Order order) async {
+    return await updateOrderOperation(order, connection);
+  }
+
+  @override
+  Future<bool> updateRent(Rent rent) async {
+    return await updateRentOperation(rent, connection);
+  }
+
+  @override
   Future<Client> getClient(int id) async {
     return await getClientOperation(id, connection);
   }
@@ -111,7 +121,6 @@ class DataBaseHasura implements IDatabase {
   Future<Rent> getRent(int id) async {
     return await getRentOperation(id, connection);
   }
-
 
   @override
   Future<List<Client>> getClients() async {
@@ -155,5 +164,4 @@ class DataBaseHasura implements IDatabase {
 
     return await snapshot.ref.getDownloadURL();
   }
-
 }

@@ -23,4 +23,5 @@ abstract class _ProductsBase with Store {
   deleteProduct(int id) {
     _hasura.deleteProduct(id);
   }
+  
 }

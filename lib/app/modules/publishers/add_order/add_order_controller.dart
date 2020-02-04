@@ -1,3 +1,4 @@
+import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/clients/clients_controller.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
@@ -15,6 +16,7 @@ class AddOrderController = _AddOrderBase with _$AddOrderController;
 
 abstract class _AddOrderBase with Store {
   IDatabase _hasura = Modular.get();
+  AppController appController = Modular.get();
 
   ClientsController clientsControlller;
 
@@ -35,15 +37,16 @@ abstract class _AddOrderBase with Store {
   List<Product> products = List<Product>();
 
   @observable
-  Order order = Order(dataDelivery: DateTime.now());
+  Order order = Order(dataDelivery: DateTime.now(), productOrders: []);
 
   @computed
   double get total {
-    print("querendo total");
     double totalCart = 0.0;
     if (order.productOrders == null) return 0.0;
+    if (products.isEmpty) return 0.0;
     for (ProductOrder productOrder in order.productOrders) {
-      Product product = products[products.indexWhere((product) => product.id == productOrder.idProduct)];
+      Product product = products[products
+          .indexWhere((product) => product.id == productOrder.idProduct)];
       totalCart += product.value * productOrder.amount;
     }
     return totalCart;
@@ -69,12 +72,17 @@ abstract class _AddOrderBase with Store {
 
   @action
   putOrder() async {
-    order.productOrders = [];
     order.client = selectedClient;
-    order.productOrders.add(ProductOrder(idProduct: 1, amount: 5));
-    order.productOrders.add(ProductOrder(idProduct: 2, amount: 6));
-    order.productOrders.add(ProductOrder(idProduct: 3, amount: 2));
-    Order newOrder = await _hasura.putOrder(order);
-    order = newOrder;
+    order.productOrders = appController.productsOrder;
+
+    if (order.id != null) {
+      if (await _hasura.deleteOrder(order.id)) {
+        Order newOrder = await _hasura.putOrder(order);
+        order = newOrder;
+      }
+    } else {
+      Order newOrder = await _hasura.putOrder(order);
+      order = newOrder;
+    }
   }
 }

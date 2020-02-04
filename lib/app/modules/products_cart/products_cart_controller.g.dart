@@ -32,4 +32,27 @@ mixin _$ProductsCartController on _ProductsCartBase, Store {
   Future getProducts() {
     return _$getProductsAsyncAction.run(() => super.getProducts());
   }
+
+  final _$_ProductsCartBaseActionController =
+      ActionController(name: '_ProductsCartBase');
+
+  @override
+  dynamic decrementAmount(int index, {int multiplier = 1}) {
+    final _$actionInfo = _$_ProductsCartBaseActionController.startAction();
+    try {
+      return super.decrementAmount(index, multiplier: multiplier);
+    } finally {
+      _$_ProductsCartBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic incrementAmount(int index, {int multiplier = 1}) {
+    final _$actionInfo = _$_ProductsCartBaseActionController.startAction();
+    try {
+      return super.incrementAmount(index, multiplier: multiplier);
+    } finally {
+      _$_ProductsCartBaseActionController.endAction(_$actionInfo);
+    }
+  }
 }

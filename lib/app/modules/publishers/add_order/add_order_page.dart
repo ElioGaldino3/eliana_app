@@ -1,4 +1,5 @@
 import 'package:eliana_app/app/app_controller.dart';
+import 'package:eliana_app/app/modules/products_cart/products_cart_module.dart';
 import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/widgets/alert_dialog_yes_no.dart';

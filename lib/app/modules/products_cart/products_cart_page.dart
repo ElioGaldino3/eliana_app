@@ -24,7 +24,7 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
           IconButton(
             icon: Icon(FontAwesomeIcons.archive),
             onPressed: () {
-              Modular.to.pushNamed('/add-order/');
+              Modular.to.pushNamedAndRemoveUntil('/add-order/', ModalRoute.withName('/orders/'));
               AddOrderController addController = Modular.get();
               addController.order.productOrders = appController.productsOrder;
               Order newOrder = addController.order;
@@ -57,28 +57,31 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
                                         .productsOrder[index].idProduct)]
                                 .name),
                           ),
-                          IconButton(
-                            icon: Icon(FontAwesomeIcons.minus, size: 15),
-                            onPressed: () {
-                              setState(() {
-                                appController.productsOrder[index].amount--;
-                              });
+                          GestureDetector(
+                            child: Container(
+                              color: Color.fromRGBO(0, 0, 0, .000000005),
+                              child: Icon(FontAwesomeIcons.minus, size: 25),
+                            ),
+                            onTap: () {
+                              controller.decrementAmount(index);
                             },
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 30,
                           ),
-                          Text(appController.productsOrder[index].amount
-                              .toString()),
                           SizedBox(
-                            width: 10,
+                            width: 30,
+                            child: Text(appController
+                                .productsOrder[index].amount
+                                .toString()),
                           ),
-                          IconButton(
-                            icon: Icon(FontAwesomeIcons.plus, size: 15),
-                            onPressed: () {
-                              setState(() {
-                                appController.productsOrder[index].amount++;
-                              });
+                          SizedBox(
+                            width: 15,
+                          ),
+                          GestureDetector(
+                            child: Icon(FontAwesomeIcons.plus, size: 25),
+                            onTap: () {
+                              controller.incrementAmount(index);
                             },
                           )
                         ],

@@ -4,6 +4,7 @@ import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/publishers/add_product/add_product_controller.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/product_order.dart';
+import 'package:eliana_app/app/shared/models/product_rent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -80,8 +81,12 @@ class _ProductItemState extends State<ProductItem> {
                   ? IconButton(
                       onPressed: () {
                         setState(() {
-                          appController.productsOrder.add(ProductOrder(
-                              idProduct: widget.item.id, amount: 1));
+                          if (widget.item.isRent)
+                            appController.productsRent.add(ProductRent(
+                                idProduct: widget.item.id, amount: 1));
+                          else
+                            appController.productsOrder.add(ProductOrder(
+                                idProduct: widget.item.id, amount: 1));
                         });
                       },
                       icon: Icon(
@@ -92,8 +97,14 @@ class _ProductItemState extends State<ProductItem> {
                   : IconButton(
                       onPressed: () {
                         setState(() {
-                          appController.productsOrder.removeWhere(
-                              (t) => t.idProduct == widget.item.id);
+                          
+
+                          if (widget.item.isRent)
+                            appController.productsRent.removeWhere(
+                                (t) => t.idProduct == widget.item.id);
+                          else
+                            appController.productsOrder.removeWhere(
+                                (t) => t.idProduct == widget.item.id);
                         });
                       },
                       icon: Icon(

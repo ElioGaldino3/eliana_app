@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eliana_app/app/modules/publishers/add_client/add_client_controller.dart';
+import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/widgets/image_source_sheet.dart';
 import 'package:eliana_app/app/shared/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,11 @@ class _AddClientPageState extends State<AddClientPage> {
               FontAwesomeIcons.redoAlt,
               size: 18,
             ),
-            onPressed: () {},
+            onPressed: () {
+              controller.nameController.clear();
+              controller.phoneController.clear();
+              controller.client = Client(phone: "", photoUrl: "");
+            },
           )
         ],
       ),

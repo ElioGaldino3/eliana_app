@@ -11,32 +11,44 @@ class LoginController = _LoginBase with _$LoginController;
 abstract class _LoginBase with Store {
   AuthController auth = Modular.get();
   IDatabase _database = Modular.get();
-  @observable
-  bool loading = false;
 
   @observable
   bool tryAcess = false;
 
   @observable
   bool haveAcess = false;
+
+  @observable
+  User user;
+
+  _LoginBase() {
+    initController();
+  }
+
+  @action
+  initController() {
+    if (auth.userDB != null) {
+      if (auth.userDB.isUser && auth.status == AuthStatus.login)
+        Modular.to.pushReplacementNamed('/orders/');
+      else if (!auth.userDB.isUser && auth.status == AuthStatus.login)
+        tryAcess = true;
+    }
+  }
+
   @action
   Future loginWithGoogle() async {
     try {
-      loading = true;
       await auth.loginWithGoogle();
-      User user = await _database.getUser(auth.user.uid);
+      user = await _database.getUser(auth.user.uid);
       if (user == null) {
         user = await _database.newUser(auth.user.uid);
         auth.userDB = user;
       } else if (user.isUser) {
-        haveAcess = true;
-        auth.status = AuthStatus.login;
+        Modular.to.pushReplacementNamed('orders');
+        auth.status = AuthStatus.haveAcess;
       } else {
         tryAcess = true;
-        loading = false;
       }
-    } catch (e) {
-      loading = false;
-    }
+    } catch (e) {}
   }
 }

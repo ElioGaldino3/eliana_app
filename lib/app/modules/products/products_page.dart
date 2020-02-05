@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mobx/mobx.dart';
 
 class ProductsPage extends StatefulWidget {
   final String title;
@@ -38,43 +39,35 @@ class _ProductsPageState extends State<ProductsPage> {
           )
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Expanded(
-            child: Observer(
-              builder: (_) {
-                if (controller.products.data == null) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return BuildListProducts(
-                    listStream: controller.products.data['data']['products'],
-                    controller: controller,
-                  );
-                }
-              },
-            ),
-          ),
-          Container(
-            height: 90,
-            color: Colors.grey[200],
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 23.0),
-                child: Observer(builder: (_) {
-                  return Text(
-                    "${controller.total} produtos",
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-                  );
-                }),
+      body: Observer(builder: (context) {
+        if (controller.products.status == StreamStatus.waiting)
+          return Center(child: CircularProgressIndicator());
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Expanded(
+              child: BuildListProducts(
+                listStream: controller.products.data['data']['products'],
+                controller: controller,
               ),
             ),
-          )
-        ],
-      ),
+            Container(
+              height: 90,
+              color: Colors.grey[200],
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 23.0),
+                  child: Text(
+                    "${controller.total} produtos",
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+            )
+          ],
+        );
+      }),
       floatingActionButton: FloatingActionButton(
         child: Icon(FontAwesomeIcons.plus),
         onPressed: () {

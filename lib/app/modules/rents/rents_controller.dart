@@ -14,11 +14,16 @@ abstract class _RentsBase with Store {
   ObservableStream rents;
 
   _RentsBase() {
-    rents = _hasura.getStreamRents();
+    getRents();
   }
 
   @computed
   int get total => rents.data == null ? 0 : rents.data['data']['rents'].length;
+
+  @action
+  getRents() {
+    rents = _hasura.getStreamRents();
+  }
 
   @action
   deleteRent(int id) {

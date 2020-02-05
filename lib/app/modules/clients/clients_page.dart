@@ -6,13 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mobx/mobx.dart';
 
 import 'clients_controller.dart';
 
 class ClientsPage extends StatefulWidget {
-  final String title;
-  const ClientsPage({Key key, this.title = "Clients"}) : super(key: key);
-
   @override
   _ClientsPageState createState() => _ClientsPageState();
 }
@@ -25,42 +23,36 @@ class _ClientsPageState extends State<ClientsPage> {
       appBar: AppBar(
         title: Text("Clientes"),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Expanded(
-            child: Observer(
-              builder: (_) {
-                if (controller.clients?.data == null) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return BuildListClients(
-                    listStream: controller.clients.data['data']['clients'],
-                    controller: controller,
-                  );
-                }
-              },
-            ),
-          ),
-          Container(
-            height: 90,
-            color: Colors.grey[200],
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 23.0),
-                child: Observer(builder: (_) {
-                  return Text(
-                    "${controller.total} clientes",
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-                  );
-                }),
+      body: Observer(
+        builder: (context) {
+          if (controller.clients.status == StreamStatus.waiting)
+            return Center(child: CircularProgressIndicator());
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: BuildListClients(
+                  listStream: controller.clients.data['data']['clients'],
+                  controller: controller,
+                ),
               ),
-            ),
-          )
-        ],
+              Container(
+                height: 90,
+                color: Colors.grey[200],
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                      padding: const EdgeInsets.only(left: 23.0),
+                      child: Text(
+                        "${controller.total} clientes",
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.w500),
+                      )),
+                ),
+              )
+            ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(FontAwesomeIcons.plus),

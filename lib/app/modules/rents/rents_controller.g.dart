@@ -34,6 +34,16 @@ mixin _$RentsController on _RentsBase, Store {
   final _$_RentsBaseActionController = ActionController(name: '_RentsBase');
 
   @override
+  dynamic getRents() {
+    final _$actionInfo = _$_RentsBaseActionController.startAction();
+    try {
+      return super.getRents();
+    } finally {
+      _$_RentsBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic deleteRent(int id) {
     final _$actionInfo = _$_RentsBaseActionController.startAction();
     try {

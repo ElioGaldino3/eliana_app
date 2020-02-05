@@ -13,13 +13,16 @@ abstract class _OrdersBase with Store {
   @observable
   ObservableStream orders;
 
-  @computed
-  int get total =>
-      orders.data == null ? 0 : orders.data['data']['orders'].length;
+  _OrdersBase() {
+    getOrders();
+  }
 
-  Future getOrders() async {
+  @computed
+  int get total => orders.status == StreamStatus.waiting ? 0 : orders.data['data']['orders'].length;
+
+  @action
+  getOrders() {
     orders = _hasura.getStreamOrders();
-    return orders;
   }
 
   @action

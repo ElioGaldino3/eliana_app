@@ -34,6 +34,16 @@ mixin _$OrdersController on _OrdersBase, Store {
   final _$_OrdersBaseActionController = ActionController(name: '_OrdersBase');
 
   @override
+  dynamic getOrders() {
+    final _$actionInfo = _$_OrdersBaseActionController.startAction();
+    try {
+      return super.getOrders();
+    } finally {
+      _$_OrdersBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic deleteOrder(int id) {
     final _$actionInfo = _$_OrdersBaseActionController.startAction();
     try {

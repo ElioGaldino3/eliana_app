@@ -43,6 +43,7 @@ abstract class _LoginBase with Store {
       if (user == null) {
         user = await _database.newUser(auth.user.uid);
         auth.userDB = user;
+        tryAcess = true;
       } else if (user.isUser) {
         Modular.to.pushReplacementNamed('orders');
         auth.status = AuthStatus.haveAcess;

@@ -1,5 +1,4 @@
 import 'package:eliana_app/app/modules/login/login_controller.dart';
-import 'package:eliana_app/app/shared/repositories/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';

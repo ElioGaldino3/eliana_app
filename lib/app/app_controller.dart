@@ -1,4 +1,5 @@
 import 'package:eliana_app/app/shared/models/product_order.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import 'shared/models/product_rent.dart';
@@ -17,4 +18,6 @@ abstract class _AppBase with Store {
   @observable
   List<ProductRent> productsRent = [];
 
+  @computed 
+  String get actualRouter => Modular.actualRoute;
 }

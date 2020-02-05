@@ -10,6 +10,7 @@
 .env
 .svn/
 pubspec.lock
+key.properties
 
 # IntelliJ related
 *.iml

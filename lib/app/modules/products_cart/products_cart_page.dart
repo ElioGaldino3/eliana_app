@@ -135,11 +135,17 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
                       ),
                     ),
                     RaisedButton(
-                      child: Text("Adicionar Produtos"),
+                      color: Colors.deepPurple,
+                      child: Text(
+                        "Adicionar Produtos",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.w500),
+                      ),
                       onPressed: () {
                         Modular.to.pushNamed("/products/");
                       },
-                    )
+                    ),
+                    SizedBox(height: 25)
                   ],
                 ),
               );

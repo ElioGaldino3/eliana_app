@@ -1,7 +1,6 @@
 import 'package:eliana_app/app/modules/products/products_controller.dart';
 import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_products.dart';
 import 'package:eliana_app/app/shared/widgets/custom_drawer/custom_drawer_widget.dart';
-import 'package:eliana_app/app/shared/widgets/rent_or_order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -27,9 +26,14 @@ class _ProductsPageState extends State<ProductsPage> {
             color: Colors.white,
             icon: Icon(FontAwesomeIcons.list),
             onPressed: () {
-              showModalBottomSheet(
-                        context: context,
-                        builder: (context) => ListProductsSheet());
+              Modular.to.pushNamed('/add-product-list/');
+            },
+          ),
+          IconButton(
+            color: Colors.white,
+            icon: Icon(FontAwesomeIcons.chair),
+            onPressed: () {
+              Modular.to.pushNamed('/add-product-list-rent/');
             },
           )
         ],

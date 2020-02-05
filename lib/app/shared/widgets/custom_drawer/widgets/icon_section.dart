@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -9,7 +8,7 @@ class IconSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _goToPage(String page) {
-      //Navigator.pop(context);
+      Navigator.pop(context);
       Modular.to.pushNamed(page);
     }
 
@@ -21,7 +20,7 @@ class IconSection extends StatelessWidget {
           onTap: () {
             _goToPage('/orders');
           },
-          highlighted: Modular.actualRoute == '/orders/',
+          highlighted: Modular.actualRoute == '/orders',
         ),
         IconTile(
           label: 'Aluguéis',

@@ -1,9 +1,5 @@
 import 'package:eliana_app/app/modules/orders/orders_controller.dart';
-import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
-import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_orders.dart';
-import 'package:eliana_app/app/shared/widgets/Items/order_item.dart';
-import 'package:eliana_app/app/shared/widgets/alert_dialog_yes_no.dart';
 import 'package:eliana_app/app/shared/widgets/custom_drawer/custom_drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -11,9 +7,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OrdersPage extends StatefulWidget {
-  final String title;
-  const OrdersPage({Key key, this.title = "Encomendas"}) : super(key: key);
-
   @override
   _OrdersPageState createState() => _OrdersPageState();
 }

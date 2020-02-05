@@ -1,6 +1,8 @@
 import 'package:eliana_app/app/shared/models/user.dart';
 import 'package:eliana_app/app/shared/repositories/auth/auth_repository_interface.dart';
+import 'package:eliana_app/app/shared/repositories/env_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -29,9 +31,12 @@ abstract class _AuthControllerBase with Store {
       status = AuthStatus.logoff;
     } else {
       userDB = await _hasura.getUser(user.uid);
-      if (userDB.isUser) {
-        status = AuthStatus.haveAcess;
+      if (userDB != null) {
+        if(userDB.isUser) {
+          status = AuthStatus.haveAcess;
+        }
       } else {
+        userDB = await _hasura.newUser(user.uid);
         status = AuthStatus.login;
       }
     }

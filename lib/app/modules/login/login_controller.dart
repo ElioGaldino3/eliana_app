@@ -16,6 +16,9 @@ abstract class _LoginBase with Store {
 
   @observable
   bool tryAcess = false;
+
+  @observable
+  bool haveAcess = false;
   @action
   Future loginWithGoogle() async {
     try {
@@ -23,12 +26,14 @@ abstract class _LoginBase with Store {
       await auth.loginWithGoogle();
       User user = await _database.getUser(auth.user.uid);
       if (user == null) {
-        auth.userDB = await _database.newUser(auth.user.uid);
-        user = auth.userDB;
+        user = await _database.newUser(auth.user.uid);
+        auth.userDB = user;
       } else if (user.isUser) {
-        Modular.to.pushReplacementNamed('/orders/');
+        haveAcess = true;
+        auth.status = AuthStatus.login;
       } else {
         tryAcess = true;
+        loading = false;
       }
     } catch (e) {
       loading = false;

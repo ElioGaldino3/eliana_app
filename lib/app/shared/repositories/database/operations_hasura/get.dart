@@ -115,7 +115,7 @@ Future<User> getUserOperation(String uid, HasuraConnect connection) async {
 
   var data = await connection.query(query, variables: {"uid": uid});
   var json = data['data']['users'];
-  if (json == []) {
+  if (json == null || json.isEmpty) {
     return null;
   } else {
     return User.fromJson(data['data']['users'][0]);

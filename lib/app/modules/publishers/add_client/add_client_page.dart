@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:share_extend/share_extend.dart';
 
 class AddClientPage extends StatefulWidget {
   @override

@@ -1,5 +1,7 @@
 import 'package:eliana_app/app/shared/repositories/auth_controller.dart';
+import 'package:eliana_app/app/shared/repositories/env_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -17,13 +19,14 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    disposer = autorun((_) {
+    disposer = autorun((_) async {
       final controller = Modular.get<AuthController>();
+
       if (controller.status == AuthStatus.login) {
         Modular.to.pushReplacementNamed('/login/');
-      } else if(controller.status == AuthStatus.logoff){
+      } else if (controller.status == AuthStatus.logoff) {
         Modular.to.pushReplacementNamed('/login/');
-      } else if(controller.status == AuthStatus.haveAcess) {
+      } else if (controller.status == AuthStatus.haveAcess) {
         Modular.to.pushReplacementNamed('/orders/');
       }
     });

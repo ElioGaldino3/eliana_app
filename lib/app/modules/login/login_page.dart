@@ -59,6 +59,10 @@ class _LoginPageState extends State<LoginPage> {
               height: 100,
             ),
             Observer(builder: (_) {
+              if (controller.haveAcess) {
+                Modular.to.pushReplacementNamed('/orders/');
+                return Center(child: CircularProgressIndicator());
+              }
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: controller.tryAcess

@@ -43,6 +43,23 @@ mixin _$LoginController on _LoginBase, Store {
     }, _$tryAcessAtom, name: '${_$tryAcessAtom.name}_set');
   }
 
+  final _$haveAcessAtom = Atom(name: '_LoginBase.haveAcess');
+
+  @override
+  bool get haveAcess {
+    _$haveAcessAtom.context.enforceReadPolicy(_$haveAcessAtom);
+    _$haveAcessAtom.reportObserved();
+    return super.haveAcess;
+  }
+
+  @override
+  set haveAcess(bool value) {
+    _$haveAcessAtom.context.conditionallyRunInAction(() {
+      super.haveAcess = value;
+      _$haveAcessAtom.reportChanged();
+    }, _$haveAcessAtom, name: '${_$haveAcessAtom.name}_set');
+  }
+
   final _$loginWithGoogleAsyncAction = AsyncAction('loginWithGoogle');
 
   @override

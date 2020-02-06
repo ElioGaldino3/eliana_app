@@ -39,7 +39,7 @@ class BuildListProducts extends StatelessWidget {
                             ),
                         barrierDismissible: false);
                   }),
-              padding: EdgeInsets.symmetric(horizontal: 0, vertical: .6),
+              padding: EdgeInsets.only(bottom: 3),
             )));
       },
     ));

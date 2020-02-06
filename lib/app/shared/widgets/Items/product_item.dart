@@ -34,8 +34,8 @@ class _ProductItemState extends State<ProductItem> {
             boxShadow: [
               BoxShadow(
                   color: Color.fromRGBO(0, 0, 0, .15),
-                  blurRadius: 1,
-                  offset: Offset(0, 3))
+                  blurRadius: 0,
+                  offset: Offset(0, 4))
             ]),
         child: Row(
           children: <Widget>[
@@ -47,7 +47,7 @@ class _ProductItemState extends State<ProductItem> {
                 decoration: BoxDecoration(
                     border: Border.all(
                         color: _getColor(widget.item.isRent), width: 4),
-                    shape: BoxShape.circle,
+                    borderRadius: BorderRadius.circular(3),
                     image: DecorationImage(
                       image: widget.item.photoUrl == null ||
                               widget.item.photoUrl.isEmpty

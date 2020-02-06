@@ -27,14 +27,12 @@ class ClientItem extends StatelessWidget {
     return GestureDetector(
       child: Container(
         height: 90,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, .09),
-                  blurRadius: 1,
-                  offset: Offset(0, 3))
-            ]),
+        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+          BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, .09),
+              blurRadius: 0,
+              offset: Offset(0, 4))
+        ]),
         child: Row(
           children: <Widget>[
             Padding(
@@ -43,8 +41,9 @@ class ClientItem extends StatelessWidget {
                 width: 67,
                 height: 67,
                 decoration: BoxDecoration(
-                    border: Border.all(color: Color.fromRGBO(98, 2, 238, .1), width: 2),
-                    shape: BoxShape.circle,
+                    border: Border.all(
+                        color: Color.fromRGBO(98, 2, 238, .1), width: 2),
+                    borderRadius: BorderRadius.circular(4),
                     image: DecorationImage(
                       image: client.photoUrl == null || client.photoUrl.isEmpty
                           ? AssetImage('images/icon-client.png')

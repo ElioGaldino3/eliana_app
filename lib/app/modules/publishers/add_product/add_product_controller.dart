@@ -27,7 +27,7 @@ abstract class _AddProductBase with Store {
 
   _AddProductBase() {
     nameController.text = product.name;
-    valueController.text = product.value.toString();
+    valueController.text = product.value == null ? 0 : product.value.toString();
   }
 
   @action

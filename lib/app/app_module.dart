@@ -29,7 +29,7 @@ class AppModule extends MainModule {
         Bind((i) => RentsController()),
         Bind((i) => DataBaseHasura(i.get<HasuraConnect>())),
         Bind((i) => HasuraConnect(
-            'http://192.168.42.212:8080/v1/graphql',
+            'https://eliana-backend.herokuapp.com/v1/graphql',
             headers: {"x-hasura-admin-secret": ""})),
         Bind<IAuth>((i) => AuthRepository()),
         Bind((i) => AuthController()),

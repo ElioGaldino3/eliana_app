@@ -38,7 +38,7 @@ class _ClientsPageState extends State<ClientsPage> {
               ),
               Container(
                 height: 90,
-                color: Colors.grey[200],
+                color: Colors.purple[800],
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -46,7 +46,7 @@ class _ClientsPageState extends State<ClientsPage> {
                       child: Text(
                         "${controller.total} clientes",
                         style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w500),
+                            fontSize: 17, fontWeight: FontWeight.w600, color: Colors.white),
                       )),
                 ),
               )

@@ -19,8 +19,7 @@ class ClientItem extends StatelessWidget {
         "whatsapp://send?phone= 55${client.phone}&text=Olá ${client.name}.";
     await canLaunch(whatsappUrl)
         ? launch(whatsappUrl)
-        : print(
-            "open whatsapp app link or do a snackbar with notification that there is no whatsapp installed");
+        : print("Error Whatsapp open");
   }
 
   @override
@@ -29,22 +28,22 @@ class ClientItem extends StatelessWidget {
       child: Container(
         height: 90,
         decoration: BoxDecoration(
-            color: Colors.deepPurple,
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+            color: Colors.white,
             boxShadow: [
               BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, .27),
-                  blurRadius: 10.5,
-                  offset: Offset(3, 10))
+                  color: Color.fromRGBO(0, 0, 0, .09),
+                  blurRadius: 1,
+                  offset: Offset(0, 3))
             ]),
         child: Row(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 23),
               child: Container(
-                width: 60,
-                height: 60,
+                width: 67,
+                height: 67,
                 decoration: BoxDecoration(
+                    border: Border.all(color: Color.fromRGBO(98, 2, 238, .1), width: 2),
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       image: client.photoUrl == null || client.photoUrl.isEmpty
@@ -64,7 +63,10 @@ class ClientItem extends StatelessWidget {
                   ),
                   AutoSizeText(
                     "${client.phone}",
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[600]),
                   )
                 ],
               ),

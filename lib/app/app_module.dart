@@ -30,7 +30,7 @@ class AppModule extends MainModule {
         Bind((i) => DataBaseHasura(i.get<HasuraConnect>())),
         Bind((i) => HasuraConnect(
             'http://192.168.42.212:8080/v1/graphql',
-            headers: {"x-hasura-admin-secret": ""})),
+            headers: {"x-hasura-admin-secret": "Gal79138151"})),
         Bind<IAuth>((i) => AuthRepository()),
         Bind((i) => AuthController()),
       ];

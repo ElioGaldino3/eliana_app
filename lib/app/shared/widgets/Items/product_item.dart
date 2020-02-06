@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/publishers/add_product/add_product_controller.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,6 @@ class ProductItem extends StatefulWidget {
 class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
-    AppController appController = Modular.get();
     return GestureDetector(
       onTap: () {
         Modular.to.pushNamed("/add-product/");
@@ -32,25 +30,27 @@ class _ProductItemState extends State<ProductItem> {
       child: Container(
         height: 90,
         decoration: BoxDecoration(
-            color: _getColor(widget.item.isRent),
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: Colors.white,
             boxShadow: [
               BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, .27),
-                  blurRadius: 10.5,
-                  offset: Offset(3, 10))
+                  color: Color.fromRGBO(0, 0, 0, .15),
+                  blurRadius: 1,
+                  offset: Offset(0, 3))
             ]),
         child: Row(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 23),
               child: Container(
-                width: 60,
-                height: 60,
+                width: 67,
+                height: 67,
                 decoration: BoxDecoration(
+                    border: Border.all(
+                        color: _getColor(widget.item.isRent), width: 4),
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: widget.item.photoUrl == null || widget.item.photoUrl.isEmpty
+                      image: widget.item.photoUrl == null ||
+                              widget.item.photoUrl.isEmpty
                           ? AssetImage('images/icon-product.png')
                           : CachedNetworkImageProvider(widget.item.photoUrl),
                     )),
@@ -86,7 +86,7 @@ class _ProductItemState extends State<ProductItem> {
 
 Color _getColor(bool isRent) {
   if (isRent) {
-    return Colors.deepPurple;
+    return Colors.deepPurple[900];
   } else {
     return Color(0xFF9B4DCB);
   }

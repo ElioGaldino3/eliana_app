@@ -24,6 +24,7 @@ class BuildListProducts extends StatelessWidget {
             child: ScaleAnimation(
                 child: Container(
               child: Dismissible(
+                  direction: DismissDirection.startToEnd,
                   key: ValueKey(list.id),
                   child: ProductItem(list),
                   confirmDismiss: (_) async {
@@ -38,7 +39,7 @@ class BuildListProducts extends StatelessWidget {
                             ),
                         barrierDismissible: false);
                   }),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              padding: EdgeInsets.only(bottom: 3),
             )));
       },
     ));

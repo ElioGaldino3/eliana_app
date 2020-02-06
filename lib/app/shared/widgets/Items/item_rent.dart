@@ -27,13 +27,12 @@ class RentItem extends StatelessWidget {
       child: Container(
         height: 90,
         decoration: BoxDecoration(
-            color: ContainerColor.containerColor(rent.dateRent),
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+            color: Colors.white,
             boxShadow: [
               BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, .27),
-                  blurRadius: 10.5,
-                  offset: Offset(3, 10))
+                  color: ContainerColor.containerColor(rent.dateRent),
+                  blurRadius: 0,
+                  offset: Offset(0, 4))
             ]),
         child: Row(
           children: <Widget>[
@@ -55,11 +54,11 @@ class RentItem extends StatelessWidget {
                   ),
                   AutoSizeText(
                     "${TimeToDeliver.timeToDeliver(rent.dateRent)}",
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.grey[600])
                   ),
                   AutoSizeText(
                     "${DayWeek.dayWeek(rent.dateRent)}",
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300, color: Colors.grey[600]),
                   ),
                 ],
               ),

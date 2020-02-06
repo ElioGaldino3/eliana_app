@@ -53,14 +53,15 @@ class _ProductsPageState extends State<ProductsPage> {
             ),
             Container(
               height: 90,
-              color: Colors.grey[200],
+              color: Colors.purple[800],
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 23.0),
                   child: Text(
                     "${controller.total} produtos",
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.w600, color: Colors.white),
                   ),
                 ),
               ),

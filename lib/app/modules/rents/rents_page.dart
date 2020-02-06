@@ -36,15 +36,17 @@ class _RentsPageState extends State<RentsPage> {
               ),
               Container(
                 height: 90,
-                color: Colors.grey[200],
+                color: Colors.purple[700],
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 23.0),
                     child: Text(
                       "${controller.total} aluguéis",
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
                     ),
                   ),
                 ),

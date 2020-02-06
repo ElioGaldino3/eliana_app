@@ -55,7 +55,7 @@ class BuildListOrders extends StatelessWidget {
                                 ),
                             barrierDismissible: false);
                     }),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                padding: EdgeInsets.only(bottom: 4),
               ),
             ),
           );

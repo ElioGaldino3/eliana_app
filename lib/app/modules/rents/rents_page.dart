@@ -1,4 +1,3 @@
-import 'package:eliana_app/app/modules/calendar/calendar_controller.dart';
 import 'package:eliana_app/app/modules/rents/rents_controller.dart';
 import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_rents.dart';
 import 'package:eliana_app/app/shared/widgets/custom_drawer/custom_drawer_widget.dart';
@@ -15,7 +14,6 @@ class RentsPage extends StatefulWidget {
 
 class _RentsPageState extends State<RentsPage> {
   RentsController controller = Modular.get();
-  CalendarPageController calendar = Modular.get();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,14 +23,14 @@ class _RentsPageState extends State<RentsPage> {
       ),
       body: Observer(
         builder: (_) {
-          if (calendar.rents.status == StreamStatus.waiting)
+          if (controller.rents.status == StreamStatus.waiting)
             return Center(child: CircularProgressIndicator());
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Expanded(
                 child: BuildListRents(
-                  listStream: calendar.rents.data['data']['rents'],
+                  listStream: controller.rents.data['data']['rents'],
                 ),
               ),
               Container(

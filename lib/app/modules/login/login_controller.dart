@@ -29,7 +29,7 @@ abstract class _LoginBase with Store {
   initController() {
     if (auth.userDB != null) {
       if (auth.userDB.isUser && auth.status == AuthStatus.login)
-        Modular.to.pushReplacementNamed('/calendar/');
+        Modular.to.pushReplacementNamed('/orders/');
       else if (!auth.userDB.isUser && auth.status == AuthStatus.login)
         tryAcess = true;
     }
@@ -45,7 +45,7 @@ abstract class _LoginBase with Store {
         auth.userDB = user;
         tryAcess = true;
       } else if (user.isUser) {
-        Modular.to.pushReplacementNamed('/calendar');
+        Modular.to.pushReplacementNamed('/orders/');
         auth.status = AuthStatus.haveAcess;
       } else {
         tryAcess = true;

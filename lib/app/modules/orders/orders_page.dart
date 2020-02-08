@@ -1,4 +1,3 @@
-import 'package:eliana_app/app/modules/calendar/calendar_controller.dart';
 import 'package:eliana_app/app/modules/orders/orders_controller.dart';
 import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_orders.dart';
 import 'package:eliana_app/app/shared/widgets/custom_drawer/custom_drawer_widget.dart';
@@ -12,9 +11,8 @@ class OrdersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OrdersController controller = Modular.get();
-    CalendarPageController calendar = Modular.get();
     return Observer(builder: (_) {
-      if (calendar.orders.status == StreamStatus.waiting) {
+      if (controller.orders.status == StreamStatus.waiting) {
         return Center(child: CircularProgressIndicator());
       } else {
         return Scaffold(
@@ -27,7 +25,7 @@ class OrdersPage extends StatelessWidget {
             children: <Widget>[
               Expanded(
                   child: BuildListOrders(
-                listStream: calendar.orders.data['data']['orders'],
+                listStream: controller.orders.data['data']['orders'],
               )),
               Container(
                 height: 90,

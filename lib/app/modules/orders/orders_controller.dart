@@ -1,4 +1,3 @@
-import 'package:eliana_app/app/modules/calendar/calendar_controller.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -10,12 +9,23 @@ class OrdersController = _OrdersBase with _$OrdersController;
 
 abstract class _OrdersBase with Store {
   IDatabase _hasura = Modular.get();
-  CalendarPageController calendarController = Modular.get();
+
+  @observable
+  ObservableStream orders;
+
+   _OrdersBase() {
+    getStream();
+  }
+
+  @action
+  getStream() {
+    orders = _hasura.getStreamOrders();
+  }
 
   @computed
-  int get total => calendarController.orders.status == StreamStatus.waiting
+  int get total => orders.status == StreamStatus.waiting
       ? 0
-      : calendarController.orders.data['data']['orders'].length;
+      : orders.data['data']['orders'].length;
 
   @action
   getOrders() {}

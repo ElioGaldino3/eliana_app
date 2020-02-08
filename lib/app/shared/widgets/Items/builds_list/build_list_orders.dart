@@ -1,4 +1,3 @@
-import 'package:eliana_app/app/modules/calendar/calendar_controller.dart';
 import 'package:eliana_app/app/modules/orders/orders_controller.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/widgets/Items/order_item.dart';
@@ -17,15 +16,14 @@ class BuildListOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OrdersController controller = Modular.get();
-    CalendarPageController calendar = Modular.get();
     return AnimationLimiter(
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         addAutomaticKeepAlives: true,
-        itemCount: calendar.orders.data['data']['orders'].length,
+        itemCount: controller.orders.data['data']['orders'].length,
         itemBuilder: (BuildContext context, int index) {
           Order order =
-              Order.fromJson(calendar.orders.data['data']['orders'][index]);
+              Order.fromJson(controller.orders.data['data']['orders'][index]);
           return AnimationConfiguration.staggeredList(
             position: index,
             child: ScaleAnimation(

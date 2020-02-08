@@ -23,6 +23,14 @@ class IconSection extends StatelessWidget {
       return Column(
         children: <Widget>[
           IconTile(
+            label: 'Calendário',
+            iconData: FontAwesomeIcons.calendar,
+            onTap: () {
+              _goToPage('/calendar/');
+            },
+            highlighted: controller.actualRouter == '/calendar/',
+          ),
+          IconTile(
             label: 'Encomendas',
             iconData: FontAwesomeIcons.archive,
             onTap: () {

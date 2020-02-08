@@ -1,3 +1,4 @@
+import 'package:eliana_app/app/modules/calendar/calendar_controller.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -9,21 +10,12 @@ class RentsController = _RentsBase with _$RentsController;
 
 abstract class _RentsBase with Store {
   IDatabase _hasura = Modular.get();
-
-  @observable
-  ObservableStream rents;
-
-  _RentsBase() {
-    getRents();
-  }
+  CalendarPageController calendarController = Modular.get();
 
   @computed
-  int get total => rents.data == null ? 0 : rents.data['data']['rents'].length;
-
-  @action
-  getRents() {
-    rents = _hasura.getStreamRents();
-  }
+  int get total => calendarController.rents.data == null
+      ? 0
+      : calendarController.rents.data['data']['rents'].length;
 
   @action
   deleteRent(int id) {

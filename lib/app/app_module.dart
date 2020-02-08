@@ -1,6 +1,7 @@
 import 'package:eliana_app/app/modules/calendar/calendar_controller.dart';
 import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/app_widget.dart';
+import 'package:eliana_app/app/modules/calendar/calendar_page.dart';
 import 'package:eliana_app/app/modules/clients/clients_module.dart';
 import 'package:eliana_app/app/modules/products/products_module.dart';
 import 'package:eliana_app/app/modules/publishers/add_client/add_client_module.dart';
@@ -26,7 +27,7 @@ import 'splash/splash_page.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => CalendarController()),
+        Bind((i) => CalendarPageController()),
         Bind((i) => AppController()),
         Bind((i) => RentsController()),
         Bind((i) => DataBaseHasura(i.get<HasuraConnect>())),
@@ -55,6 +56,8 @@ class AppModule extends MainModule {
             module: ProductsCartModule(), guards: [IsUserGuard()]),
         Router('/add-product-list-rent/',
             module: ProductsCartRentModule(), guards: [IsUserGuard()]),
+        Router('/calendar/',
+            child: (_, args) => CalendarPage(), guards: [IsUserGuard()]),
       ];
 
   @override

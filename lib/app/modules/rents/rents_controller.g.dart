@@ -14,34 +14,7 @@ mixin _$RentsController on _RentsBase, Store {
   @override
   int get total => (_$totalComputed ??= Computed<int>(() => super.total)).value;
 
-  final _$rentsAtom = Atom(name: '_RentsBase.rents');
-
-  @override
-  ObservableStream<dynamic> get rents {
-    _$rentsAtom.context.enforceReadPolicy(_$rentsAtom);
-    _$rentsAtom.reportObserved();
-    return super.rents;
-  }
-
-  @override
-  set rents(ObservableStream<dynamic> value) {
-    _$rentsAtom.context.conditionallyRunInAction(() {
-      super.rents = value;
-      _$rentsAtom.reportChanged();
-    }, _$rentsAtom, name: '${_$rentsAtom.name}_set');
-  }
-
   final _$_RentsBaseActionController = ActionController(name: '_RentsBase');
-
-  @override
-  dynamic getRents() {
-    final _$actionInfo = _$_RentsBaseActionController.startAction();
-    try {
-      return super.getRents();
-    } finally {
-      _$_RentsBaseActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   dynamic deleteRent(int id) {

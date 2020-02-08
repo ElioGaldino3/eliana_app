@@ -1,28 +1,31 @@
+import 'package:eliana_app/app/modules/calendar/calendar_controller.dart';
 import 'package:eliana_app/app/modules/orders/orders_controller.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/widgets/Items/order_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../../alert_dialog_yes_no.dart';
 
 class BuildListOrders extends StatelessWidget {
   final List listStream;
-  final OrdersController controller;
 
-  const BuildListOrders({Key key, this.listStream, this.controller})
+  const BuildListOrders({Key key, this.listStream})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    OrdersController controller = Modular.get();
+    CalendarPageController calendar = Modular.get();
     return AnimationLimiter(
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         addAutomaticKeepAlives: true,
-        itemCount: controller.orders.data['data']['orders'].length,
+        itemCount: calendar.orders.data['data']['orders'].length,
         itemBuilder: (BuildContext context, int index) {
           Order order =
-              Order.fromJson(controller.orders.data['data']['orders'][index]);
+              Order.fromJson(calendar.orders.data['data']['orders'][index]);
           return AnimationConfiguration.staggeredList(
             position: index,
             child: ScaleAnimation(

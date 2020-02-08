@@ -1,3 +1,4 @@
+import 'package:eliana_app/app/modules/calendar/calendar_controller.dart';
 import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/app_widget.dart';
 import 'package:eliana_app/app/modules/clients/clients_module.dart';
@@ -25,6 +26,7 @@ import 'splash/splash_page.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
+        Bind((i) => CalendarController()),
         Bind((i) => AppController()),
         Bind((i) => RentsController()),
         Bind((i) => DataBaseHasura(i.get<HasuraConnect>())),

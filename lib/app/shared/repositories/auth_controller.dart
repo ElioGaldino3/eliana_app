@@ -21,6 +21,9 @@ abstract class _AuthControllerBase with Store {
 
   User userDB;
 
+  @observable
+  String idToken;
+
   @action
   setUser(FirebaseUser value) async {
     user = value;
@@ -28,6 +31,9 @@ abstract class _AuthControllerBase with Store {
     if (user == null) {
       status = AuthStatus.logoff;
     } else {
+      user.getIdToken().then((token) {
+        idToken = token.token;
+      });
       userDB = await _hasura.getUser(user.uid);
       if (userDB != null) {
         if (userDB.isUser) {

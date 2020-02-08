@@ -73,11 +73,11 @@ mixin _$AddProductController on _AddProductBase, Store {
     return _$uploadImageAsyncAction.run(() => super.uploadImage(image));
   }
 
-  final _$addClientAsyncAction = AsyncAction('addClient');
+  final _$addProductAsyncAction = AsyncAction('addProduct');
 
   @override
-  Future addClient() {
-    return _$addClientAsyncAction.run(() => super.addClient());
+  Future addProduct() {
+    return _$addProductAsyncAction.run(() => super.addProduct());
   }
 
   final _$_AddProductBaseActionController =
@@ -88,6 +88,16 @@ mixin _$AddProductController on _AddProductBase, Store {
     final _$actionInfo = _$_AddProductBaseActionController.startAction();
     try {
       return super.changeOptionRent(isRent);
+    } finally {
+      _$_AddProductBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic reset() {
+    final _$actionInfo = _$_AddProductBaseActionController.startAction();
+    try {
+      return super.reset();
     } finally {
       _$_AddProductBaseActionController.endAction(_$actionInfo);
     }

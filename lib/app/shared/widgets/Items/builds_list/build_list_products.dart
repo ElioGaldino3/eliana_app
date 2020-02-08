@@ -32,7 +32,7 @@ class BuildListProducts extends StatelessWidget {
                         context: context,
                         builder: (_) => AlertDialogYesNo(
                               title: "Deletar Produto",
-                              content: "Você realmente quer deletar o produto?",
+                              content: "Você realmente quer deletar o(a) ${list.name}?",
                               yesFunction: () {
                                 controller.deleteProduct(list.id);
                               },

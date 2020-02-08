@@ -27,7 +27,8 @@ abstract class _AddProductBase with Store {
 
   _AddProductBase() {
     nameController.text = product.name;
-    valueController.text = product.value == null ? 0 : product.value.toString();
+    valueController.text =
+        product.value == null ? "" : product.value.toString();
   }
 
   @action
@@ -43,7 +44,7 @@ abstract class _AddProductBase with Store {
   }
 
   @action
-  addClient() async {
+  addProduct() async {
     if (product.id != null) {
       Product newProduct = Product(
           id: product.id,
@@ -56,8 +57,7 @@ abstract class _AddProductBase with Store {
     } else {
       product.name = nameController.text;
       product.value = double.parse(valueController.text);
-      Product newClient = await _hasura.putProduct(product);
-      product = newClient;
+      await _hasura.putProduct(product);
     }
   }
 
@@ -66,5 +66,12 @@ abstract class _AddProductBase with Store {
     Product newProduct = product;
     newProduct.isRent = isRent;
     product = newProduct;
+  }
+
+  @action
+  reset() {
+    nameController.clear();
+    valueController.clear();
+    product = Product(id: null);
   }
 }

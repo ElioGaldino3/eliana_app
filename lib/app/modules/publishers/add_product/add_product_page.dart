@@ -64,7 +64,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 TextFormField(
                   controller: controller.valueController,
                   decoration: InputDecoration(
-                    labelText: "Value",
+                    labelText: "Valor",
                     border: OutlineInputBorder(),
                   ),
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -153,24 +153,24 @@ class _AddProductPageState extends State<AddProductPage> {
                 "Coloque o nome do produto", context, Colors.red[400]);
             return;
           }
-          bool isNew;
-          if (controller.product.id != null)
-            isNew = false;
-          else
-            isNew = true;
+          bool isNew = true;
+          isNew = controller.product.id == null;
           FocusScope.of(context).requestFocus(FocusNode());
-          controller.addClient();
-          isNew
-              ? ShowToast.showCustomToast(
-                  FontAwesomeIcons.solidCheckCircle,
-                  "${controller.product.name} adicionado(a)",
-                  context,
-                  Colors.green[400])
-              : ShowToast.showCustomToast(
-                  FontAwesomeIcons.solidCheckCircle,
-                  "${controller.product.name} editado(a)",
-                  context,
-                  Colors.green[400]);
+          controller.addProduct();
+          if (isNew) {
+            ShowToast.showCustomToast(
+                FontAwesomeIcons.solidCheckCircle,
+                "${controller.product.name} adicionado(a)",
+                context,
+                Colors.green[400]);
+            controller.reset();
+          } else {
+            ShowToast.showCustomToast(
+                FontAwesomeIcons.solidCheckCircle,
+                "${controller.product.name} editado(a)",
+                context,
+                Colors.green[400]);
+          }
         },
       ),
     );

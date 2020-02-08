@@ -43,6 +43,23 @@ mixin _$AuthController on _AuthControllerBase, Store {
     }, _$userAtom, name: '${_$userAtom.name}_set');
   }
 
+  final _$idTokenAtom = Atom(name: '_AuthControllerBase.idToken');
+
+  @override
+  String get idToken {
+    _$idTokenAtom.context.enforceReadPolicy(_$idTokenAtom);
+    _$idTokenAtom.reportObserved();
+    return super.idToken;
+  }
+
+  @override
+  set idToken(String value) {
+    _$idTokenAtom.context.conditionallyRunInAction(() {
+      super.idToken = value;
+      _$idTokenAtom.reportChanged();
+    }, _$idTokenAtom, name: '${_$idTokenAtom.name}_set');
+  }
+
   final _$setUserAsyncAction = AsyncAction('setUser');
 
   @override

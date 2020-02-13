@@ -246,6 +246,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.11"
+  flare_dart:
+    dependency: transitive
+    description:
+      name: flare_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.3"
+  flare_flutter:
+    dependency: "direct main"
+    description:
+      name: flare_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -317,6 +331,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttie:
+    dependency: "direct main"
+    description:
+      name: fluttie
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.0"
   font_awesome_flutter:
     dependency: "direct main"
     description:

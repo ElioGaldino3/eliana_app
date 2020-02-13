@@ -1,6 +1,7 @@
 import 'package:eliana_app/app/modules/rents/rents_controller.dart';
 import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_rents.dart';
 import 'package:eliana_app/app/shared/widgets/custom_drawer/custom_drawer_widget.dart';
+import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -24,7 +25,7 @@ class _RentsPageState extends State<RentsPage> {
       body: Observer(
         builder: (_) {
           if (controller.rents.status == StreamStatus.waiting)
-            return Center(child: CircularProgressIndicator());
+            return Center(child: LoadingAnimation());
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[

@@ -1,6 +1,7 @@
 import 'package:eliana_app/app/modules/products/products_controller.dart';
 import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_products.dart';
 import 'package:eliana_app/app/shared/widgets/custom_drawer/custom_drawer_widget.dart';
+import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -41,7 +42,8 @@ class _ProductsPageState extends State<ProductsPage> {
       ),
       body: Observer(builder: (context) {
         if (controller.products.status == StreamStatus.waiting)
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: LoadingAnimation());
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -61,7 +63,9 @@ class _ProductsPageState extends State<ProductsPage> {
                   child: Text(
                     "${controller.total} produtos",
                     style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w600, color: Colors.white),
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white),
                   ),
                 ),
               ),

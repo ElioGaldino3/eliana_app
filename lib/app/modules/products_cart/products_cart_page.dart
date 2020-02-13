@@ -3,6 +3,8 @@ import 'package:eliana_app/app/modules/products_cart/products_cart_controller.da
 import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product_order.dart';
+import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -25,7 +27,7 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
             case ConnectionState.none:
             case ConnectionState.waiting:
               return Center(
-                child: CircularProgressIndicator(),
+                child: LoadingAnimation(),
               );
               break;
             default:

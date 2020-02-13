@@ -117,6 +117,64 @@ mixin _$AddOrderController on _AddOrderBase, Store {
     }, _$orderAtom, name: '${_$orderAtom.name}_set');
   }
 
+  final _$instanceAtom = Atom(name: '_AddOrderBase.instance');
+
+  @override
+  Fluttie get instance {
+    _$instanceAtom.context.enforceReadPolicy(_$instanceAtom);
+    _$instanceAtom.reportObserved();
+    return super.instance;
+  }
+
+  @override
+  set instance(Fluttie value) {
+    _$instanceAtom.context.conditionallyRunInAction(() {
+      super.instance = value;
+      _$instanceAtom.reportChanged();
+    }, _$instanceAtom, name: '${_$instanceAtom.name}_set');
+  }
+
+  final _$animationAtom = Atom(name: '_AddOrderBase.animation');
+
+  @override
+  dynamic get animation {
+    _$animationAtom.context.enforceReadPolicy(_$animationAtom);
+    _$animationAtom.reportObserved();
+    return super.animation;
+  }
+
+  @override
+  set animation(dynamic value) {
+    _$animationAtom.context.conditionallyRunInAction(() {
+      super.animation = value;
+      _$animationAtom.reportChanged();
+    }, _$animationAtom, name: '${_$animationAtom.name}_set');
+  }
+
+  final _$compositorAtom = Atom(name: '_AddOrderBase.compositor');
+
+  @override
+  dynamic get compositor {
+    _$compositorAtom.context.enforceReadPolicy(_$compositorAtom);
+    _$compositorAtom.reportObserved();
+    return super.compositor;
+  }
+
+  @override
+  set compositor(dynamic value) {
+    _$compositorAtom.context.conditionallyRunInAction(() {
+      super.compositor = value;
+      _$compositorAtom.reportChanged();
+    }, _$compositorAtom, name: '${_$compositorAtom.name}_set');
+  }
+
+  final _$prepareAnimationAsyncAction = AsyncAction('prepareAnimation');
+
+  @override
+  Future prepareAnimation() {
+    return _$prepareAnimationAsyncAction.run(() => super.prepareAnimation());
+  }
+
   final _$getClientsAsyncAction = AsyncAction('getClients');
 
   @override

@@ -1,4 +1,6 @@
 import 'package:eliana_app/app/modules/login/login_controller.dart';
+import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -12,10 +14,11 @@ class _LoginPageState extends State<LoginPage> {
   LoginController controller = Modular.get();
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        return Scaffold(
-          body: Container(
+    return Scaffold(
+      body: Observer(
+        builder: (_) {
+          
+          return Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topRight,
@@ -60,21 +63,24 @@ class _LoginPageState extends State<LoginPage> {
                                     fontSize: 15, fontWeight: FontWeight.w500))
                           ],
                         )
-                      : RaisedButton(
-                          child: Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Text("Faça o login com o Google!"),
-                          ),
-                          onPressed: () async {
-                            controller.loginWithGoogle();
-                          },
-                        ),
+                      : controller.loading
+                          ? LoadingAnimation()
+                          : RaisedButton(
+                              child: Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Text("Faça o login com o Google!"),
+                              ),
+                              onPressed: () {
+                                controller.powerLoading();
+                                controller.loginWithGoogle();
+                              },
+                            ),
                 )
               ],
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

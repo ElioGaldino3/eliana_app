@@ -2,6 +2,8 @@ import 'package:eliana_app/app/modules/products_cart_rent/products_cart_rent_con
 import 'package:eliana_app/app/modules/publishers/add_rent/add_rent_controller.dart';
 import 'package:eliana_app/app/shared/models/product_rent.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
+import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -30,7 +32,7 @@ class _ProductsCartRentPageState extends State<ProductsCartRentPage> {
             case ConnectionState.none:
             case ConnectionState.waiting:
               return Center(
-                child: CircularProgressIndicator(),
+                child: LoadingAnimation(),
               );
               break;
             default:

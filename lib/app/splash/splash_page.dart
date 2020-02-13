@@ -1,7 +1,6 @@
 import 'package:eliana_app/app/shared/repositories/auth_controller.dart';
-import 'package:eliana_app/app/shared/repositories/env_controller.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -21,7 +20,6 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     disposer = autorun((_) async {
       final controller = Modular.get<AuthController>();
-
       if (controller.status == AuthStatus.login) {
         Modular.to.pushReplacementNamed('/login/');
       } else if (controller.status == AuthStatus.logoff) {
@@ -42,7 +40,10 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Container(
+          height: 150,
+          child: FlareActor("animations/ElianaLoading.flr", animation: "Loading",),
+        ),
       ),
     );
   }

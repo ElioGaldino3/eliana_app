@@ -8,6 +8,7 @@ import 'package:eliana_app/app/shared/repositories/database/database_interface.d
 import 'package:eliana_app/app/shared/utils/build_dropdown_clients.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:fluttie/fluttie.dart';
 import 'package:mobx/mobx.dart';
 
 part 'add_order_controller.g.dart';
@@ -37,6 +38,27 @@ abstract class _AddOrderBase with Store {
 
   @observable
   Order order = Order(dataDelivery: DateTime.now(), productOrders: []);
+
+  @observable
+  var instance = Fluttie();
+
+  @observable
+  var animation;
+
+  @observable
+  var compositor;
+
+  _AddOrderBase() {
+    prepareAnimation();
+  }
+
+  @action 
+  prepareAnimation() async {
+    compositor = await instance.loadAnimationFromAsset(
+      "animations/eliana_loading.json", //Replace this string with your actual file
+    );
+    animation = instance.prepareAnimation(compositor);
+  }
 
   @computed
   double get total {

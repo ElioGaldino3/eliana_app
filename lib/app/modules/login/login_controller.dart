@@ -21,6 +21,9 @@ abstract class _LoginBase with Store {
   @observable
   User user;
 
+  @observable
+  bool loading = false;
+
   _LoginBase() {
     initController();
   }
@@ -51,5 +54,10 @@ abstract class _LoginBase with Store {
         tryAcess = true;
       }
     } catch (e) {}
+  }
+
+  @action
+  powerLoading() {
+    loading = true;
   }
 }

@@ -2,6 +2,7 @@ import 'package:eliana_app/app/modules/publishers/add_client/add_client_controll
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_clients.dart';
 import 'package:eliana_app/app/shared/widgets/custom_drawer/custom_drawer_widget.dart';
+import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -26,7 +27,7 @@ class _ClientsPageState extends State<ClientsPage> {
       body: Observer(
         builder: (context) {
           if (controller.clients.status == StreamStatus.waiting)
-            return Center(child: CircularProgressIndicator());
+            return Center(child: LoadingAnimation());
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[

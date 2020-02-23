@@ -1,6 +1,5 @@
 import 'package:eliana_app/app/modules/login/login_controller.dart';
 import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';

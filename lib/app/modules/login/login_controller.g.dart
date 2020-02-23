@@ -60,6 +60,23 @@ mixin _$LoginController on _LoginBase, Store {
     }, _$userAtom, name: '${_$userAtom.name}_set');
   }
 
+  final _$loadingAtom = Atom(name: '_LoginBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.context.enforceReadPolicy(_$loadingAtom);
+    _$loadingAtom.reportObserved();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.context.conditionallyRunInAction(() {
+      super.loading = value;
+      _$loadingAtom.reportChanged();
+    }, _$loadingAtom, name: '${_$loadingAtom.name}_set');
+  }
+
   final _$loginWithGoogleAsyncAction = AsyncAction('loginWithGoogle');
 
   @override
@@ -74,6 +91,16 @@ mixin _$LoginController on _LoginBase, Store {
     final _$actionInfo = _$_LoginBaseActionController.startAction();
     try {
       return super.initController();
+    } finally {
+      _$_LoginBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic powerLoading() {
+    final _$actionInfo = _$_LoginBaseActionController.startAction();
+    try {
+      return super.powerLoading();
     } finally {
       _$_LoginBaseActionController.endAction(_$actionInfo);
     }

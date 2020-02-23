@@ -6,10 +6,10 @@ import 'package:eliana_app/app/modules/publishers/add_client/add_client_module.d
 import 'package:eliana_app/app/modules/rents/rents_controller.dart';
 import 'package:eliana_app/app/shared/repositories/auth/auth_repository.dart';
 import 'package:eliana_app/app/shared/repositories/auth_controller.dart';
+import 'package:eliana_app/app/shared/repositories/database/custom_hasura_connect.dart';
 import 'package:eliana_app/app/shared/repositories/database/database_hasura.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:hasura_connect/hasura_connect.dart';
 import 'modules/login/login_module.dart';
 import 'modules/orders/orders_module.dart';
 import 'modules/products_cart/products_cart_module.dart';
@@ -26,11 +26,10 @@ class AppModule extends MainModule {
   List<Bind> get binds => [
         Bind((i) => AppController()),
         Bind((i) => RentsController()),
-        Bind((i) => DataBaseHasura(i.get<HasuraConnect>())),
-        Bind((i) => HasuraConnect('https://eliana-backend.herokuapp.com/v1/graphql',
-            headers: {"x-hasura-admin-secret": ""})),
+        Bind((i) => DataBaseHasura()),
         Bind<IAuth>((i) => AuthRepository()),
         Bind((i) => AuthController()),
+        Bind((i) => CustomHasuraConnect()),
       ];
 
   @override

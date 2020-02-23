@@ -1,5 +1,6 @@
 import 'package:eliana_app/app/shared/models/user.dart';
 import 'package:eliana_app/app/shared/repositories/auth/auth_repository_interface.dart';
+import 'package:eliana_app/app/shared/repositories/database/custom_hasura_connect.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -12,6 +13,7 @@ class AuthController = _AuthControllerBase with _$AuthController;
 abstract class _AuthControllerBase with Store {
   final IAuth _authRepository = Modular.get();
   IDatabase _hasura = Modular.get();
+  CustomHasuraConnect _connection = Modular.get();
 
   @observable
   AuthStatus status = AuthStatus.loading;
@@ -22,7 +24,7 @@ abstract class _AuthControllerBase with Store {
   User userDB;
 
   @observable
-  String idToken;
+  String token = "";
 
   @action
   setUser(FirebaseUser value) async {
@@ -31,9 +33,6 @@ abstract class _AuthControllerBase with Store {
     if (user == null) {
       status = AuthStatus.logoff;
     } else {
-      user.getIdToken().then((token) {
-        idToken = token.token;
-      });
       userDB = await _hasura.getUser(user.uid);
       if (userDB != null) {
         if (userDB.isUser) {

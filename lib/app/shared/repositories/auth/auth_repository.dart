@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:eliana_app/app/shared/repositories/auth/auth_repository_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,6 +24,7 @@ class AuthRepository implements IAuth {
 
     final FirebaseUser user =
         (await _auth.signInWithCredential(credential)).user;
+
 
     ///
     print("signed in " + user.displayName);

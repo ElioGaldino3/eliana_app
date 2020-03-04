@@ -18,14 +18,14 @@ mixin _$AddOrderController on _AddOrderBase, Store {
   final _$clientsAtom = Atom(name: '_AddOrderBase.clients');
 
   @override
-  List<Client> get clients {
+  ObservableList<Client> get clients {
     _$clientsAtom.context.enforceReadPolicy(_$clientsAtom);
     _$clientsAtom.reportObserved();
     return super.clients;
   }
 
   @override
-  set clients(List<Client> value) {
+  set clients(ObservableList<Client> value) {
     _$clientsAtom.context.conditionallyRunInAction(() {
       super.clients = value;
       _$clientsAtom.reportChanged();
@@ -49,6 +49,23 @@ mixin _$AddOrderController on _AddOrderBase, Store {
     }, _$selectedClientAtom, name: '${_$selectedClientAtom.name}_set');
   }
 
+  final _$isPutAtom = Atom(name: '_AddOrderBase.isPut');
+
+  @override
+  bool get isPut {
+    _$isPutAtom.context.enforceReadPolicy(_$isPutAtom);
+    _$isPutAtom.reportObserved();
+    return super.isPut;
+  }
+
+  @override
+  set isPut(bool value) {
+    _$isPutAtom.context.conditionallyRunInAction(() {
+      super.isPut = value;
+      _$isPutAtom.reportChanged();
+    }, _$isPutAtom, name: '${_$isPutAtom.name}_set');
+  }
+
   final _$commentControllerAtom = Atom(name: '_AddOrderBase.commentController');
 
   @override
@@ -69,14 +86,14 @@ mixin _$AddOrderController on _AddOrderBase, Store {
   final _$dropDownMenuItemsAtom = Atom(name: '_AddOrderBase.dropDownMenuItems');
 
   @override
-  List<DropdownMenuItem<Client>> get dropDownMenuItems {
+  ObservableList<DropdownMenuItem<Client>> get dropDownMenuItems {
     _$dropDownMenuItemsAtom.context.enforceReadPolicy(_$dropDownMenuItemsAtom);
     _$dropDownMenuItemsAtom.reportObserved();
     return super.dropDownMenuItems;
   }
 
   @override
-  set dropDownMenuItems(List<DropdownMenuItem<Client>> value) {
+  set dropDownMenuItems(ObservableList<DropdownMenuItem<Client>> value) {
     _$dropDownMenuItemsAtom.context.conditionallyRunInAction(() {
       super.dropDownMenuItems = value;
       _$dropDownMenuItemsAtom.reportChanged();
@@ -86,14 +103,14 @@ mixin _$AddOrderController on _AddOrderBase, Store {
   final _$productsAtom = Atom(name: '_AddOrderBase.products');
 
   @override
-  List<Product> get products {
+  ObservableList<Product> get products {
     _$productsAtom.context.enforceReadPolicy(_$productsAtom);
     _$productsAtom.reportObserved();
     return super.products;
   }
 
   @override
-  set products(List<Product> value) {
+  set products(ObservableList<Product> value) {
     _$productsAtom.context.conditionallyRunInAction(() {
       super.products = value;
       _$productsAtom.reportChanged();

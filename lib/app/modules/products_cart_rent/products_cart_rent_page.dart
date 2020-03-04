@@ -3,7 +3,6 @@ import 'package:eliana_app/app/modules/publishers/add_rent/add_rent_controller.d
 import 'package:eliana_app/app/shared/models/product_rent.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -43,8 +42,8 @@ class _ProductsCartRentPageState extends State<ProductsCartRentPage> {
                     IconButton(
                       icon: Icon(FontAwesomeIcons.archive),
                       onPressed: () {
-                        Modular.to.pushNamedAndRemoveUntil(
-                            '/add-rent/', ModalRoute.withName('/orders/'));
+                        Modular.to.pushNamed(
+                            '/add-rent');
                         AddRentController addController = Modular.get();
                         addController.rent.productRents =
                             appController.productsRent;

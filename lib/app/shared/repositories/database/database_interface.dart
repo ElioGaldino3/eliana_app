@@ -5,14 +5,13 @@ import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:eliana_app/app/shared/models/user.dart';
-import 'package:mobx/mobx.dart';
 
 abstract class IDatabase {
   //Getters Streams
-  ObservableStream getStreamOrders();
-  ObservableStream getStreamRents();
-  ObservableStream getStreamProducts();
-  ObservableStream getStreamClients();
+  Stream<List<Order>> getStreamOrders();
+  Stream<List<Rent>> getStreamRents();
+  Stream<List<Product>> getStreamProducts();
+  Stream<List<Client>> getStreamClients();
 
   //Putters
   Future<Order> putOrder(Order order);

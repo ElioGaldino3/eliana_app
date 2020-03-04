@@ -38,4 +38,10 @@ class Product {
         "isRent": isRent,
         "photoUrl": photoUrl,
       };
+
+      static fromJsonList(List list) {
+    if (list == null) return null;
+
+    return list.map((json) => Product.fromJson(json)).toList();
+  }
 }

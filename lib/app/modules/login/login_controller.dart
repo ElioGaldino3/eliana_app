@@ -48,12 +48,14 @@ abstract class _LoginBase with Store {
         auth.userDB = user;
         tryAcess = true;
       } else if (user.isUser) {
-        Modular.to.pushReplacementNamed('/orders/');
+        Modular.to.pushReplacementNamed('/rents-orders');
         auth.status = AuthStatus.haveAcess;
       } else {
         tryAcess = true;
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   @action

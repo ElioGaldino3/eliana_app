@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:eliana_app/app/app_controller.dart';
+import 'package:eliana_app/app/modules/orders/rents_orders_controller.dart';
+import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
 import 'package:eliana_app/app/modules/publishers/add_rent/add_rent_controller.dart';
-import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:eliana_app/app/shared/utils/container_color.dart';
 import 'package:eliana_app/app/shared/utils/date_format_portuguese.dart';
 import 'package:eliana_app/app/shared/utils/day_week.dart';
@@ -10,36 +11,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class RentItem extends StatelessWidget {
-  final Rent rent;
+class RentsOrderItem extends StatelessWidget {
+  final CustomListItem rentOrder;
 
-  const RentItem({Key key, this.rent}) : super(key: key);
+  const RentsOrderItem({Key key, this.rentOrder}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    DateTime dateTime = rentOrder.isOrder
+        ? rentOrder.order.dataDelivery
+        : rentOrder.rent.dateRent;
     return GestureDetector(
       onTap: () {
-        Modular.to.pushNamed('/add-rent');
-        AddRentController addController = Modular.get();
-        AppController appController = Modular.get();
-        addController.rent = rent;
-        appController.productsRent = rent.productRents;
+        if (rentOrder.isOrder) {
+          Modular.to.pushNamed('/add-order');
+          Modular.get<AddOrderController>().order = rentOrder.order;
+          Modular.get<AppController>().productsOrder =
+              rentOrder.order.productOrders;
+        } else {
+          Modular.to.pushNamed('/add-rent');
+          Modular.get<AddRentController>().rent = rentOrder.rent;
+          Modular.get<AppController>().productsRent =
+              rentOrder.rent.productRents;
+        }
       },
       child: Container(
         height: 90,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: ContainerColor.containerColor(rent.dateRent),
-                  blurRadius: 0,
-                  offset: Offset(0, 4))
-            ]),
+        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+          BoxShadow(
+              color: ContainerColor.containerColor(dateTime),
+              blurRadius: 0,
+              offset: Offset(0, 4))
+        ]),
         child: Row(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 23),
               child: Icon(
-                FontAwesomeIcons.chair,
+                rentOrder.isOrder
+                    ? FontAwesomeIcons.archive
+                    : FontAwesomeIcons.chair,
                 size: 27,
               ),
             ),
@@ -49,16 +59,22 @@ class RentItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   AutoSizeText(
-                    "${DateFormatPortuguese.getString(rent.dateRent)}",
+                    "${DateFormatPortuguese.getString(dateTime)}",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                   ),
                   AutoSizeText(
-                    "${TimeToDeliver.timeToDeliver(rent.dateRent)}",
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.grey[600])
+                    "${TimeToDeliver.timeToDeliver(dateTime)}",
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[600]),
                   ),
                   AutoSizeText(
-                    "${DayWeek.dayWeek(rent.dateRent)}",
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300, color: Colors.grey[600]),
+                    "${DayWeek.dayWeek(dateTime)}",
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.grey[500]),
                   ),
                 ],
               ),

@@ -23,20 +23,12 @@ class IconSection extends StatelessWidget {
       return Column(
         children: <Widget>[
           IconTile(
-            label: 'Encomendas',
+            label: 'Aluguéis e Encomendas',
             iconData: FontAwesomeIcons.archive,
             onTap: () {
-              _goToPage('/orders/');
+              _goToPage('/rents-orders/');
             },
-            highlighted: controller.actualRouter == '/orders/',
-          ),
-          IconTile(
-            label: 'Aluguéis',
-            iconData: FontAwesomeIcons.chair,
-            onTap: () {
-              _goToPage('/rents/');
-            },
-            highlighted: controller.actualRouter == '/rents/',
+            highlighted: controller.actualRouter == '/rents-orders/',
           ),
           IconTile(
             label: 'Produtos',

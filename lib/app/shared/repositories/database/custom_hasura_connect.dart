@@ -4,11 +4,11 @@ import 'package:hasura_connect/hasura_connect.dart';
 class CustomHasuraConnect {
   HasuraConnect client;
   CustomHasuraConnect() {
-    client = HasuraConnect("your-hasura-entry-point",
-        headers: {"x-hasura-admin-secret": ""},
-        //token: token,
-        );
-   // client.changeToken(token);
+    client = HasuraConnect(
+      "your-hasura-entry-point",
+      //token: token,
+    );
+    // client.changeToken(token);
   }
 
   Future<String> token(bool isError) async {

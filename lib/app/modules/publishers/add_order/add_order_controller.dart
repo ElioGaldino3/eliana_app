@@ -22,19 +22,22 @@ abstract class _AddOrderBase with Store {
   ClientsController clientsControlller;
 
   @observable
-  List<Client> clients = List<Client>();
+  ObservableList<Client> clients;
 
   @observable
   Client selectedClient = Client();
 
   @observable
+  bool isPut = false;
+
+  @observable
   TextEditingController commentController = TextEditingController();
 
   @observable
-  List<DropdownMenuItem<Client>> dropDownMenuItems;
+  ObservableList<DropdownMenuItem<Client>> dropDownMenuItems;
 
   @observable
-  List<Product> products = List<Product>();
+  ObservableList<Product> products;
 
   @observable
   Order order = Order(dataDelivery: DateTime.now(), productOrders: []);
@@ -50,9 +53,10 @@ abstract class _AddOrderBase with Store {
 
   _AddOrderBase() {
     prepareAnimation();
+    getClients();
   }
 
-  @action 
+  @action
   prepareAnimation() async {
     compositor = await instance.loadAnimationFromAsset(
       "animations/eliana_loading.json", //Replace this string with your actual file
@@ -64,7 +68,7 @@ abstract class _AddOrderBase with Store {
   double get total {
     double totalCart = 0.0;
     if (order.productOrders == null) return 0.0;
-    if (products.isEmpty) return 0.0;
+    if (products == null) return 0.0;
     for (ProductOrder productOrder in order.productOrders) {
       Product product = products[products
           .indexWhere((product) => product.id == productOrder.idProduct)];
@@ -75,8 +79,8 @@ abstract class _AddOrderBase with Store {
 
   @action
   Future getClients() async {
-    clients = await _hasura.getClients();
-    products = await _hasura.getProducts();
+    clients = appController.clients;
+    products = appController.products;
     dropDownMenuItems = buildDropdownMenuItems(clients);
     selectedClient = dropDownMenuItems[0].value;
     commentController.text = order.comment;
@@ -94,6 +98,7 @@ abstract class _AddOrderBase with Store {
 
   @action
   putOrder() async {
+    isPut = true;
     order.client = selectedClient;
     order.productOrders = appController.productsOrder;
     order.comment = commentController.text;
@@ -106,5 +111,6 @@ abstract class _AddOrderBase with Store {
       Order newOrder = await _hasura.putOrder(order);
       order = newOrder;
     }
+    isPut = false;
   }
 }

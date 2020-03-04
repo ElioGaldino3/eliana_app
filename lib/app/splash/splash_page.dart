@@ -25,7 +25,7 @@ class _SplashPageState extends State<SplashPage> {
       } else if (controller.status == AuthStatus.logoff) {
         Modular.to.pushReplacementNamed('/login/');
       } else if (controller.status == AuthStatus.haveAcess) {
-        Modular.to.pushReplacementNamed('/orders/');
+        Modular.to.pushReplacementNamed('/rents-orders/');
       }
     });
   }

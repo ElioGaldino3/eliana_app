@@ -1,7 +1,11 @@
+import 'package:eliana_app/app/shared/models/client.dart';
+import 'package:eliana_app/app/shared/models/order.dart';
+import 'package:eliana_app/app/shared/models/product.dart';
+import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:hasura_connect/hasura_connect.dart';
 import 'package:mobx/mobx.dart';
 
-ObservableStream getStreamClientsOperation(HasuraConnect connection) {
+Stream<List<Client>> getStreamClientsOperation(HasuraConnect connection) {
   var query = """
       subscription getClients {
         clients(order_by: {name: asc}) {
@@ -13,11 +17,10 @@ ObservableStream getStreamClientsOperation(HasuraConnect connection) {
       }
     """;
 
-  Snapshot snapshot = connection.subscription(query);
-  return snapshot.asObservable();
+  return connection.subscription(query).map((json) => Client.fromJsonList(json["data"]["clients"]));
 }
 
-ObservableStream getStreamOrdersOperation(HasuraConnect connection) {
+Stream<List<Order>> getStreamOrdersOperation(HasuraConnect connection) {
   var query = """
       subscription MySubscription {
         orders(order_by: {dataDelivery: asc}, where: {isDelivery: {_eq: false}}) {
@@ -37,11 +40,10 @@ ObservableStream getStreamOrdersOperation(HasuraConnect connection) {
         }
       }
     """;
-  Snapshot snapshot = connection.subscription(query);
-  return snapshot.asObservable();
+  return connection.subscription(query).map((json) => Order.fromJsonList(json["data"]["orders"]));
 }
 
-ObservableStream getStreamProductsOperation(HasuraConnect connection) {
+Stream<List<Product>> getStreamProductsOperation(HasuraConnect connection) {
   var query = """
       subscription getProdutos {
         products(order_by: {name: asc}) {
@@ -54,11 +56,10 @@ ObservableStream getStreamProductsOperation(HasuraConnect connection) {
       }
     """;
 
-  Snapshot snapshot = connection.subscription(query);
-  return snapshot.asObservable();
+  return connection.subscription(query).map((json) => Product.fromJsonList(json["data"]["products"]));
 }
 
-ObservableStream getStreamRentsOperation(HasuraConnect connection) {
+Stream<List<Rent>> getStreamRentsOperation(HasuraConnect connection) {
   var query = r"""
       subscription getRents {
         rents(order_by: {dateRent: asc}, where: {isFinished: {_eq: false}}) {
@@ -80,6 +81,5 @@ ObservableStream getStreamRentsOperation(HasuraConnect connection) {
       }
     """;
 
-  Snapshot snapshot = connection.subscription(query);
-  return snapshot.asObservable();
+  return connection.subscription(query).map((json) => Rent.fromJsonList(json["data"]["rents"]));
 }

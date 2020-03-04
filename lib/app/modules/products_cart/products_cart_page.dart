@@ -4,7 +4,6 @@ import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller
 import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product_order.dart';
 import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -38,13 +37,11 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
                     IconButton(
                       icon: Icon(FontAwesomeIcons.archive),
                       onPressed: () {
-                        Modular.to.pushNamedAndRemoveUntil(
-                            '/add-order/', ModalRoute.withName('/orders/'));
+                        Modular.to.pushNamed(
+                            '/add-order');
                         AddOrderController addController = Modular.get();
                         addController.order.productOrders =
                             appController.productsOrder;
-                        Order newOrder = addController.order;
-                        addController.order = newOrder;
                       },
                     )
                   ],

@@ -9,16 +9,6 @@ class ProductsController = _ProductsBase with _$ProductsController;
 abstract class _ProductsBase with Store {
   IDatabase _hasura = Modular.get();
 
-  @observable
-  ObservableStream products;
-
-  _ProductsBase() {
-    products = _hasura.getStreamProducts();
-  }
-
-  @computed
-  int get total => products.data == null ? 0 : products.data['data']['products'].length;
-
   @action
   deleteProduct(int id) {
     _hasura.deleteProduct(id);

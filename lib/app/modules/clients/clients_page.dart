@@ -1,3 +1,4 @@
+import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/publishers/add_client/add_client_controller.dart';
 import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_clients.dart';
@@ -18,6 +19,7 @@ class ClientsPage extends StatefulWidget {
 
 class _ClientsPageState extends State<ClientsPage> {
   ClientsController controller = Modular.get();
+  AppController appController = Modular.get();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,15 +28,14 @@ class _ClientsPageState extends State<ClientsPage> {
       ),
       body: Observer(
         builder: (context) {
-          if (controller.clients.status == StreamStatus.waiting)
+          if (appController.clientsStream.status == StreamStatus.waiting)
             return Center(child: LoadingAnimation());
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Expanded(
                 child: BuildListClients(
-                  listStream: controller.clients.data['data']['clients'],
-                  controller: controller,
+                  clients: appController.clients,
                 ),
               ),
               Container(
@@ -45,9 +46,11 @@ class _ClientsPageState extends State<ClientsPage> {
                   child: Padding(
                       padding: const EdgeInsets.only(left: 23.0),
                       child: Text(
-                        "${controller.total} clientes",
+                        "${appController.totalClients} clientes",
                         style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w600, color: Colors.white),
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
                       )),
                 ),
               )

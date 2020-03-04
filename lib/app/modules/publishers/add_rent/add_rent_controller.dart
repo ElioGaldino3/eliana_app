@@ -22,7 +22,7 @@ abstract class _AddRentBase with Store {
   ClientsController clientsControlller;
 
   @observable
-  List<Client> clients = List<Client>();
+  ObservableList<Client> clients;
 
   @observable
   TextEditingController adressController = TextEditingController();
@@ -37,7 +37,10 @@ abstract class _AddRentBase with Store {
   List<DropdownMenuItem<Client>> dropDownMenuItems;
 
   @observable
-  List<Product> products = List<Product>();
+  ObservableList<Product> products;
+
+  @observable
+  bool isPut = false;
 
   @observable
   Rent rent = Rent(dateRent: DateTime.now(), productRents: []);
@@ -46,7 +49,7 @@ abstract class _AddRentBase with Store {
   double get total {
     double totalCart = 0.0;
     if (rent.productRents == null || rent.productRents == []) return 0.0;
-    if (products.isEmpty) return 0.0;
+    if (products == null) return 0.0;
     for (ProductRent productRent in rent.productRents) {
       if (productRent.productId != null) {
         Product product = products[products
@@ -57,10 +60,12 @@ abstract class _AddRentBase with Store {
     return totalCart;
   }
 
-  @action
+  _AddRentBase() {
+    getClients();
+  }
   Future getClients() async {
-    clients = await _hasura.getClients();
-    products = await _hasura.getProducts();
+    clients = appController.clients;
+    products = appController.products;
     dropDownMenuItems = buildDropdownMenuItems(clients);
     selectedClient = dropDownMenuItems[0].value;
     adressController.text = rent.adress;
@@ -79,12 +84,15 @@ abstract class _AddRentBase with Store {
 
   @action
   putRent() async {
+    isPut = true;
     rent.client = selectedClient;
     rent.productRents = appController.productsRent;
     rent.adress = adressController.text;
     rent.comment = commentController.text;
     if (rent.id != null) {
-      if (await _hasura.deleteRent(rent.id)) {
+      bool isDeleted = await _hasura.deleteRent(rent.id);
+      print(isDeleted);
+      if (isDeleted) {
         Rent newRent = await _hasura.putRent(rent);
         rent = newRent;
       }
@@ -92,5 +100,6 @@ abstract class _AddRentBase with Store {
       Rent newRent = await _hasura.putRent(rent);
       rent = newRent;
     }
+    isPut = false;
   }
 }

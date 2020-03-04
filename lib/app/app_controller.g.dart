@@ -9,6 +9,30 @@ part of 'app_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AppController on _AppBase, Store {
+  Computed<ObservableList<Client>> _$clientsComputed;
+
+  @override
+  ObservableList<Client> get clients => (_$clientsComputed ??=
+          Computed<ObservableList<Client>>(() => super.clients))
+      .value;
+  Computed<int> _$totalClientsComputed;
+
+  @override
+  int get totalClients =>
+      (_$totalClientsComputed ??= Computed<int>(() => super.totalClients))
+          .value;
+  Computed<ObservableList<Product>> _$productsComputed;
+
+  @override
+  ObservableList<Product> get products => (_$productsComputed ??=
+          Computed<ObservableList<Product>>(() => super.products))
+      .value;
+  Computed<int> _$totalProductsComputed;
+
+  @override
+  int get totalProducts =>
+      (_$totalProductsComputed ??= Computed<int>(() => super.totalProducts))
+          .value;
   Computed<String> _$actualRouterComputed;
 
   @override
@@ -65,5 +89,39 @@ mixin _$AppController on _AppBase, Store {
       super.productsRent = value;
       _$productsRentAtom.reportChanged();
     }, _$productsRentAtom, name: '${_$productsRentAtom.name}_set');
+  }
+
+  final _$clientsStreamAtom = Atom(name: '_AppBase.clientsStream');
+
+  @override
+  ObservableStream<List<Client>> get clientsStream {
+    _$clientsStreamAtom.context.enforceReadPolicy(_$clientsStreamAtom);
+    _$clientsStreamAtom.reportObserved();
+    return super.clientsStream;
+  }
+
+  @override
+  set clientsStream(ObservableStream<List<Client>> value) {
+    _$clientsStreamAtom.context.conditionallyRunInAction(() {
+      super.clientsStream = value;
+      _$clientsStreamAtom.reportChanged();
+    }, _$clientsStreamAtom, name: '${_$clientsStreamAtom.name}_set');
+  }
+
+  final _$productsStreamAtom = Atom(name: '_AppBase.productsStream');
+
+  @override
+  ObservableStream<List<Product>> get productsStream {
+    _$productsStreamAtom.context.enforceReadPolicy(_$productsStreamAtom);
+    _$productsStreamAtom.reportObserved();
+    return super.productsStream;
+  }
+
+  @override
+  set productsStream(ObservableStream<List<Product>> value) {
+    _$productsStreamAtom.context.conditionallyRunInAction(() {
+      super.productsStream = value;
+      _$productsStreamAtom.reportChanged();
+    }, _$productsStreamAtom, name: '${_$productsStreamAtom.name}_set');
   }
 }

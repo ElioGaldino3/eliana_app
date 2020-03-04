@@ -1,3 +1,4 @@
+import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/products/products_controller.dart';
 import 'package:eliana_app/app/shared/widgets/Items/builds_list/build_list_products.dart';
 import 'package:eliana_app/app/shared/widgets/custom_drawer/custom_drawer_widget.dart';
@@ -18,6 +19,7 @@ class ProductsPage extends StatefulWidget {
 
 class _ProductsPageState extends State<ProductsPage> {
   ProductsController controller = Modular.get();
+  AppController appController = Modular.get();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,16 +43,14 @@ class _ProductsPageState extends State<ProductsPage> {
         ],
       ),
       body: Observer(builder: (context) {
-        if (controller.products.status == StreamStatus.waiting)
-          return Center(
-              child: LoadingAnimation());
+        if (appController.productsStream.status == StreamStatus.waiting)
+          return Center(child: LoadingAnimation());
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
               child: BuildListProducts(
-                listStream: controller.products.data['data']['products'],
-                controller: controller,
+                products: appController.products
               ),
             ),
             Container(
@@ -61,7 +61,7 @@ class _ProductsPageState extends State<ProductsPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 23.0),
                   child: Text(
-                    "${controller.total} produtos",
+                    "${appController.totalProducts} produtos",
                     style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,

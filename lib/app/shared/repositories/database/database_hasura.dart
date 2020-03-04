@@ -44,22 +44,22 @@ class DataBaseHasura implements IDatabase {
   }
 
   @override
-  ObservableStream getStreamClients() {
+  Stream<List<Client>> getStreamClients() {
     return getStreamClientsOperation(connection.client);
   }
 
   @override
-  ObservableStream getStreamOrders() {
+  Stream<List<Order>> getStreamOrders() {
     return getStreamOrdersOperation(connection.client);
   }
 
   @override
-  ObservableStream getStreamProducts() {
+  Stream<List<Product>> getStreamProducts() {
     return getStreamProductsOperation(connection.client);
   }
 
   @override
-  ObservableStream getStreamRents() {
+  Stream<List<Rent>> getStreamRents() {
     return getStreamRentsOperation(connection.client);
   }
 

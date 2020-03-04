@@ -45,4 +45,9 @@ class Rent {
         "dateRent": "${dateRent.year.toString().padLeft(4, '0')}-${dateRent.month.toString().padLeft(2, '0')}-${dateRent.day.toString().padLeft(2, '0')}",
         "client": client.toJson(),
     };
+    static fromJsonList(List list) {
+    if (list == null) return null;
+
+    return list.map((json) => Rent.fromJson(json)).toList();
+  }
 }

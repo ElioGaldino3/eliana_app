@@ -1,27 +1,33 @@
 class Client {
-    int id;
-    String name;
-    String phone;
-    String photoUrl;
+  int id;
+  String name;
+  String phone;
+  String photoUrl;
 
-    Client({
-        this.id,
-        this.name,
-        this.phone,
-        this.photoUrl = "",
-    });
+  Client({
+    this.id,
+    this.name,
+    this.phone,
+    this.photoUrl = "",
+  });
 
-    factory Client.fromJson(Map<String, dynamic> json) => Client(
+  factory Client.fromJson(Map<String, dynamic> json) => Client(
         id: json["id"],
         name: json["name"],
         phone: json["phone"],
         photoUrl: json["photoUrl"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "phone": phone,
         "photoUrl": photoUrl,
-    };
+      };
+
+  static fromJsonList(List list) {
+    if (list == null) return null;
+
+    return list.map((json) => Client.fromJson(json)).toList();
+  }
 }

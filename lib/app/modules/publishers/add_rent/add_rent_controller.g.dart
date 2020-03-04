@@ -18,14 +18,14 @@ mixin _$AddRentController on _AddRentBase, Store {
   final _$clientsAtom = Atom(name: '_AddRentBase.clients');
 
   @override
-  List<Client> get clients {
+  ObservableList<Client> get clients {
     _$clientsAtom.context.enforceReadPolicy(_$clientsAtom);
     _$clientsAtom.reportObserved();
     return super.clients;
   }
 
   @override
-  set clients(List<Client> value) {
+  set clients(ObservableList<Client> value) {
     _$clientsAtom.context.conditionallyRunInAction(() {
       super.clients = value;
       _$clientsAtom.reportChanged();
@@ -103,18 +103,35 @@ mixin _$AddRentController on _AddRentBase, Store {
   final _$productsAtom = Atom(name: '_AddRentBase.products');
 
   @override
-  List<Product> get products {
+  ObservableList<Product> get products {
     _$productsAtom.context.enforceReadPolicy(_$productsAtom);
     _$productsAtom.reportObserved();
     return super.products;
   }
 
   @override
-  set products(List<Product> value) {
+  set products(ObservableList<Product> value) {
     _$productsAtom.context.conditionallyRunInAction(() {
       super.products = value;
       _$productsAtom.reportChanged();
     }, _$productsAtom, name: '${_$productsAtom.name}_set');
+  }
+
+  final _$isPutAtom = Atom(name: '_AddRentBase.isPut');
+
+  @override
+  bool get isPut {
+    _$isPutAtom.context.enforceReadPolicy(_$isPutAtom);
+    _$isPutAtom.reportObserved();
+    return super.isPut;
+  }
+
+  @override
+  set isPut(bool value) {
+    _$isPutAtom.context.conditionallyRunInAction(() {
+      super.isPut = value;
+      _$isPutAtom.reportChanged();
+    }, _$isPutAtom, name: '${_$isPutAtom.name}_set');
   }
 
   final _$rentAtom = Atom(name: '_AddRentBase.rent');
@@ -132,13 +149,6 @@ mixin _$AddRentController on _AddRentBase, Store {
       super.rent = value;
       _$rentAtom.reportChanged();
     }, _$rentAtom, name: '${_$rentAtom.name}_set');
-  }
-
-  final _$getClientsAsyncAction = AsyncAction('getClients');
-
-  @override
-  Future<dynamic> getClients() {
-    return _$getClientsAsyncAction.run(() => super.getClients());
   }
 
   final _$putRentAsyncAction = AsyncAction('putRent');

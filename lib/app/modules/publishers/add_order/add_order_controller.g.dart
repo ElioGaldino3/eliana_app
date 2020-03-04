@@ -117,23 +117,6 @@ mixin _$AddOrderController on _AddOrderBase, Store {
     }, _$productsAtom, name: '${_$productsAtom.name}_set');
   }
 
-  final _$orderAtom = Atom(name: '_AddOrderBase.order');
-
-  @override
-  Order get order {
-    _$orderAtom.context.enforceReadPolicy(_$orderAtom);
-    _$orderAtom.reportObserved();
-    return super.order;
-  }
-
-  @override
-  set order(Order value) {
-    _$orderAtom.context.conditionallyRunInAction(() {
-      super.order = value;
-      _$orderAtom.reportChanged();
-    }, _$orderAtom, name: '${_$orderAtom.name}_set');
-  }
-
   final _$instanceAtom = Atom(name: '_AddOrderBase.instance');
 
   @override

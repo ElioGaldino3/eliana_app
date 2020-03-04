@@ -74,6 +74,40 @@ mixin _$AppController on _AppBase, Store {
     }, _$productsOrderAtom, name: '${_$productsOrderAtom.name}_set');
   }
 
+  final _$orderAtom = Atom(name: '_AppBase.order');
+
+  @override
+  Order get order {
+    _$orderAtom.context.enforceReadPolicy(_$orderAtom);
+    _$orderAtom.reportObserved();
+    return super.order;
+  }
+
+  @override
+  set order(Order value) {
+    _$orderAtom.context.conditionallyRunInAction(() {
+      super.order = value;
+      _$orderAtom.reportChanged();
+    }, _$orderAtom, name: '${_$orderAtom.name}_set');
+  }
+
+  final _$rentAtom = Atom(name: '_AppBase.rent');
+
+  @override
+  Rent get rent {
+    _$rentAtom.context.enforceReadPolicy(_$rentAtom);
+    _$rentAtom.reportObserved();
+    return super.rent;
+  }
+
+  @override
+  set rent(Rent value) {
+    _$rentAtom.context.conditionallyRunInAction(() {
+      super.rent = value;
+      _$rentAtom.reportChanged();
+    }, _$rentAtom, name: '${_$rentAtom.name}_set');
+  }
+
   final _$productsRentAtom = Atom(name: '_AppBase.productsRent');
 
   @override

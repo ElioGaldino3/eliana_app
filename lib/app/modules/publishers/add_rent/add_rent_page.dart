@@ -26,129 +26,143 @@ class _AddRentPageState extends State<AddRentPage> {
   AppController appController = Modular.get();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Adicionar Aluguél"),
-      ),
-      body: Observer(
-        builder: (context) {
-          if (appController.clientsStream.status == StreamStatus.waiting ||
-              appController.productsStream.status == StreamStatus.waiting)
-            return Center(child: LoadingAnimation());
-          //controller.getClients();
-          return Column(children: [
-            Expanded(
-              child: ListView(
-                //crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(25),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text("Cliente:"),
-                        Observer(builder: (_) {
-                          return Row(
-                            children: <Widget>[
-                              Icon(FontAwesomeIcons.users),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
-                                child: DropdownButton(
-                                  value: controller.selectedClient,
-                                  items: controller.dropDownMenuItems,
-                                  onChanged: (Client s) {
-                                    controller.selectedClient = s;
-                                  },
-                                ),
-                              ),
-                            ],
-                          );
-                        }),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text("Data de entrega:"),
-                        Observer(builder: (_) {
-                          return CustomDatePicker(true,
-                              date: controller.rent.dateRent,
-                              locale: LocaleType.pt);
-                        }),
-                        SizedBox(
-                          height: 7,
-                        ),
-                        Text("Carrinho de Produtos:"),
-                        SizedBox(height: 15),
-                        GestureDetector(
-                          child: Container(
-                            color: Color.fromRGBO(0, 0, 0, .0000004),
-                            child: Row(
+    return WillPopScope(
+      onWillPop: () async {
+        Modular.to.pushReplacementNamed('/rents-orders');
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Adicionar Aluguél"),
+        ),
+        body: Observer(
+          builder: (context) {
+            if (appController.clientsStream.status == StreamStatus.waiting ||
+                appController.productsStream.status == StreamStatus.waiting)
+              return Center(child: LoadingAnimation());
+            //controller.getClients();
+            return Column(children: [
+              Expanded(
+                child: ListView(
+                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(25),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text("Cliente:"),
+                          Observer(builder: (_) {
+                            return Row(
                               children: <Widget>[
-                                Icon(FontAwesomeIcons.shoppingCart),
+                                Icon(FontAwesomeIcons.users),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 9.0),
-                                  child: Text("Ir para o carrinho"),
+                                      horizontal: 15.0),
+                                  child: DropdownButton(
+                                    value: controller.selectedClient,
+                                    items: controller.dropDownMenuItems,
+                                    onChanged: (Client s) {
+                                      controller.selectedClient = s;
+                                      appController.rent.client = s;
+                                    },
+                                  ),
                                 ),
                               ],
+                            );
+                          }),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Data de entrega:"),
+                          Observer(builder: (_) {
+                            return CustomDatePicker(true,
+                                date: appController.rent.dateRent,
+                                locale: LocaleType.pt);
+                          }),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          Text("Carrinho de Produtos:"),
+                          SizedBox(height: 15),
+                          GestureDetector(
+                            child: Container(
+                              color: Color.fromRGBO(0, 0, 0, .0000004),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(FontAwesomeIcons.shoppingCart),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 9.0),
+                                    child: Text("Ir para o carrinho"),
+                                  ),
+                                ],
+                              ),
                             ),
+                            onTap: () {
+                              AppController appController = Modular.get();
+                              Modular.to.pushReplacementNamed(
+                                  '/add-product-list-rent/');
+                              appController.productsRent =
+                                  appController.rent.productRents;
+                            },
                           ),
-                          onTap: () {
-                            AppController appController = Modular.get();
-                            Modular.to.pushNamed('/add-product-list-rent/');
-                            appController.productsRent =
-                                controller.rent.productRents;
-                          },
-                        ),
-                        SizedBox(height: 15),
-                        TextField(
-                          controller: controller.adressController,
-                          decoration: InputDecoration(labelText: "Endereço"),
-                        ),
-                        SizedBox(height: 15),
-                        TextField(
-                          controller: controller.commentController,
-                          decoration: InputDecoration(
-                            labelText: "Comentário",
-                            border: OutlineInputBorder(),
+                          SizedBox(height: 15),
+                          TextField(
+                            controller: controller.adressController,
+                            decoration: InputDecoration(labelText: "Endereço"),
                           ),
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                        )
-                      ],
+                          SizedBox(height: 15),
+                          TextField(
+                            controller: controller.commentController,
+                            decoration: InputDecoration(
+                              labelText: "Comentário",
+                              border: OutlineInputBorder(),
+                            ),
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(20),
-              color: Colors.white,
-              height: 90,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Observer(builder: (_) {
-                  return Text(
-                    "Total: R\$${controller.total.toStringAsFixed(2)}",
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-                  );
-                }),
+              Container(
+                padding: EdgeInsets.all(20),
+                color: Colors.white,
+                height: 90,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Observer(builder: (_) {
+                    return Text(
+                      "Total: R\$${controller.total.toStringAsFixed(2)}",
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                    );
+                  }),
+                ),
               ),
-            ),
-          ]);
-        },
-      ),
-      floatingActionButton: Observer(builder: (_) {
-        return FloatingActionButton(
-          onPressed: controller.isPut ? null : () {
-            FocusScope.of(context).requestFocus(FocusNode());
-            controller.putRent();
-            ShowToast.showCustomToast(FontAwesomeIcons.solidCheckCircle,
-                "Aluguél salvo com sucesso!", context, Colors.green[400]);
+            ]);
           },
-          child: Icon(FontAwesomeIcons.save),
-        );
-      }),
+        ),
+        floatingActionButton: Observer(builder: (_) {
+          return FloatingActionButton(
+            onPressed: controller.isPut
+                ? null
+                : () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    controller.putRent();
+                    ShowToast.showCustomToast(
+                        FontAwesomeIcons.solidCheckCircle,
+                        "Aluguél salvo com sucesso!",
+                        context,
+                        Colors.green[400]);
+                  },
+            child: Icon(FontAwesomeIcons.save),
+          );
+        }),
+      ),
     );
   }
 }

@@ -17,20 +17,21 @@ class RentsOrderItem extends StatelessWidget {
   const RentsOrderItem({Key key, this.rentOrder}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    AppController appController = Modular.get();
     DateTime dateTime = rentOrder.isOrder
         ? rentOrder.order.dataDelivery
         : rentOrder.rent.dateRent;
     return GestureDetector(
       onTap: () {
         if (rentOrder.isOrder) {
-          Modular.to.pushNamed('/add-order');
-          Modular.get<AddOrderController>().order = rentOrder.order;
-          Modular.get<AppController>().productsOrder =
-              rentOrder.order.productOrders;
+          Modular.to.pushReplacementNamed('/add-order');
+
+          appController.order = rentOrder.order;
+          appController.productsOrder = rentOrder.order.productOrders;
         } else {
-          Modular.to.pushNamed('/add-rent');
-          Modular.get<AddRentController>().rent = rentOrder.rent;
-          Modular.get<AppController>().productsRent =
+          Modular.to.pushReplacementNamed('/add-rent');
+          appController.rent = rentOrder.rent;
+          appController.productsRent =
               rentOrder.rent.productRents;
         }
       },

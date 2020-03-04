@@ -5,7 +5,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import 'shared/models/client.dart';
+import 'shared/models/order.dart';
 import 'shared/models/product_rent.dart';
+import 'shared/models/rent.dart';
 
 part 'app_controller.g.dart';
 
@@ -21,6 +23,12 @@ abstract class _AppBase with Store {
   List<ProductOrder> productsOrder = [];
 
   @observable
+  Order order = Order(dataDelivery: DateTime.now(), productOrders: []);
+
+  @observable
+  Rent rent = Rent(dateRent: DateTime.now(), productRents: []);
+
+  @observable
   List<ProductRent> productsRent = [];
 
   @observable
@@ -33,8 +41,7 @@ abstract class _AppBase with Store {
   @observable
   ObservableStream<List<Product>> productsStream;
   @computed
-  ObservableList<Product> get products =>
-      productsStream?.value?.asObservable();
+  ObservableList<Product> get products => productsStream?.value?.asObservable();
   @computed
   int get totalProducts => products.length;
 

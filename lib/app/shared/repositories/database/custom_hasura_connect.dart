@@ -6,9 +6,9 @@ class CustomHasuraConnect {
   CustomHasuraConnect() {
     client = HasuraConnect(
       "your-hasura-entry-point",
-      //token: token,
+      token: token,
     );
-    // client.changeToken(token);
+    client.changeToken(token);
   }
 
   Future<String> token(bool isError) async {

@@ -42,15 +42,12 @@ abstract class _AddRentBase with Store {
   @observable
   bool isPut = false;
 
-  @observable
-  Rent rent = Rent(dateRent: DateTime.now(), productRents: []);
-
   @computed
   double get total {
     double totalCart = 0.0;
-    if (rent.productRents == null || rent.productRents == []) return 0.0;
+    if (appController.rent.productRents == null || appController.rent.productRents == []) return 0.0;
     if (products == null) return 0.0;
-    for (ProductRent productRent in rent.productRents) {
+    for (ProductRent productRent in appController.rent.productRents) {
       if (productRent.productId != null) {
         Product product = products[products
             .indexWhere((product) => product.id == productRent.productId)];
@@ -68,10 +65,10 @@ abstract class _AddRentBase with Store {
     products = appController.products;
     dropDownMenuItems = buildDropdownMenuItems(clients);
     selectedClient = dropDownMenuItems[0].value;
-    adressController.text = rent.adress;
-    commentController.text = rent.comment;
-    if (rent.id != null) {
-      changeOption(rent.client.id);
+    adressController.text = appController.rent.adress;
+    commentController.text = appController.rent.comment;
+    if (appController.rent.client != null) {
+      changeOption(appController.rent.client.id);
     }
   }
 
@@ -85,20 +82,20 @@ abstract class _AddRentBase with Store {
   @action
   putRent() async {
     isPut = true;
-    rent.client = selectedClient;
-    rent.productRents = appController.productsRent;
-    rent.adress = adressController.text;
-    rent.comment = commentController.text;
-    if (rent.id != null) {
-      bool isDeleted = await _hasura.deleteRent(rent.id);
+    appController.rent.client = selectedClient;
+    appController.rent.productRents = appController.productsRent;
+    appController.rent.adress = adressController.text;
+    appController.rent.comment = commentController.text;
+    if (appController.rent.id != null) {
+      bool isDeleted = await _hasura.deleteRent(appController.rent.id);
       print(isDeleted);
       if (isDeleted) {
-        Rent newRent = await _hasura.putRent(rent);
-        rent = newRent;
+        Rent newRent = await _hasura.putRent(appController.rent);
+        appController.rent = newRent;
       }
     } else {
-      Rent newRent = await _hasura.putRent(rent);
-      rent = newRent;
+      Rent newRent = await _hasura.putRent(appController.rent);
+      appController.rent = newRent;
     }
     isPut = false;
   }

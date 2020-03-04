@@ -20,7 +20,12 @@ class _AddClientPageState extends State<AddClientPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        Modular.to.pushReplacementNamed('/clients');
+        return false;
+      },
+      child:  Scaffold(
       appBar: AppBar(
         title: Text(controller.client.id != null
             ? "Editar Cliente"
@@ -148,6 +153,6 @@ class _AddClientPageState extends State<AddClientPage> {
                   Colors.green[400]);
         },
       ),
-    );
+    ),);
   }
 }

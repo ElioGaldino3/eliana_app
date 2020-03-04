@@ -134,23 +134,6 @@ mixin _$AddRentController on _AddRentBase, Store {
     }, _$isPutAtom, name: '${_$isPutAtom.name}_set');
   }
 
-  final _$rentAtom = Atom(name: '_AddRentBase.rent');
-
-  @override
-  Rent get rent {
-    _$rentAtom.context.enforceReadPolicy(_$rentAtom);
-    _$rentAtom.reportObserved();
-    return super.rent;
-  }
-
-  @override
-  set rent(Rent value) {
-    _$rentAtom.context.conditionallyRunInAction(() {
-      super.rent = value;
-      _$rentAtom.reportChanged();
-    }, _$rentAtom, name: '${_$rentAtom.name}_set');
-  }
-
   final _$putRentAsyncAction = AsyncAction('putRent');
 
   @override

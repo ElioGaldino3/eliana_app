@@ -22,64 +22,76 @@ class _ProductsPageState extends State<ProductsPage> {
   AppController appController = Modular.get();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Produtos"),
-        actions: <Widget>[
-          IconButton(
-            color: Colors.white,
-            icon: Icon(FontAwesomeIcons.list),
-            onPressed: () {
-              Modular.to.pushNamed('/add-product-list/');
-            },
-          ),
-          IconButton(
-            color: Colors.white,
-            icon: Icon(FontAwesomeIcons.chair),
-            onPressed: () {
-              Modular.to.pushNamed('/add-product-list-rent/');
-            },
-          )
-        ],
-      ),
-      body: Observer(builder: (context) {
-        if (appController.productsStream.status == StreamStatus.waiting)
-          return Center(child: LoadingAnimation());
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: BuildListProducts(
-                products: appController.products
-              ),
+    return WillPopScope(
+      onWillPop: () async {
+        if (controller.fromOrderCart)
+          Modular.to.pushReplacementNamed('/add-product-list');
+        else if (controller.fromRentCart)
+          Modular.to.pushReplacementNamed('/add-product-list-rent');
+        else
+          Modular.to.pushReplacementNamed('/rents-orders');
+
+        controller.fromOrderCart = false;
+        controller.fromRentCart = false;
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Produtos"),
+          actions: <Widget>[
+            IconButton(
+              color: Colors.white,
+              icon: Icon(FontAwesomeIcons.list),
+              onPressed: () {
+                Modular.to.pushNamed('/add-product-list/');
+              },
             ),
-            Container(
-              height: 90,
-              color: Colors.purple[800],
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 23.0),
-                  child: Text(
-                    "${appController.totalProducts} produtos",
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
+            IconButton(
+              color: Colors.white,
+              icon: Icon(FontAwesomeIcons.chair),
+              onPressed: () {
+                Modular.to.pushNamed('/add-product-list-rent/');
+              },
             )
           ],
-        );
-      }),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(FontAwesomeIcons.plus),
-        onPressed: () {
-          Modular.to.pushNamed("/add-product/");
-        },
+        ),
+        body: Observer(builder: (context) {
+          if (appController.productsStream.status == StreamStatus.waiting)
+            return Center(child: LoadingAnimation());
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: BuildListProducts(products: appController.products),
+              ),
+              Container(
+                height: 90,
+                color: Colors.purple[800],
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 23.0),
+                    child: Text(
+                      "${appController.totalProducts} produtos",
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          );
+        }),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(FontAwesomeIcons.plus),
+          onPressed: () {
+            Modular.to.pushNamed("/add-product/");
+          },
+        ),
+        drawer: CustomDrawerWidget(),
       ),
-      drawer: CustomDrawerWidget(),
     );
   }
 }

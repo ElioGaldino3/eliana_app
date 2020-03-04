@@ -40,9 +40,6 @@ abstract class _AddOrderBase with Store {
   ObservableList<Product> products;
 
   @observable
-  Order order = Order(dataDelivery: DateTime.now(), productOrders: []);
-
-  @observable
   var instance = Fluttie();
 
   @observable
@@ -67,9 +64,9 @@ abstract class _AddOrderBase with Store {
   @computed
   double get total {
     double totalCart = 0.0;
-    if (order.productOrders == null) return 0.0;
+    if (appController.order.productOrders == null) return 0.0;
     if (products == null) return 0.0;
-    for (ProductOrder productOrder in order.productOrders) {
+    for (ProductOrder productOrder in appController.order.productOrders) {
       Product product = products[products
           .indexWhere((product) => product.id == productOrder.idProduct)];
       totalCart += product.value * productOrder.amount;
@@ -83,9 +80,9 @@ abstract class _AddOrderBase with Store {
     products = appController.products;
     dropDownMenuItems = buildDropdownMenuItems(clients);
     selectedClient = dropDownMenuItems[0].value;
-    commentController.text = order.comment;
-    if (order.id != null) {
-      changeOption(order.client.id);
+    commentController.text = appController.order.comment;
+    if (appController.order.client != null) {
+      changeOption(appController.order.client.id);
     }
   }
 
@@ -94,22 +91,23 @@ abstract class _AddOrderBase with Store {
     selectedClient = dropDownMenuItems[
             dropDownMenuItems.indexWhere((client) => client.value.id == id)]
         .value;
+    appController.order.client = selectedClient;
   }
 
   @action
   putOrder() async {
     isPut = true;
-    order.client = selectedClient;
-    order.productOrders = appController.productsOrder;
-    order.comment = commentController.text;
-    if (order.id != null) {
-      if (await _hasura.deleteOrder(order.id)) {
-        Order newOrder = await _hasura.putOrder(order);
-        order = newOrder;
+    appController.order.client = selectedClient;
+    appController.order.productOrders = appController.productsOrder;
+    appController.order.comment = commentController.text;
+    if (appController.order.id != null) {
+      if (await _hasura.deleteOrder(appController.order.id)) {
+        Order newOrder = await _hasura.putOrder(appController.order);
+        appController.order = newOrder;
       }
     } else {
-      Order newOrder = await _hasura.putOrder(order);
-      order = newOrder;
+      Order newOrder = await _hasura.putOrder(appController.order);
+      appController.order = newOrder;
     }
     isPut = false;
   }

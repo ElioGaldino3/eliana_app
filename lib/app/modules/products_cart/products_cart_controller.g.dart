@@ -12,14 +12,14 @@ mixin _$ProductsCartController on _ProductsCartBase, Store {
   final _$productsAtom = Atom(name: '_ProductsCartBase.products');
 
   @override
-  List<Product> get products {
+  ObservableList<Product> get products {
     _$productsAtom.context.enforceReadPolicy(_$productsAtom);
     _$productsAtom.reportObserved();
     return super.products;
   }
 
   @override
-  set products(List<Product> value) {
+  set products(ObservableList<Product> value) {
     _$productsAtom.context.conditionallyRunInAction(() {
       super.products = value;
       _$productsAtom.reportChanged();

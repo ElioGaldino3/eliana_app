@@ -1,6 +1,5 @@
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/product_rent.dart';
-import 'package:eliana_app/app/shared/repositories/database/database_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -12,15 +11,14 @@ class ProductsCartRentController = _ProductsCartRentBase
     with _$ProductsCartRentController;
 
 abstract class _ProductsCartRentBase with Store {
-  IDatabase _hasura = Modular.get();
   AppController appController = Modular.get();
 
   @observable
-  List<Product> products = [];
+  ObservableList<Product> products = <Product>[].asObservable();
 
   @action
   Future getProducts() async {
-    products = await _hasura.getProducts();
+    products = appController.products;
   }
 
   @action
@@ -37,5 +35,4 @@ abstract class _ProductsCartRentBase with Store {
     List<ProductRent> newList = appController.productsRent;
     appController.productsRent = newList;
   }
-  
 }

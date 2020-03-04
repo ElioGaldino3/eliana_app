@@ -15,7 +15,7 @@ class IconSection extends StatelessWidget {
         Navigator.pop(context);
       else {
         Navigator.pop(context);
-        Modular.to.pushNamed(page);
+        Modular.to.pushReplacementNamed(page);
       }
     }
 

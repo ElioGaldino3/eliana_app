@@ -1,3 +1,4 @@
+import 'package:eliana_app/app/modules/products/products_controller.dart';
 import 'package:eliana_app/app/modules/products_cart_rent/products_cart_rent_controller.dart';
 import 'package:eliana_app/app/modules/publishers/add_rent/add_rent_controller.dart';
 import 'package:eliana_app/app/shared/models/product_rent.dart';
@@ -24,7 +25,13 @@ class _ProductsCartRentPageState extends State<ProductsCartRentPage> {
   ProductsCartRentController controller = Modular.get();
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return WillPopScope(
+      onWillPop: () async {
+        Modular.to.pushReplacementNamed('/add-rent');
+        appController.rent.productRents = appController.productsRent;
+        return false;
+      },
+      child: FutureBuilder(
         future: controller.getProducts(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
@@ -42,13 +49,9 @@ class _ProductsCartRentPageState extends State<ProductsCartRentPage> {
                     IconButton(
                       icon: Icon(FontAwesomeIcons.archive),
                       onPressed: () {
-                        Modular.to.pushNamed(
-                            '/add-rent');
-                        AddRentController addController = Modular.get();
-                        addController.rent.productRents =
+                        Modular.to.pushReplacementNamed('/add-rent');
+                        appController.rent.productRents =
                             appController.productsRent;
-                        Rent newRent = addController.rent;
-                        addController.rent = newRent;
                       },
                     )
                   ],
@@ -148,7 +151,8 @@ class _ProductsCartRentPageState extends State<ProductsCartRentPage> {
                             color: Colors.white, fontWeight: FontWeight.w500),
                       ),
                       onPressed: () {
-                        Modular.to.pushNamed("/products/");
+                        Modular.to.pushReplacementNamed("/products/");
+                        Modular.get<ProductsController>().fromRentCart = true;
                       },
                     ),
                     SizedBox(height: 25)
@@ -157,7 +161,9 @@ class _ProductsCartRentPageState extends State<ProductsCartRentPage> {
               );
               break;
           }
-        });
+        },
+      ),
+    );
   }
 
   _showDialog(BuildContext context, int index) async {

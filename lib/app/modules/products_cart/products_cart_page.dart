@@ -1,4 +1,5 @@
 import 'package:eliana_app/app/app_controller.dart';
+import 'package:eliana_app/app/modules/products/products_controller.dart';
 import 'package:eliana_app/app/modules/products_cart/products_cart_controller.dart';
 import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
 import 'package:eliana_app/app/shared/models/order.dart';
@@ -19,138 +20,146 @@ class _ProductsCartPageState extends State<ProductsCartPage> {
   ProductsCartController controller = Modular.get();
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: controller.getProducts(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return Center(
-                child: LoadingAnimation(),
-              );
-              break;
-            default:
-              return Scaffold(
-                appBar: AppBar(
-                  title: Text("Carrinho de Produtos"),
-                  actions: <Widget>[
-                    IconButton(
-                      icon: Icon(FontAwesomeIcons.archive),
-                      onPressed: () {
-                        Modular.to.pushNamed(
-                            '/add-order');
-                        AddOrderController addController = Modular.get();
-                        addController.order.productOrders =
-                            appController.productsOrder;
-                      },
-                    )
-                  ],
-                ),
-                body: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: appController.productsOrder.length,
-                        itemBuilder: (context, index) {
-                          return Observer(
-                            builder: (_) {
-                              if (controller.products.isEmpty)
-                                return Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              return Dismissible(
-                                key: ValueKey(appController
-                                    .productsOrder[index].idProduct),
-                                background: Container(
-                                  alignment: Alignment.centerLeft,
-                                  padding: EdgeInsets.only(left: 20.0),
-                                  color: Colors.redAccent,
-                                  child:
-                                      Icon(Icons.delete, color: Colors.white),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(13.0),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Text(controller
-                                            .products[controller.products
-                                                .indexWhere((s) =>
-                                                    s.id ==
-                                                    appController
-                                                        .productsOrder[index]
-                                                        .idProduct)]
-                                            .name),
-                                      ),
-                                      GestureDetector(
-                                        child: Container(
-                                          color: Color.fromRGBO(
-                                              0, 0, 0, .000000005),
-                                          child: Icon(FontAwesomeIcons.minus,
-                                              size: 25),
-                                        ),
-                                        onTap: () {
-                                          controller.decrementAmount(index);
-                                        },
-                                      ),
-                                      SizedBox(
-                                        width: 30,
-                                      ),
-                                      GestureDetector(
-                                        child: SizedBox(
-                                          width: 30,
-                                          child: Text(appController
-                                              .productsOrder[index].amount
-                                              .toString()),
-                                        ),
-                                        onTap: () {
-                                          _showDialog(context, index);
-                                        },
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      GestureDetector(
-                                        child: Icon(FontAwesomeIcons.plus,
-                                            size: 25),
-                                        onTap: () {
-                                          controller.incrementAmount(index);
-                                        },
-                                      )
-                                    ],
+    return WillPopScope(
+      onWillPop: () async {
+        Modular.to.pushReplacementNamed('/add-order');
+        appController.order.productOrders = appController.productsOrder;
+        return false;
+      },
+      child: FutureBuilder(
+          future: controller.getProducts(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return Center(
+                  child: LoadingAnimation(),
+                );
+                break;
+              default:
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text("Carrinho de Produtos"),
+                    actions: <Widget>[
+                      IconButton(
+                        icon: Icon(FontAwesomeIcons.archive),
+                        onPressed: () {
+                          Modular.to.pushReplacementNamed('/add-order');
+                          appController.order.productOrders =
+                              appController.productsOrder;
+                        },
+                      )
+                    ],
+                  ),
+                  body: Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: appController.productsOrder.length,
+                          itemBuilder: (context, index) {
+                            return Observer(
+                              builder: (_) {
+                                if (controller.products.isEmpty)
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                return Dismissible(
+                                  key: ValueKey(appController
+                                      .productsOrder[index].idProduct),
+                                  background: Container(
+                                    alignment: Alignment.centerLeft,
+                                    padding: EdgeInsets.only(left: 20.0),
+                                    color: Colors.redAccent,
+                                    child:
+                                        Icon(Icons.delete, color: Colors.white),
                                   ),
-                                ),
-                                direction: DismissDirection.startToEnd,
-                                onDismissed: (direction) {
-                                  appController.productsOrder.removeWhere((t) =>
-                                      t.idProduct ==
-                                      appController
-                                          .productsOrder[index].idProduct);
-                                },
-                              );
-                            },
-                          );
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(13.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Text(controller
+                                              .products[controller.products
+                                                  .indexWhere((s) =>
+                                                      s.id ==
+                                                      appController
+                                                          .productsOrder[index]
+                                                          .idProduct)]
+                                              .name),
+                                        ),
+                                        GestureDetector(
+                                          child: Container(
+                                            color: Color.fromRGBO(
+                                                0, 0, 0, .000000005),
+                                            child: Icon(FontAwesomeIcons.minus,
+                                                size: 25),
+                                          ),
+                                          onTap: () {
+                                            controller.decrementAmount(index);
+                                          },
+                                        ),
+                                        SizedBox(
+                                          width: 30,
+                                        ),
+                                        GestureDetector(
+                                          child: SizedBox(
+                                            width: 30,
+                                            child: Text(appController
+                                                .productsOrder[index].amount
+                                                .toString()),
+                                          ),
+                                          onTap: () {
+                                            _showDialog(context, index);
+                                          },
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        GestureDetector(
+                                          child: Icon(FontAwesomeIcons.plus,
+                                              size: 25),
+                                          onTap: () {
+                                            controller.incrementAmount(index);
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  direction: DismissDirection.startToEnd,
+                                  onDismissed: (direction) {
+                                    appController.productsOrder.removeWhere(
+                                        (t) =>
+                                            t.idProduct ==
+                                            appController.productsOrder[index]
+                                                .idProduct);
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                      RaisedButton(
+                        color: Colors.deepPurple,
+                        child: Text(
+                          "Adicionar Produtos",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w500),
+                        ),
+                        onPressed: () {
+                          Modular.to.pushReplacementNamed("/products/");
+                          Modular.get<ProductsController>().fromOrderCart =
+                              true;
                         },
                       ),
-                    ),
-                    RaisedButton(
-                      color: Colors.deepPurple,
-                      child: Text(
-                        "Adicionar Produtos",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w500),
-                      ),
-                      onPressed: () {
-                        Modular.to.pushNamed("/products/");
-                      },
-                    ),
-                    SizedBox(height: 25)
-                  ],
-                ),
-              );
-              break;
-          }
-        });
+                      SizedBox(height: 25)
+                    ],
+                  ),
+                );
+                break;
+            }
+          }),
+    );
   }
 
   _showDialog(BuildContext context, int index) async {

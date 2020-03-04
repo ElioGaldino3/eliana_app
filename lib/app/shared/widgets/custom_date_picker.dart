@@ -8,21 +8,20 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../app_controller.dart';
+
 class CustomDatePicker extends StatelessWidget {
   final LocaleType locale;
   final bool isRent;
   final DateTime date;
 
-  const CustomDatePicker(this.isRent, {Key key, this.locale, this.date}) : super(key: key);
+  const CustomDatePicker(this.isRent, {Key key, this.locale, this.date})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    AddRentController rentController;
-    AddOrderController controller;
-    if (isRent)
-      rentController = Modular.get();
-    else
-      controller = Modular.get();
+    AppController controller;
+    controller = Modular.get();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: GestureDetector(
@@ -37,7 +36,7 @@ class CustomDatePicker extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: isRent
                       ? Text(DateFormatPortuguese.getString(
-                          rentController.rent.dateRent))
+                          controller.rent.dateRent))
                       : Text(DateFormatPortuguese.getString(
                           controller.order.dataDelivery)),
                 )
@@ -57,13 +56,13 @@ class CustomDatePicker extends StatelessWidget {
                 newOrder.dataDelivery = newDate;
                 controller.order = newOrder;
               } else {
-                Rent newRent = rentController.rent;
+                Rent newRent = controller.rent;
                 newRent.dateRent = newDate;
-                rentController.rent = newRent;
+                controller.rent = newRent;
               }
             },
             currentTime: isRent
-                ? rentController.rent.dateRent
+                ? controller.rent.dateRent
                 : controller.order.dataDelivery,
             locale: locale,
           );

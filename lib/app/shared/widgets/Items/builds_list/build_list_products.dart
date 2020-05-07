@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:mobx/mobx.dart';
+
 import '../../alert_dialog_yes_no.dart';
 
 class BuildListProducts extends StatelessWidget {
@@ -27,8 +28,7 @@ class BuildListProducts extends StatelessWidget {
                   direction: DismissDirection.startToEnd,
                   key: ValueKey(products[index].id),
                   child: ProductItem(products[index]),
-                  confirmDismiss: (_) async {
-                    await showDialog(
+                  confirmDismiss: (_) async => await showDialog(
                         context: context,
                         builder: (_) => AlertDialogYesNo(
                               title: "Deletar Produto",
@@ -37,8 +37,7 @@ class BuildListProducts extends StatelessWidget {
                                 Modular.get<ProductsController>().deleteProduct(products[index].id);
                               },
                             ),
-                        barrierDismissible: false);
-                  }),
+                        barrierDismissible: false)),
               padding: EdgeInsets.only(bottom: 3),
             )));
       },

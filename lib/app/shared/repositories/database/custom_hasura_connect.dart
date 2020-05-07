@@ -5,7 +5,7 @@ class CustomHasuraConnect {
   HasuraConnect client;
   CustomHasuraConnect() {
     client = HasuraConnect(
-      "your-hasura-entry-point",
+      "https://eliana-backend.herokuapp.com/v1/graphql",
       token: token,
     );
     client.changeToken(token);

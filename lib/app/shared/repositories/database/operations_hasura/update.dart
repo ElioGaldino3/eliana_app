@@ -1,7 +1,5 @@
 import 'package:eliana_app/app/shared/models/client.dart';
-import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
-import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:hasura_connect/hasura_connect.dart';
 
 Future<bool> updateClientOperation(

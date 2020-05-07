@@ -1,8 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/orders/rents_orders_controller.dart';
-import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
-import 'package:eliana_app/app/modules/publishers/add_rent/add_rent_controller.dart';
 import 'package:eliana_app/app/shared/utils/container_color.dart';
 import 'package:eliana_app/app/shared/utils/date_format_portuguese.dart';
 import 'package:eliana_app/app/shared/utils/day_week.dart';

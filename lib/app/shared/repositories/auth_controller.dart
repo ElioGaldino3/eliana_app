@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import 'database/database_interface.dart';
+
 part 'auth_controller.g.dart';
 
 class AuthController = _AuthControllerBase with _$AuthController;
@@ -57,6 +58,7 @@ abstract class _AuthControllerBase with Store {
   @action
   Future logOut() {
     _authRepository.getLogout();
+    return null;
   }
 
   @action

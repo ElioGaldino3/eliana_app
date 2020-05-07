@@ -3,7 +3,6 @@ import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product.dart';
 import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:hasura_connect/hasura_connect.dart';
-import 'package:mobx/mobx.dart';
 
 Stream<List<Client>> getStreamClientsOperation(HasuraConnect connection) {
   var query = """

@@ -1,8 +1,6 @@
 import 'package:eliana_app/app/app_controller.dart';
 import 'package:eliana_app/app/modules/products/products_controller.dart';
 import 'package:eliana_app/app/modules/products_cart/products_cart_controller.dart';
-import 'package:eliana_app/app/modules/publishers/add_order/add_order_controller.dart';
-import 'package:eliana_app/app/shared/models/order.dart';
 import 'package:eliana_app/app/shared/models/product_order.dart';
 import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
 import 'package:flutter/material.dart';

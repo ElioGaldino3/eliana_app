@@ -11,8 +11,7 @@ import '../item_client.dart';
 class BuildListClients extends StatelessWidget {
   final ObservableList<Client> clients;
 
-  const BuildListClients({Key key, this.clients})
-      : super(key: key);
+  const BuildListClients({Key key, this.clients}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +27,18 @@ class BuildListClients extends StatelessWidget {
                     direction: DismissDirection.startToEnd,
                     key: ValueKey(clients[index].id),
                     child: ClientItem(clients[index]),
-                    confirmDismiss: (_) async {
-                      await showDialog(
-                          context: context,
-                          builder: (_) => AlertDialogYesNo(
-                                title: "Deletar Cliente",
-                                content:
-                                    "Você realmente quer deletar o(a) ${clients[index].name}?",
-                                yesFunction: () {
-                                  Modular.get<ClientsController>().deleteClient(clients[index].id);
-                                },
-                              ),
-                          barrierDismissible: false);
-                    }),
+                    confirmDismiss: (_) async => await showDialog(
+                        context: context,
+                        builder: (_) => AlertDialogYesNo(
+                              title: "Deletar Cliente",
+                              content:
+                                  "Você realmente quer deletar o(a) ${clients[index].name}?",
+                              yesFunction: () {
+                                Modular.get<ClientsController>()
+                                    .deleteClient(clients[index].id);
+                              },
+                            ),
+                        barrierDismissible: false)),
                 padding: EdgeInsets.only(bottom: 4),
               ),
             ));

@@ -2,7 +2,6 @@ import 'package:eliana_app/app/shared/models/client.dart';
 import 'package:eliana_app/app/shared/widgets/custom_date_picker.dart';
 import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
 import 'package:eliana_app/app/shared/widgets/show_toast.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

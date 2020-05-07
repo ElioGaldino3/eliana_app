@@ -1,8 +1,6 @@
 import 'package:eliana_app/app/modules/products/products_controller.dart';
 import 'package:eliana_app/app/modules/products_cart_rent/products_cart_rent_controller.dart';
-import 'package:eliana_app/app/modules/publishers/add_rent/add_rent_controller.dart';
 import 'package:eliana_app/app/shared/models/product_rent.dart';
-import 'package:eliana_app/app/shared/models/rent.dart';
 import 'package:eliana_app/app/shared/widgets/loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

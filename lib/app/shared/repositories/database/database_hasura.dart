@@ -14,7 +14,6 @@ import 'package:eliana_app/app/shared/repositories/database/operations_hasura/pu
 import 'package:eliana_app/app/shared/repositories/database/operations_hasura/update.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
 
 import 'custom_hasura_connect.dart';
 import 'operations_hasura/delete.dart';
